@@ -10,7 +10,7 @@ for (const route of ["/", "/work", "/voices", "/brochure?page=11", "/sponsors"])
   assert.equal(response.status, 200, `${route} must load`);
   const html = await response.text();
   assert.match(html, /HR VISTA/, `${route} must contain the site`);
-  assert.doesNotMatch(html, /BKC|Jio Grounds|Mumbai|Bandra Kurla/i, `${route} must not advertise an unconfirmed venue`);
+  assert.doesNotMatch(html, /BKC|Jio Grounds|Bandra Kurla/i, `${route} must not advertise an unconfirmed exact venue`);
   for (const match of html.matchAll(/<script[^>]+src="([^\"]+)"/g)) scripts.add(match[1]);
   console.log(`PASS ${route}`);
 }

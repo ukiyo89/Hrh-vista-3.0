@@ -319,14 +319,12 @@ export default function JourneyGlobe({
                 <img src={i === 0 ? "/media/raw/logo_hr_vista.png" : "/media/raw/logo_christ_lavasa.png"} alt="" width={220} height={120} draggable={false} />
               </span>)}
             </div>
-            <span className={styles.eggLabel}>{i === 0 ? "A WORLD OF POSSIBILITIES" : "WHERE OUR STORY BEGINS"}</span>
             {Array.from({ length: 6 }, (_, particle) => <i key={particle} className={styles.spark} style={{ "--particle": particle } as CSSProperties} />)}
           </div>)}
-          <span className={styles.found}>TWO IDENTITIES. ONE WORLD. <i>✳</i></span>
         </div>}
       </div>
       <div className={styles.controls}>
-        <p>DRAG TO EXPLORE <span>·</span> A LITTLE SHAKE. A LITTLE SURPRISE.</p>
+        <p>Drag to explore</p>
         <div className={styles.buttons}>
           <button type="button" onClick={discover} aria-label="Shake the globe to reveal the Easter egg">Give it a shake <span>↔</span></button>
           <button type="button" onClick={reset} aria-label="Reset globe rotation">Reset <span>↺</span></button>

@@ -152,7 +152,7 @@ export const content: Content = {
     headline: "THE FUTURE OF WORK. THE PEOPLE WHO SHAPE IT.",
     theme: "The Future of Work — The People Who Shape It",
     dates: "21–22 November 2026",
-    venue: "Venue to be announced",
+    venue: "Mumbai · Exact venue to be announced",
     presenter: "Presented by the Centre for Placement and Career Guidance",
     institution: "CHRIST (Deemed to be University), Pune Lavasa Campus",
   },

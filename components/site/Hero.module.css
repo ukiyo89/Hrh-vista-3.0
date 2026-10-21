@@ -357,3 +357,6 @@
   .titleLine > span { animation:none !important; transform:none !important; }
   .storyLink > span { transition:none; }
 }
+
+.cue { font-size:11px; letter-spacing:.08em; }
+@media(max-width:480px) { .caption { max-width:310px; font-size:11px; letter-spacing:0; } .cue { font-size:10px; } }

@@ -26,16 +26,6 @@
   margin-inline: auto;
 }
 
-.eyebrow {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  margin: 0 0 38px;
-  color: #495c75;
-  font: 600 10px/1.6 var(--font-body), sans-serif;
-  letter-spacing: .15em;
-}
-
 .headerMain {
   display: grid;
   grid-template-columns: 1.65fr .55fr;
@@ -64,27 +54,13 @@
   width: min(100%, 250px);
 }
 
-.headerArrow {
-  display: block;
-  font: 400 66px/.9 var(--font-display), sans-serif;
-  color: var(--archive-blue);
-  margin-bottom: 24px;
-}
-
-.headerAside p {
-  font-size: 13px;
-  line-height: 1.8;
-  margin: 0;
-  color: #46556a;
-}
-
 .headerAside a {
   display: inline-flex;
   align-items: center;
   gap: 24px;
   min-height: 44px;
   margin-top: 14px;
-  font-size: 11px;
+  font-size: 12px;
   text-decoration: none;
   border-bottom: 1px solid var(--archive-rule);
 }
@@ -103,24 +79,10 @@
   z-index: 6;
   top: var(--nav-h, 64px);
   display: grid;
-  grid-template-columns: .75fr repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--archive-rule);
   background: #eeede6f5;
   backdrop-filter: blur(12px);
-}
-
-.railLabel {
-  align-self: center;
-  padding: 12px 20px 12px 0;
-  font-size: 10px;
-  line-height: 1.7;
-  letter-spacing: .12em;
-}
-
-.railLabel strong {
-  font-size: 7px;
-  font-weight: 500;
-  color: #516278;
 }
 
 .timeline > a {
@@ -150,20 +112,8 @@
 }
 
 .navText {
-  display: grid;
-  gap: 6px;
-}
-
-.navText strong {
-  font-size: 11px;
-  line-height: 1.35;
-  font-weight: 600;
-}
-
-.navText > span {
-  font-size: 8px;
-  letter-spacing: .07em;
-  opacity: .85;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .navDot {
@@ -212,17 +162,13 @@
   gap: 24px;
   padding-bottom: 18px;
   margin-bottom: 40px;
-  font-size: 9px;
-  letter-spacing: .13em;
+  font-size: 12px;
+  line-height: 1.6;
   color: #495e78;
 }
 
 .editionMeta p {
   margin: 0;
-}
-
-.editionMeta > span {
-  font-size: 8px;
 }
 
 .editionMeta i {
@@ -275,15 +221,6 @@
 .editionNumber > span {
   color: transparent;
   -webkit-text-stroke: 1px var(--archive-blue);
-}
-
-.editionTag {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  font-size: 7px;
-  letter-spacing: .13em;
-  color: #495e78;
 }
 
 .editionInfo h3 {
@@ -388,18 +325,6 @@
   filter: saturate(1);
 }
 
-.photoChapter {
-  position: absolute;
-  z-index: 1;
-  left: 20px;
-  top: 20px;
-  background: #102238ed;
-  color: #f2f4f9;
-  font-size: 8px;
-  letter-spacing: .13em;
-  padding: 8px 10px;
-}
-
 .photoArrow {
   position: absolute;
   z-index: 1;
@@ -422,50 +347,14 @@
   transform: translate(3px, -3px);
 }
 
-.futureFlag {
-  position: absolute;
-  z-index: 1;
-  left: 20px;
-  bottom: 24px;
-  padding: 9px 12px;
-  background: #f1e5c7;
-  color: #26364b;
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: .11em;
-}
-
 .editionPhoto figcaption {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   padding-top: 16px;
   color: #485c73;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.6;
-}
-
-.editionPhoto figcaption > span:last-child {
-  flex-shrink: 0;
-  font-size: 8px;
-  letter-spacing: .1em;
-}
-
-.editionNote {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin: clamp(34px, 4vw, 64px) 0 0;
-  font-size: 8px;
-  letter-spacing: .16em;
-  color: #576c83;
-}
-
-.editionNote > span {
-  font-size: 18px;
-  line-height: 1;
-  letter-spacing: 0;
 }
 
 @media (min-width: 1700px) {
@@ -473,38 +362,26 @@
 }
 
 @media (max-width: 1100px) {
-  .timeline { grid-template-columns: .55fr repeat(3, 1fr); }
+  .timeline { grid-template-columns: repeat(3, 1fr); }
   .timeline > a { padding: 14px 16px; gap: 12px; }
-  .navText strong { font-size: 10px; }
   .navDot { display: none; }
-  .railLabel { font-size: 8px; }
-  .railLabel strong { font-size: 6px; }
   .editionLayout { gap: 24px; }
   .editionInfo h3 { font-size: clamp(44px, 6.5vw, 72px); }
   .edition { min-height: 0; }
-  .editionPhoto figcaption { font-size: 9px; }
 }
 
 @media (max-width: 760px) {
   .editions { padding: 78px 7vw 30px; margin-top: -24px; border-radius: 24px 24px 0 0; }
-  .eyebrow { margin-bottom: 28px; font-size: 9px; }
-  .eyebrow > span:last-child { display: none; }
   .headerMain { grid-template-columns: 1fr; gap: 28px; padding-bottom: 36px; }
   .header h2 { font-size: clamp(39px, 7.8vw, 59px); }
   .headerAside { justify-self: stretch; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
-  .headerArrow { display: none; }
-  .headerAside p { font-size: 11px; }
-  .headerAside a { margin: 0; gap: 14px; font-size: 10px; flex-shrink: 0; }
+  .headerAside a { margin: 0; gap: 14px; font-size: 12px; }
   .timeline { grid-template-columns: repeat(3, 1fr); }
-  .railLabel { display: none; }
-  .timeline > a { min-height: 76px; justify-content: center; gap: 8px; padding: 13px 8px; }
+  .timeline > a { min-height: 76px; justify-content: center; flex-direction: column; gap: 8px; padding: 13px 8px; }
   .timeline > a:first-of-type { border-left: 0; }
   .navNumber { font-size: 32px; }
-  .navText strong { font-size: 8px; }
-  .navText > span { font-size: 6px; }
   .edition { padding-top: 44px; padding-bottom: 14px; scroll-margin-top: calc(var(--nav-h, 64px) + 92px); }
-  .editionMeta { margin-bottom: 28px; font-size: 8px; gap: 12px; }
-  .editionMeta > span { font-size: 6px; }
+  .editionMeta { margin-bottom: 28px; font-size: 12px; gap: 12px; }
   .editionLayout { grid-template-columns: 1fr; gap: 22px; }
   .editionInfo { grid-template-columns: 1fr; gap: 24px; padding-block: 10px; }
   .editionMark { height: 155px; width: 220px; }
@@ -513,14 +390,10 @@
   .editionDetails { display: block; }
   .editionDetails .textLink { margin-top: 18px; }
   .copy { font-size: 13px; max-width: 460px; }
-  .textLink { margin-top: 18px; font-size: 11px; }
+  .textLink { margin-top: 18px; font-size: 12px; }
   .photoFrame { height: clamp(280px, 50svh, 480px); }
-  .photoChapter { top: 14px; left: 14px; font-size: 7px; padding: 7px 8px; }
   .photoArrow { bottom: 14px; right: 14px; width: 40px; height: 40px; font-size: 21px; }
-  .futureFlag { left: 14px; bottom: 16px; font-size: 7px; padding: 8px; }
-  .editionPhoto figcaption { gap: 16px; padding-top: 14px; font-size: 8px; }
-  .editionPhoto figcaption > span:last-child { font-size: 7px; }
-  .editionNote { margin-top: 34px; font-size: 7px; }
+  .editionPhoto figcaption { gap: 16px; padding-top: 14px; font-size: 12px; }
 }
 
 @media (max-width: 430px) {
@@ -529,11 +402,9 @@
   .headerAside a { margin-top: 12px; }
   .timeline > a { flex-direction: column; gap: 8px; min-height: 84px; padding-inline: 4px; }
   .navNumber { font-size: 29px; }
-  .navText { gap: 3px; text-align: center; }
-  .navText > span { display: none; }
+  .navText { text-align: center; }
   .editionMark { height: 150px; }
   .editionNumber { font-size: 168px; }
-  .editionMeta > span { max-width: 82px; text-align: right; line-height: 1.5; }
 }
 
 @media (prefers-reduced-motion: reduce) {

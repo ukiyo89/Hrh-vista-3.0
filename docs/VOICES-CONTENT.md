@@ -23,4 +23,4 @@ The array order is the reading order. Around 20 entries are supported without la
 
 ## Check after adding
 
-Run the existing TypeScript and production checks, then inspect `/voices` at mobile and desktop widths. Verify long quotes, paragraph breaks, full attribution, optional portraits, source links, previous/next buttons and the full voice index. Check reduced motion, keyboard navigation and missing images. The page metadata and homepage teaser automatically stop saying “coming soon” when the array contains entries.
+Run the existing TypeScript and production checks, then inspect `/voices` at mobile and desktop widths. Verify long quotes, paragraph breaks, full attribution, optional portraits, source links, previous/next buttons and the full voice index. Check reduced motion, keyboard navigation and missing images. The page metadata automatically stops saying “coming soon” when the array contains entries.

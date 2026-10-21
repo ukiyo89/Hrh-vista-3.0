@@ -6,11 +6,6 @@ export function SiteFooter() {
         <a href="/" className={styles.wordmark}>
           HR VISTA <span>3.0</span>
         </a>
-        <p>
-          New ground.
-          <br />
-          Shared roots.
-        </p>
         <a
           href="/#top"
           className={styles.back}
@@ -34,14 +29,12 @@ export function SiteFooter() {
           </p>
         </div>
         <nav aria-label="Journey chapters">
-          <span>FOLLOW THE STORY</span>
           <a href="/#lavasa">Our Lavasa roots</a>
           <a href="/#journey">The journey</a>
-          <a href="/#next-chapter">The next chapter</a>
+          <a href="/#mumbai">Hello, Mumbai</a>
           <a href="/#editions">1.0 → 2.0 → 3.0</a>
         </nav>
         <nav aria-label="More about HR Vista">
-          <span>TAKE A CLOSER LOOK</span>
           <a href="/work">The edition archive ↗</a>
           <a href="/voices">Voices from 2.0 ↗</a>
           <a href="/#people">The people behind it ↗</a>
@@ -54,10 +47,6 @@ export function SiteFooter() {
       </div>
       <div className={styles.bottom}>
         <span>HR VISTA 3.0 · 21–22 NOVEMBER 2026</span>
-        <p>
-          Photography from past editions. Participation figures for 3.0 are
-          expectations.
-        </p>
       </div>
     </footer>
   );

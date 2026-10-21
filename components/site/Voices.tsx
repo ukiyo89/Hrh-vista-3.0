@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { feedback } from "@/lib/data/voices";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
+import { ArchivePerspective } from "./VoicesTeaser";
 import styles from "./Voices.module.css";
 
 export function Voices() {
@@ -23,10 +24,10 @@ export function Voices() {
       const opening = gsap.timeline({ scrollTrigger: {
         trigger: "[data-voice-opening]", start: "top top", end: "bottom 25%", scrub: .55,
       } });
-      opening.to("[data-opening-line='first']", { xPercent: -12, ease: "none", duration: 1 }, 0)
-        .to("[data-opening-line='last']", { xPercent: 10, ease: "none", duration: 1 }, 0)
-        .fromTo("[data-voice-aperture]", { clipPath: "inset(0% 27% 0% 27%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "none", duration: .75 }, 0)
-        .fromTo("[data-voice-aperture] img", { scale: 1.22, yPercent: 3 }, { scale: 1.04, yPercent: -3, ease: "none", duration: 1 }, 0);
+      opening.to("[data-opening-line='first']", { xPercent: -26, y: -35, ease: "none", duration: 1 }, 0)
+        .to("[data-opening-line='last']", { xPercent: 22, y: 20, ease: "none", duration: 1 }, 0)
+        .fromTo("[data-voice-aperture]", { clipPath: "inset(12% 38% 12% 38%)", y: 80 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, ease: "power2.inOut", duration: .85 }, 0)
+        .fromTo("[data-photo-number]", { xPercent: 80, yPercent: -40 }, { xPercent: 0, yPercent: 0, ease: "none", duration: 1 }, 0);
       const reflection = gsap.timeline({ scrollTrigger: {
         trigger: "[data-reflection-stage]", start: "top 95%", end: "top 5%", scrub: .6,
       } });
@@ -34,7 +35,10 @@ export function Voices() {
         .fromTo("[data-reflection-heading]", { x: 100 }, { x: 0, duration: 1, ease: "none" }, 0)
         .fromTo("[data-perspective-line]", { scaleX: .12 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
       const roomImage = element.querySelector("[data-room-image]");
-      if (roomImage) reflection.fromTo(roomImage, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1, ease: "none" }, 0);
+      if (roomImage) {
+        reflection.fromTo(roomImage, { clipPath: "inset(0% 0% 100% 0%)", y: 90 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 1, ease: "none" }, 0);
+        gsap.fromTo(roomImage.querySelector("img"), { scale: 1.22, yPercent: 6 }, { scale: 1.05, yPercent: -5, ease: "none", scrollTrigger: { trigger: roomImage, start: "top bottom", end: "bottom top", scrub: .5 } });
+      }
       gsap.fromTo("[data-continue-word]", { yPercent: 50 }, {
         yPercent: 0, stagger: .08, ease: "none",
         scrollTrigger: { trigger: "[data-voice-continue]", start: "top 95%", end: "top 40%", scrub: .5 },
@@ -60,17 +64,15 @@ export function Voices() {
 
   return <main id="main-content" ref={root} className={styles.page}>
     <section className={styles.opening} data-voice-opening aria-labelledby="voices-title">
-      <div className={styles.topline}><span>VOICES / HR VISTA 2.0</span><span>LAVASA · NOVEMBER 2025</span></div>
       <h1 id="voices-title"><span data-opening-line="first">What stays</span><span data-opening-line="last"><em>with us.</em></span></h1>
       <div className={styles.openingFoot}><p>The conversations end.<br />The perspectives stay.</p><a href="#reflections">Into the conversation <span aria-hidden="true">↓</span></a></div>
       <figure className={styles.archivePhoto}>
-        <div className={styles.aperture} data-voice-aperture><img src="/media/flickr/story-1.jpg" alt="Two speakers sharing perspectives on the HR VISTA 2.0 stage" width={1600} height={900} loading="eager" fetchPriority="high" /><span className={styles.photoNumber} aria-hidden="true">2.0</span></div>
-        <figcaption><span>A shared stage. Different perspectives.</span><span>PHOTOGRAPH / HR VISTA 2.0</span></figcaption>
+        <div className={styles.aperture} data-voice-aperture><ArchivePerspective wide /><span className={styles.photoNumber} data-photo-number aria-hidden="true">2.0</span></div>
+        <figcaption>HR VISTA 2.0 · Lavasa, November 2025</figcaption>
       </figure>
     </section>
 
     <section id="reflections" className={styles.reflections} data-reflection-stage aria-labelledby="reflections-title">
-      <div className={styles.reflectionTop}><span>FROM THE ROOM</span><span>{feedback.length ? `${String(feedback.length).padStart(2, "0")} PERSONAL REFLECTIONS` : "A SPACE FOR PERSONAL REFLECTIONS"}</span></div>
       <div className={styles.perspectiveRule} aria-hidden="true"><i data-perspective-line /></div>
       {current ? <div className={styles.reader}>
         <div className={styles.readerHeading}><h2 id="reflections-title" ref={readerHeading} tabIndex={-1} data-reflection-heading>In their<br /><em>own words.</em></h2><span className={styles.readerCount}>{String(selected + 1).padStart(2, "0")} / {String(feedback.length).padStart(2, "0")}</span></div>
@@ -79,16 +81,15 @@ export function Voices() {
           <blockquote><p>{current.quote}</p></blockquote>
           <div className={styles.attribution}>{current.portrait && <img src={current.portrait} alt="" width={72} height={72} loading="lazy" />}<div><strong>{current.name}</strong><p>{current.role}{current.role && current.org ? " · " : ""}{current.org}</p>{current.source && <a href={current.source} target="_blank" rel="noopener noreferrer">Original source <span aria-hidden="true">↗</span><span className={styles.srOnly}> (opens in a new tab)</span></a>}</div></div>
         </div>
-        {feedback.length > 1 && <div className={styles.readerControls}><button type="button" onClick={() => choose(selected - 1)} aria-label="Previous reflection">←</button><p>Another perspective</p><button type="button" onClick={() => choose(selected + 1)} aria-label="Next reflection">→</button></div>}
+        {feedback.length > 1 && <div className={styles.readerControls}><button type="button" onClick={() => readFromIndex(selected - 1)} aria-label="Previous reflection">←</button><p>Another perspective</p><button type="button" onClick={() => readFromIndex(selected + 1)} aria-label="Next reflection">→</button></div>}
         {feedback.length > 1 && <details className={styles.voiceIndex}><summary>Browse all {feedback.length} voices <span aria-hidden="true">+</span></summary><ol>{feedback.map((item, index) => <li key={`${item.name}-${index}`}><button type="button" aria-pressed={selected === index} onClick={() => readFromIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item.name}</strong><span>{selected === index ? "Reading" : "Read reflection"}</span></button></li>)}</ol></details>}
       </div> : <div className={styles.awaiting}>
         <span className={styles.quoteMark} data-quote-mark aria-hidden="true">“</span>
-        <div className={styles.awaitingCopy}><p className={styles.eyebrow}>THE MOMENT AFTER THE MOMENT.</p><h2 id="reflections-title" data-reflection-heading>Reflections<br /><em>coming soon.</em></h2><p>The people who were there.<br />The ideas they carried home.</p><p className={styles.note}>Personal reflections from HR VISTA 2.0 will be shared here. Until then, step back into the conversations that brought us together.</p><Link href="/work#hr-vista-2" className={styles.textLink}>Revisit the second edition <span aria-hidden="true">↗</span></Link></div>
-        <figure className={styles.roomPhoto} data-room-image><img src="/media/flickr/room-3.jpg" alt="A moment from the HR VISTA 2.0 event archive" width={1000} height={1200} loading="lazy" /><figcaption>FROM THE 2.0 ARCHIVE<br />THE CONVERSATION CONTINUES.</figcaption></figure>
+        <div className={styles.awaitingCopy}><h2 id="reflections-title" data-reflection-heading>Reflections<br /><em>coming soon.</em></h2><p>The people who were there.<br />The ideas they carried home.</p><Link href="/work#hr-vista-2" className={styles.textLink}>Revisit the second edition <span aria-hidden="true">↗</span></Link></div>
+        <figure className={styles.roomPhoto} data-room-image><img src="/media/flickr/room-3.jpg" alt="A moment from the HR VISTA 2.0 event archive" width={1000} height={1200} loading="lazy" /></figure>
       </div>}
-      <p className={styles.archiveNote}>From the HR VISTA 2.0 photography archive · Lavasa, November 2025.</p>
     </section>
 
-    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><p className={styles.eyebrow}>FROM WHAT WAS. TO WHAT’S NEXT.</p><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026 · Venue to be announced</p><Link href="/#next-chapter" className={styles.nextLink}>See what’s taking shape <span aria-hidden="true">↗</span></Link></div></section>
+    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026 · Venue to be announced</p><Link href="/#next-chapter" className={styles.nextLink}>See what’s taking shape <span aria-hidden="true">↗</span></Link></div></section>
   </main>;
 }

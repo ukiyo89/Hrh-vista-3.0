@@ -163,7 +163,6 @@ export function ChristIntro() {
       <div className={styles.shutters} aria-hidden="true">
         {Array.from({ length: 7 }, (_, i) => <div key={i} style={{ "--strip": i } as CSSProperties} />)}
       </div>
-      <div className={styles.topline}><span>HR VISTA / 03</span><span>ROOTED IN PEOPLE. OPEN TO POSSIBILITY.</span></div>
       <div className={styles.brand}>
         <img className={styles.christ} src="/media/raw/logo_christ_lavasa.png" alt="CHRIST (Deemed to be University) presents" width={250} height={85} loading="eager" />
         <div className={styles.wordmark} aria-label="HR VISTA 3.0"><span>HR VISTA</span><em>3.0</em></div>
@@ -173,7 +172,7 @@ export function ChristIntro() {
         </div>
         <span className={styles.status} role="status">{phase === "opening" ? "WELCOME TO WHAT’S NEXT" : "SETTING THE STAGE"}</span>
       </div>
-      <div className={styles.bottomline}><span>PEOPLE. POSSIBILITY. PERSPECTIVE.</span><button ref={skip} type="button" onClick={() => enter.current()}>Enter the experience <span>↗</span></button></div>
+      <div className={styles.bottomline}><button ref={skip} type="button" onClick={() => enter.current()}>Enter the experience <span>↗</span></button></div>
     </div>
     </>
   );

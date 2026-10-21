@@ -26,3 +26,6 @@
 @keyframes failOpen { to { opacity:0; visibility:hidden; pointer-events:none; } }
 @media(max-width:700px) { .wordmark { font-size:clamp(56px,14vw,90px); gap:7px; }.christ { width:180px; height:62px; margin-bottom:38px; }.brand > p { margin:24px 0 30px; }.topline,.bottomline { left:7vw; right:7vw; font-size:7px; }.bottomline > span { max-width:110px; line-height:1.8; }.bottomline button { font-size:10px; gap:16px; }.topline { top:24px; } }
 @media(prefers-reduced-motion:reduce) { .intro { display:none; } }
+
+.bottomline { justify-content:flex-end; }
+.status { font-size:12px; letter-spacing:.08em; }

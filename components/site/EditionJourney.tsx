@@ -9,12 +9,9 @@ import styles from "./EditionJourney.module.css";
 const editions = [
   {
     number: "1.0",
-    year: "2025",
-    place: "LAVASA",
-    kicker: "FEBRUARY 2025 · LAVASA",
+    kicker: "February 2025 · Lavasa",
     title: "The first spark.",
     lines: ["The first", "spark."],
-    note: "A COMMUNITY TAKES SHAPE",
     nav: "The spark",
     copy: "A meeting of minds in the hills. Around 50 HR delegates came together for conversations, mentorship and a shared vision of work reimagined.",
     image: "/media/flickr/raw/hrvista1_feb21.jpg",
@@ -25,12 +22,9 @@ const editions = [
   },
   {
     number: "2.0",
-    year: "2025",
-    place: "LAVASA",
-    kicker: "NOVEMBER 2025 · LAVASA",
+    kicker: "November 2025 · Lavasa",
     title: "The conversation grows.",
     lines: ["The conversation", "grows."],
-    note: "NEW PERSPECTIVES. SHARED PURPOSE.",
     nav: "The conversation",
     copy: "Leadership in a post-AI world. Four panels, two round tables, and a community finding new connections—on the stage and beyond it.",
     image: "/media/flickr/story-1.jpg",
@@ -41,14 +35,11 @@ const editions = [
   },
   {
     number: "3.0",
-    year: "2026",
-    place: "NEXT CHAPTER",
-    kicker: "NOVEMBER 2026 · VENUE TO BE ANNOUNCED",
+    kicker: "November 2026 · Mumbai · Venue to be announced",
     title: "A wider horizon.",
     lines: ["A wider", "horizon."],
-    note: "THE STORY IS STILL UNFOLDING",
     nav: "The horizon",
-    copy: "Our most ambitious chapter yet. A new gathering is taking shape for November 2026. The same purpose, imagined at a new scale. Venue to be announced.",
+    copy: "Our most ambitious chapter yet. A new gathering is taking shape in Mumbai for November 2026. The same purpose, imagined at a new scale. Venue to be announced.",
     image: "/media/flickr/editions-4.jpg",
     alt: "The HR VISTA 2.0 community whose story continues into the planned third edition",
     caption: "Our community, looking ahead · Photograph from HR VISTA 2.0",
@@ -181,23 +172,19 @@ export function EditionJourney() {
   return (
     <section id="editions" ref={root} className={styles.editions} aria-labelledby="editions-heading">
       <header className={styles.header}>
-        <p className={styles.eyebrow}><span>04 / THE EVOLUTION</span><span>AN EVER-GROWING CONVERSATION</span></p>
         <div className={styles.headerMain}>
           <h2 id="editions-heading"><span data-header-line>Every chapter.</span><span data-header-line><em>More possibility.</em></span></h2>
           <div className={styles.headerAside}>
-            <span className={styles.headerArrow} aria-hidden="true">↙</span>
-            <p>Built on conversations.<br />Grown through connection.</p>
             <a href="#edition-1">Follow our evolution <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </header>
 
       <nav className={styles.timeline} aria-label="Edition timeline">
-        <span className={styles.railLabel}>HR VISTA<br /><strong>IN THREE CHAPTERS</strong></span>
         {editions.map((edition, index) => (
           <a key={edition.number} href={`#edition-${index + 1}`} aria-current={active === index ? "step" : undefined}>
             <span className={styles.navNumber}>{edition.number}</span>
-            <span className={styles.navText}><strong>{edition.nav}</strong><span>{edition.year} · {edition.place}</span></span>
+            <span className={styles.navText}>{edition.nav}</span>
             <span className={styles.navDot} aria-hidden="true" />
           </a>
         ))}
@@ -209,7 +196,6 @@ export function EditionJourney() {
           <article id={`edition-${index + 1}`} key={edition.number} className={styles.edition} data-edition={index} aria-labelledby={`edition-title-${index + 1}`}>
             <div className={styles.editionMeta}>
               <p>{edition.kicker}</p>
-              <span>{index === 2 ? "THE NEXT CHAPTER" : "FROM THE ARCHIVE"}</span>
               <i data-edition-rule aria-hidden="true" />
             </div>
 
@@ -217,7 +203,6 @@ export function EditionJourney() {
               <div className={styles.editionInfo}>
                 <div className={styles.editionMark} aria-hidden="true">
                   <span data-number className={styles.editionNumber}>{edition.number.charAt(0)}<span>.0</span></span>
-                  <span className={styles.editionTag}>HR VISTA / {edition.number}</span>
                 </div>
                 <h3 id={`edition-title-${index + 1}`} aria-label={edition.title}>
                   {edition.lines.map((line) => <span key={line} data-edition-line aria-hidden="true">{line}</span>)}
@@ -228,19 +213,16 @@ export function EditionJourney() {
                 <div className={styles.photoReveal} data-photo-reveal>
                   <a href={edition.href} className={styles.photoFrame} aria-label={edition.label}>
                     <img data-photo-image src={edition.image} alt={edition.alt} width={1600} height={900} loading="lazy" decoding="async" />
-                    <span className={styles.photoChapter} aria-hidden="true">CHAPTER / 0{index + 1}</span>
                     <span className={styles.photoArrow} aria-hidden="true">↗</span>
-                    {index === 2 && <span className={styles.futureFlag}>LOOKING AHEAD TO 3.0</span>}
                   </a>
                 </div>
-                <figcaption><span>{edition.caption}</span><span aria-hidden="true">0{index + 1} / 03</span></figcaption>
+                <figcaption>{edition.caption}</figcaption>
               </figure>
               <div className={styles.editionDetails}>
                 <p className={styles.copy}>{edition.copy}</p>
                 <a href={edition.href} className={styles.textLink}>{edition.label}<span aria-hidden="true">↗</span></a>
               </div>
             </div>
-            <p className={styles.editionNote} aria-hidden="true"><span>+</span>{edition.note}<span>+</span></p>
           </article>
         ))}
       </div>

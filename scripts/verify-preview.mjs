@@ -5,11 +5,12 @@ import { createHash } from "node:crypto";
 // Verify a running preview, including bundles needed for navigation.
 const origin = process.argv[2] ?? "http://127.0.0.1:3005";
 const scripts = new Set();
-for (const route of ["/", "/work", "/brochure?page=11", "/sponsors"]) {
+for (const route of ["/", "/work", "/voices", "/brochure?page=11", "/sponsors"]) {
   const response = await fetch(new URL(route, origin));
   assert.equal(response.status, 200, `${route} must load`);
   const html = await response.text();
   assert.match(html, /HR VISTA/, `${route} must contain the site`);
+  assert.doesNotMatch(html, /BKC|Jio Grounds|Mumbai|Bandra Kurla/i, `${route} must not advertise an unconfirmed venue`);
   for (const match of html.matchAll(/<script[^>]+src="([^\"]+)"/g)) scripts.add(match[1]);
   console.log(`PASS ${route}`);
 }
@@ -27,3 +28,10 @@ const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 assert.equal(served.subarray(0, 4).toString(), "%PDF");
 assert.equal(hash(served), hash(source), "Download must match the complete brochure");
 console.log(`PASS brochure download (${served.length.toLocaleString()} bytes)`);
+const calendar = await fetch(new URL("/hr-vista-2026.ics", origin));
+assert.equal(calendar.status, 200);
+const calendarText = await calendar.text();
+assert.match(calendarText, /DTSTART;VALUE=DATE:20261121/);
+assert.match(calendarText, /DTEND;VALUE=DATE:20261123/);
+assert.doesNotMatch(calendarText, /LOCATION:|Mumbai|BKC|Jio Grounds/i);
+console.log("PASS all-day calendar download (21–22 November; no unconfirmed location)");

@@ -42,13 +42,13 @@ const editions = [
   {
     number: "3.0",
     year: "2026",
-    place: "MUMBAI",
-    kicker: "NOVEMBER 2026 · MUMBAI",
+    place: "NEXT CHAPTER",
+    kicker: "NOVEMBER 2026 · VENUE TO BE ANNOUNCED",
     title: "A wider horizon.",
     lines: ["A wider", "horizon."],
     note: "THE STORY IS STILL UNFOLDING",
     nav: "The horizon",
-    copy: "Our most ambitious chapter yet. Two days in Mumbai, with 500+ professionals and representation from 50+ organisations expected. The same purpose, imagined at a new scale.",
+    copy: "Our most ambitious chapter yet. A new gathering is taking shape for November 2026. The same purpose, imagined at a new scale. Venue to be announced.",
     image: "/media/flickr/editions-4.jpg",
     alt: "The HR VISTA 2.0 community whose story continues into the planned third edition",
     caption: "Our community, looking ahead · Photograph from HR VISTA 2.0",
@@ -116,49 +116,38 @@ export function EditionJourney() {
 
       element.querySelectorAll<HTMLElement>("[data-edition]").forEach((article, index) => {
         const number = article.querySelector("[data-number]");
-        const orbit = article.querySelector("[data-number-orbit]");
         const photograph = article.querySelector("[data-photo-reveal]");
         const image = article.querySelector("[data-photo-image]");
         const type = article.querySelectorAll("[data-edition-line]");
         const rule = article.querySelector("[data-edition-rule]");
 
-        // One coordinated pass brings the archive sheet into view. The
-        // essential article copy is always present and never fully faded out.
-        gsap.fromTo(number, { y: 42, x: index === 1 ? 26 : -26, rotate: index === 1 ? 5 : -5 }, {
-          y: -16,
-          x: 0,
-          rotate: 0,
+        // The chapter grows from a narrow photographic aperture into a full
+        // archive sheet. Every stage follows native scroll in both directions.
+        gsap.fromTo(number, { xPercent: index === 1 ? 28 : -28, yPercent: 12 }, {
+          yPercent: -8,
+          xPercent: 0,
           ease: "none",
-          scrollTrigger: { trigger: article, start: "top bottom", end: "bottom top", scrub: 0.8 },
-        });
-        gsap.fromTo(orbit, { rotate: -35 }, {
-          rotate: 100,
-          ease: "none",
-          scrollTrigger: { trigger: article, start: "top bottom", end: "bottom top", scrub: 0.8 },
+          scrollTrigger: { trigger: article, start: "top bottom", end: "top 20%", scrub: 0.6 },
         });
         gsap.fromTo(photograph, {
-          clipPath: "inset(13% 10% 13% 10%)",
-          scale: 0.94,
-          rotate: index === 1 ? -2 : 2,
+          clipPath: "inset(8% 38% 8% 38%)",
         }, {
           clipPath: "inset(0% 0% 0% 0%)",
-          scale: 1,
-          rotate: 0,
-          ease: "power2.out",
-          scrollTrigger: { trigger: article, start: "top 85%", end: "top 12%", scrub: 0.6 },
-        });
-        gsap.fromTo(image, { scale: 1.18, yPercent: 5 }, {
-          scale: 1.14,
-          yPercent: -5,
           ease: "none",
-          scrollTrigger: { trigger: article, start: "top bottom", end: "bottom top", scrub: 0.8 },
+          scrollTrigger: { trigger: photograph, start: "top 92%", end: "top 25%", scrub: 0.5 },
         });
-        gsap.fromTo(type, { y: 24, opacity: 0.4 }, {
+        gsap.fromTo(image, { scale: 1.2, yPercent: 4 }, {
+          scale: 1.04,
+          yPercent: -2,
+          ease: "none",
+          scrollTrigger: { trigger: photograph, start: "top bottom", end: "bottom top", scrub: 0.6 },
+        });
+        gsap.fromTo(type, { x: (lineIndex: number) => (lineIndex === 0 ? -1 : 1) * Math.min(window.innerWidth * .12, 160), y: 30 }, {
+          x: 0,
           y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: { trigger: article, start: "top 68%", end: "top 16%", scrub: 0.5 },
+          stagger: 0.08,
+          ease: "none",
+          scrollTrigger: { trigger: article, start: "top 88%", end: "top 15%", scrub: 0.5 },
         });
         gsap.fromTo(rule, { scaleX: 0 }, {
           scaleX: 1,
@@ -184,7 +173,7 @@ export function EditionJourney() {
       cancelAnimationFrame(frame);
       context.revert();
       gsap.set(element.querySelectorAll(
-        "[data-header-line], [data-timeline-progress], [data-number], [data-number-orbit], [data-photo-reveal], [data-photo-image], [data-edition-line], [data-edition-rule]",
+        "[data-header-line], [data-timeline-progress], [data-number], [data-photo-reveal], [data-photo-image], [data-edition-line], [data-edition-rule]",
       ), { clearProps: "transform,opacity,clipPath" });
     };
   }, [reduced]);
@@ -227,20 +216,12 @@ export function EditionJourney() {
             <div className={styles.editionLayout}>
               <div className={styles.editionInfo}>
                 <div className={styles.editionMark} aria-hidden="true">
-                  <svg className={styles.numberOrbit} data-number-orbit viewBox="0 0 240 240">
-                    <circle cx="120" cy="120" r="112" />
-                    <circle cx="120" cy="120" r="88" strokeDasharray="1 14" />
-                    <path d="M120 0V28M120 212V240M0 120H28M212 120H240" />
-                    <circle className={styles.orbitDot} cx="221" cy="73" r="5" />
-                  </svg>
                   <span data-number className={styles.editionNumber}>{edition.number.charAt(0)}<span>.0</span></span>
                   <span className={styles.editionTag}>HR VISTA / {edition.number}</span>
                 </div>
                 <h3 id={`edition-title-${index + 1}`} aria-label={edition.title}>
                   {edition.lines.map((line) => <span key={line} data-edition-line aria-hidden="true">{line}</span>)}
                 </h3>
-                <p className={styles.copy}>{edition.copy}</p>
-                <a href={edition.href} className={styles.textLink}>{edition.label}<span aria-hidden="true">↗</span></a>
               </div>
 
               <figure className={styles.editionPhoto}>
@@ -254,6 +235,10 @@ export function EditionJourney() {
                 </div>
                 <figcaption><span>{edition.caption}</span><span aria-hidden="true">0{index + 1} / 03</span></figcaption>
               </figure>
+              <div className={styles.editionDetails}>
+                <p className={styles.copy}>{edition.copy}</p>
+                <a href={edition.href} className={styles.textLink}>{edition.label}<span aria-hidden="true">↗</span></a>
+              </div>
             </div>
             <p className={styles.editionNote} aria-hidden="true"><span>+</span>{edition.note}<span>+</span></p>
           </article>

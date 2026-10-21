@@ -89,7 +89,7 @@ export function EditionsArchive() {
             <div className={styles.mastheadGrid}>
               <div className={styles.heroCopy}>
                 <h1 className={styles.heroTitle}><span>Where it</span><span>all began<span className={styles.titleDot}>.</span></span></h1>
-                <p className={styles.heroDescription}>Before Mumbai.<br />Two chapters that shaped us.</p>
+                <p className={styles.heroDescription}>Where it started.<br />Two chapters that shaped us.</p>
                 <p className={styles.heroNote}>Two editions in Lavasa brought HR leaders, students and industry together. This is their story.</p>
               </div>
               <div className={styles.photoSpread}>
@@ -124,7 +124,7 @@ export function EditionsArchive() {
           <div><p className="hv-eyebrow">HR VISTA 3.0 · Upcoming</p><h2 id="next-edition-title" className={styles.nextTitle}>Next<br />chapter<span>↗</span></h2></div>
           <div>
             <p className={styles.upcomingDate}>{content.hero.dates}</p>
-            <p className={styles.upcomingLocation}>Mumbai · BKC · Jio Grounds</p>
+            <p className={styles.upcomingLocation}>Venue to be announced</p>
             <p className="hv-copy">{content.hero.theme}. Two days of keynote conversations, leadership panels and connections across the HR community.</p>
             <div className={styles.actions}>
               <a className={styles.nextAction} href="/brochure/HR-VISTA-3.0.pdf" download>Download brochure <span aria-hidden="true">↓</span></a>

@@ -46,6 +46,10 @@ export function People() {
   const stage = useRef<HTMLDivElement>(null);
   const [filter, setFilter] = useState<(typeof filters)[number]>("Everyone");
   const [paused, setPaused] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const networkTimeline = useRef<gsap.core.Timeline | null>(null);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
   const reduced = useReducedMotionPreference();
   const shown = people.filter(person => filter === "Everyone" || person.group === filter);
 
@@ -77,12 +81,13 @@ export function People() {
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
       const scene = stage.current;
-      if (!scene || paused) return;
+      if (!scene) return;
       const context = gsap.context(() => {
         const network = scene.querySelector<HTMLElement>("[data-network]");
         const nodes = scene.querySelectorAll<HTMLElement>("[data-network-node]");
         const paths = scene.querySelectorAll<SVGPathElement>("[data-network-path]");
-        const sequence = gsap.timeline({ scrollTrigger: { trigger: scene, start: "top 88%", end: "top 12%", scrub: .75, invalidateOnRefresh: true } });
+        const sequence = gsap.timeline({ scrollTrigger: { trigger: scene, start: "top 85%", end: "bottom 80%", scrub: .6, invalidateOnRefresh: true } });
+        networkTimeline.current = sequence;
         sequence.fromTo(paths, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.4, stagger: .065, ease: "none" }, 0);
         nodes.forEach((node, index) => {
           const position = nodePositions[index];
@@ -91,17 +96,23 @@ export function People() {
             yPercent: -50,
             x: () => (50 - position.x) * (scene.clientWidth < 700 ? 3 : 5),
             y: (50 - position.y) * 4,
-            scale: .4,
-            rotate: -position.turn * 3,
-          }, { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 1, rotate: 0, duration: 1.2, ease: "power2.out" }, index * .07);
+            scale: .65,
+          }, { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 1, duration: 1.2, ease: "power2.out" }, index * .07);
         });
-        sequence.fromTo(scene.querySelector("[data-signal-core]"), { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: .6, rotate: -90 }, { scale: 1, rotate: 0, duration: 1.5, ease: "power2.out" }, 0);
-        gsap.fromTo(network, { y: 45 }, { y: -45, ease: "none", scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: 1 } });
-        gsap.fromTo(scene.querySelector("[data-human-energy]"), { x: -35 }, { x: 25, ease: "none", scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: 1 } });
+        sequence.fromTo(scene.querySelector("[data-signal-core]"), { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: .6 }, { scale: 1, duration: 1.5, ease: "power2.out" }, 0);
+        sequence.fromTo(network, { y: 40 }, { y: 0, ease: "none", duration: 1.8 }, 0);
+        sequence.fromTo(scene.querySelector("[data-human-energy]"), { x: 55 }, { x: 0, ease: "power2.out", duration: 1.8 }, 0);
+        if (pausedRef.current) sequence.scrollTrigger?.disable(false);
       }, scene);
-      return () => context.revert();
+      return () => { context.revert(); networkTimeline.current = null; };
     });
     return () => media.revert();
+  }, []);
+
+  useEffect(() => {
+    const trigger = networkTimeline.current?.scrollTrigger;
+    if (paused) trigger?.disable(false);
+    else trigger?.enable(false, false);
   }, [paused]);
 
   return <section ref={root} id="people" className={styles.section} aria-labelledby="people-title" data-paused={paused || reduced}>
@@ -112,20 +123,21 @@ export function People() {
         <p>The faculty, organisers and community behind the conversation. Every connection brings a different kind of energy.</p>
         <a className={styles.communityLink} href="https://www.linkedin.com/company/cpcgchristlavasa/" target="_blank" rel="noopener noreferrer">Meet CPCG on LinkedIn <span aria-hidden="true">↗</span></a>
       </div>
-      <div className={styles.network} data-network aria-hidden="true">
-        <div className={styles.networkOrbit}><i /><i /><i /></div>
-        <svg className={styles.connections} viewBox="0 0 800 660" fill="none">
-          {nodePositions.map((position, index) => <g key={index}>
+      <div className={styles.network} data-network role="group" aria-label="Explore the HR VISTA community. Select a portrait to meet a person.">
+        <div className={styles.networkOrbit} aria-hidden="true"><i /><i /><i /></div>
+        <svg className={styles.connections} viewBox="0 0 800 660" fill="none" aria-hidden="true">
+          {nodePositions.map((position, index) => <g key={index} data-selected={selected === index}>
             <path data-network-path pathLength="1" strokeDasharray="1" d={`M416 343 Q${position.x * 8} 343 ${position.x * 8} ${position.y * 6.6}`} />
             <path className={styles.signalTrail} pathLength="1" strokeDasharray=".045 .955" style={{ "--trail-delay": `${index * -.9}s` } as CSSProperties} d={`M416 343 Q${position.x * 8} 343 ${position.x * 8} ${position.y * 6.6}`} />
           </g>)}
         </svg>
-        <div className={styles.signalCore} data-signal-core><span>✳</span><i /><i /></div>
-        {people.map((person, index) => <div key={person.name} className={styles.networkNode} data-network-node style={{ "--node-x": `${nodePositions[index].x}%`, "--node-y": `${nodePositions[index].y}%`, "--node-turn": `${nodePositions[index].turn}deg`, "--node-delay": `${index * -.7}s` } as CSSProperties}>
+        <div className={styles.signalCore} data-signal-core aria-hidden="true"><span>✳</span><i /><i /></div>
+        {people.map((person, index) => <button type="button" key={person.name} className={styles.networkNode} data-network-node aria-label={`Meet ${person.name}`} aria-pressed={selected === index} onClick={() => setSelected(index)} style={{ "--node-x": `${nodePositions[index].x}%`, "--node-y": `${nodePositions[index].y}%`, "--node-turn": "0deg", "--node-delay": `${index * -.7}s` } as CSSProperties}>
           <div className={styles.nodeFloat}>{person.portrait && <Portrait key={person.portrait} src={person.portrait} position={person.portraitPosition} />}<span className={styles.nodeNumber}>0{index + 1}</span><Initials value={person.initials} /><Initials value={person.initials} echo /><i /></div>
-        </div>)}
-        <span className={styles.networkAnnotation}>DIFFERENT VOICES.<br />ONE SHARED MOMENTUM.</span>
+        </button>)}
+        <span className={styles.networkAnnotation}>SELECT A PORTRAIT.<br />FOLLOW A CONNECTION.</span>
       </div>
+      <div className={styles.networkSelection} aria-live="polite" aria-atomic="true"><span>{people[selected].group}</span><strong>{people[selected].name}</strong><a href={people[selected].linkedin} target="_blank" rel="noopener noreferrer">LinkedIn profile <span aria-hidden="true">↗</span><span className={styles.srOnly}> (opens in a new tab)</span></a></div>
       <div className={styles.stageFoot}><span><i aria-hidden="true" />PEOPLE MAKE THE DIFFERENCE.</span><button type="button" aria-pressed={paused} onClick={() => setPaused(value => !value)} disabled={reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button><a href="#people-directory">Meet the people <span aria-hidden="true">↓</span></a></div>
     </div>
 

@@ -71,7 +71,7 @@ const TILES: Tile[] = [
     src: "/media/flickr/room-2.jpg",
     alt: "HR VISTA networking",
     index: "05",
-    title: "Lavasa → Mumbai",
+    title: "A wider horizon",
     caption: "Campus initiative to national platform",
   },
   {
@@ -79,7 +79,7 @@ const TILES: Tile[] = [
     alt: "HR VISTA closing frame",
     index: "06",
     title: "21–22 Nov",
-    caption: "BKC · Jio Grounds · Mumbai",
+    caption: "Venue to be announced",
   },
 ];
 

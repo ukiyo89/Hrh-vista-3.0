@@ -122,26 +122,11 @@
   -webkit-backface-visibility: hidden;
 }
 
-/* Per-panel breathing — `translateY 0 → −15px → 0` over 3s, staggered 0.2s per
-   panel, straight from the reference component. It lives on an inner element so
-   it never has to share the transform property with the drum maths. */
+/* Keep the drum as a connected wall; scroll and drag supply its movement. */
 .breathe {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  animation: hero-breathe 3s ease-in-out infinite;
-  animation-delay: var(--d, 0s);
-  will-change: transform;
-}
-
-@keyframes hero-breathe {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
 }
 
 .breathe img {
@@ -193,7 +178,7 @@
   font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
   font-size: clamp(0.75rem, min(1.4vw, 2.5vh), 1.5rem);
   font-weight: 400;
-  line-height: 3.7;
+  line-height: 2.4;
   letter-spacing: -0.01em;
   color: var(--paper);
 }
@@ -337,6 +322,7 @@
 }
 
 @media (max-width: 480px) {
+  .caption { max-width:280px; margin-inline:auto; font-size:9px; line-height:1.8; letter-spacing:.04em; }
   .title { font-size:clamp(1.45rem,7.3vw,2rem); }
   .storyLink { font-size:11px; left:7vw; gap:24px; }
 }

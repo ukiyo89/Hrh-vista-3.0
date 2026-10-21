@@ -14,7 +14,7 @@ export function BrochureMasthead() {
   return (
     <header ref={header} className={styles.intro}>
       <div className={`hv-container ${styles.introInner}`}>
-        <div className={styles.introTopline}><p>HR VISTA 3.0 / The digital reading room</p><p>Mumbai, 2026 <span aria-hidden="true">↗</span></p></div>
+        <div className={styles.introTopline}><p>HR VISTA 3.0 / The digital reading room</p><p>The next chapter, 2026 <span aria-hidden="true">↗</span></p></div>
         <div className={styles.introGrid}>
           <div className={styles.introCopy}>
             <h1 className={styles.introTitle}><span>Your next</span><span>chapter<span className={styles.titleDot}>.</span></span></h1>
@@ -31,7 +31,7 @@ export function BrochureMasthead() {
             <div className={styles.coverTag}><span>12 pages</span><span>One shared future.</span></div>
           </div>
         </div>
-        <div className={styles.introMeta}><span>21–22 November 2026</span><span>Jio Grounds / BKC / Mumbai</span><span>HR VISTA 3.0 <span aria-hidden="true">↗</span></span></div>
+        <div className={styles.introMeta}><span>21–22 November 2026</span><span>Venue to be announced</span><span>HR VISTA 3.0 <span aria-hidden="true">↗</span></span></div>
       </div>
     </header>
   );

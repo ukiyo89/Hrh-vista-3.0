@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check:preview": "node scripts/verify-preview.mjs"
+    "check:preview": "node scripts/verify-preview.mjs",
+    "check:event": "node scripts/verify-event.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

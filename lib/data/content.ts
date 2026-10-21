@@ -119,7 +119,7 @@ export interface Content {
     delegateProfile: string[];
   };
   whatAwaits: Panel[];
-  whyMumbai: {
+  whyGather: {
     heading: string;
     subheading: string;
     body: string;
@@ -152,7 +152,7 @@ export const content: Content = {
     headline: "THE FUTURE OF WORK. THE PEOPLE WHO SHAPE IT.",
     theme: "The Future of Work — The People Who Shape It",
     dates: "21–22 November 2026",
-    venue: "Mumbai | BKC | Jio Grounds",
+    venue: "Venue to be announced",
     presenter: "Presented by the Centre for Placement and Career Guidance",
     institution: "CHRIST (Deemed to be University), Pune Lavasa Campus",
   },
@@ -171,7 +171,7 @@ export const content: Content = {
       { value: "50+", label: "LEADING ORGANISATIONS & INDUSTRY REPRESENTATION" },
       { value: "1 PLATFORM", label: "CONNECTING ACADEMIA & INDUSTRY" },
     ],
-    locationNote: "MUMBAI — INDIA'S CORPORATE & BUSINESS HUB",
+    locationNote: "VENUE TO BE ANNOUNCED",
     dates: "21–22 NOVEMBER 2026",
   },
 
@@ -204,7 +204,7 @@ export const content: Content = {
         year: "HR VISTA 3.0",
         title: "Bigger. Broader. More connected.",
         description:
-          "Mumbai — a cross-section of India's HR ecosystem, from enterprises to emerging leaders.",
+          "A cross-section of India's HR ecosystem, from enterprises to emerging leaders.",
       },
     ],
   },
@@ -270,12 +270,12 @@ export const content: Content = {
     },
   ],
 
-  whyMumbai: {
-    heading: "WHY MUMBAI? — THE HEART OF INDIA'S CORPORATE ECOSYSTEM",
-    subheading: "MUMBAI × HR VISTA 3.0",
-    body: "Mumbai is more than the venue for HR VISTA 3.0. It is one of India's most influential centres for business, finance, media, technology and corporate leadership — making it a natural setting for a national HR gathering. And at the heart of Mumbai's corporate district lies Bandra Kurla Complex, a destination that brings together leading organisations, institutions and business communities.",
+  whyGather: {
+    heading: "A SHARED SPACE FOR INDIA'S HR COMMUNITY",
+    subheading: "PEOPLE × HR VISTA 3.0",
+    body: "HR VISTA brings together business, academia, technology and people leadership for conversations about the changing world of work. The venue for the third edition will be announced once confirmed.",
     points: [
-      "Business Capital",
+      "Industry Perspectives",
       "Corporate Leadership",
       "Global Organisations",
       "Talent & Innovation",
@@ -476,7 +476,7 @@ export const content: Content = {
       "A conversation about the future of work.",
     ],
     contacts: [
-      "21–22 November 2026 | Mumbai | BKC | Jio Grounds",
+      "21–22 November 2026 | Venue to be announced",
       "CHRIST (Deemed to be University), Pune Lavasa Campus",
       "Centre for Placement and Career Guidance (CPCG)",
       // NOTE: brochure lists no email/phone/social handles — add when supplied by the client.

@@ -200,8 +200,7 @@
 
 .edition {
   position: relative;
-  min-height: 90svh;
-  padding-block: clamp(46px, 5vw, 76px) 26px;
+  padding-block: clamp(46px, 5vw, 76px) 44px;
   scroll-margin-top: calc(var(--nav-h, 64px) + 108px);
 }
 
@@ -238,23 +237,29 @@
 
 .editionLayout {
   display: grid;
-  grid-template-columns: .85fr 1.15fr;
-  gap: 6vw;
+  grid-template-columns: 1fr;
+  gap: 28px;
   align-items: center;
 }
 
 .editionInfo {
   position: relative;
   min-width: 0;
+  display: grid;
+  grid-template-columns: .7fr 1.3fr;
+  align-items: end;
+  gap: 4vw;
+  overflow: clip;
+  padding-block: 14px;
 }
 
 .editionMark {
   position: relative;
-  width: min(100%, 330px);
-  height: clamp(146px, 16vw, 250px);
+  width: 100%;
+  height: clamp(150px, 21vw, 320px);
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .editionNumber {
@@ -262,7 +267,7 @@
   z-index: 1;
   display: block;
   color: var(--archive-blue);
-  font: 500 clamp(132px, 15vw, 240px)/.8 var(--font-display), sans-serif;
+  font: 500 clamp(160px, 25vw, 390px)/.8 var(--font-display), sans-serif;
   letter-spacing: -.095em;
   user-select: none;
 }
@@ -272,38 +277,21 @@
   -webkit-text-stroke: 1px var(--archive-blue);
 }
 
-.numberOrbit {
-  position: absolute;
-  width: clamp(130px, 15vw, 240px);
-  height: auto;
-  right: -6%;
-  top: 0;
-  fill: none;
-  stroke: #7893af;
-  stroke-width: .65;
-  opacity: .42;
-  pointer-events: none;
-}
-
-.numberOrbit .orbitDot {
-  fill: #345a87;
-  stroke: var(--archive-paper);
-  stroke-width: 4px;
-}
-
 .editionTag {
   position: absolute;
-  right: 0;
-  bottom: 1px;
+  left: 0;
+  bottom: 0;
   font-size: 7px;
   letter-spacing: .13em;
   color: #495e78;
 }
 
 .editionInfo h3 {
-  margin: 0 0 22px;
-  font: 400 clamp(34px, 3.65vw, 60px)/1.05 var(--font-display), sans-serif;
-  letter-spacing: -.045em;
+  position: relative;
+  z-index: 2;
+  margin: 0 0 10px;
+  font: 400 clamp(48px, 6.6vw, 104px)/.98 var(--font-display), sans-serif;
+  letter-spacing: -.055em;
 }
 
 .editionInfo h3 > span {
@@ -315,12 +303,21 @@
 }
 
 .copy {
-  max-width: 390px;
+  max-width: 620px;
   margin: 0;
   font-size: clamp(13px, 1.05vw, 16px);
   line-height: 1.85;
   color: #495669;
 }
+
+.editionDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 5vw;
+}
+
+.editionDetails .textLink { flex-shrink: 0; margin-top: 0; }
 
 .textLink {
   display: inline-flex;
@@ -363,7 +360,7 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1.08;
+  height: clamp(340px, 60svh, 780px);
   overflow: hidden;
   background: #c9cdd0;
 }
@@ -422,7 +419,7 @@
 .photoFrame:hover .photoArrow {
   background: #16283e;
   color: #f5f5ed;
-  transform: rotate(45deg);
+  transform: translate(3px, -3px);
 }
 
 .futureFlag {
@@ -471,20 +468,6 @@
   letter-spacing: 0;
 }
 
-.edition:nth-child(2) .editionLayout {
-  grid-template-columns: 1.15fr .85fr;
-}
-
-.edition:nth-child(2) .editionInfo {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-.edition:nth-child(2) .editionPhoto {
-  grid-column: 1;
-  grid-row: 1;
-}
-
 @media (min-width: 1700px) {
   .editions { padding-inline: max(6vw, calc((100vw - 1600px) / 2)); }
 }
@@ -496,10 +479,8 @@
   .navDot { display: none; }
   .railLabel { font-size: 8px; }
   .railLabel strong { font-size: 6px; }
-  .editionLayout { gap: 4vw; }
-  .editionMark { margin-bottom: 18px; }
-  .editionInfo h3 { font-size: clamp(32px, 3.8vw, 48px); }
-  .photoFrame { aspect-ratio: .94; }
+  .editionLayout { gap: 24px; }
+  .editionInfo h3 { font-size: clamp(44px, 6.5vw, 72px); }
   .edition { min-height: 0; }
   .editionPhoto figcaption { font-size: 9px; }
 }
@@ -524,17 +505,16 @@
   .edition { padding-top: 44px; padding-bottom: 14px; scroll-margin-top: calc(var(--nav-h, 64px) + 92px); }
   .editionMeta { margin-bottom: 28px; font-size: 8px; gap: 12px; }
   .editionMeta > span { font-size: 6px; }
-  .editionLayout,
-  .edition:nth-child(2) .editionLayout { grid-template-columns: 1fr; gap: 32px; }
-  .edition:nth-child(2) .editionInfo,
-  .edition:nth-child(2) .editionPhoto { grid-column: auto; grid-row: auto; }
-  .editionMark { height: 152px; width: 220px; margin-bottom: 20px; }
-  .editionNumber { font-size: 152px; }
-  .numberOrbit { width: 154px; right: -4%; }
-  .editionInfo h3 { font-size: clamp(35px, 7.4vw, 54px); margin-bottom: 18px; }
+  .editionLayout { grid-template-columns: 1fr; gap: 22px; }
+  .editionInfo { grid-template-columns: 1fr; gap: 24px; padding-block: 10px; }
+  .editionMark { height: 155px; width: 220px; }
+  .editionNumber { font-size: 180px; }
+  .editionInfo h3 { font-size: clamp(43px, 10vw, 72px); margin-bottom: 0; }
+  .editionDetails { display: block; }
+  .editionDetails .textLink { margin-top: 18px; }
   .copy { font-size: 13px; max-width: 460px; }
   .textLink { margin-top: 18px; font-size: 11px; }
-  .photoFrame { aspect-ratio: 1.28; }
+  .photoFrame { height: clamp(280px, 50svh, 480px); }
   .photoChapter { top: 14px; left: 14px; font-size: 7px; padding: 7px 8px; }
   .photoArrow { bottom: 14px; right: 14px; width: 40px; height: 40px; font-size: 21px; }
   .futureFlag { left: 14px; bottom: 16px; font-size: 7px; padding: 8px; }
@@ -551,9 +531,8 @@
   .navNumber { font-size: 29px; }
   .navText { gap: 3px; text-align: center; }
   .navText > span { display: none; }
-  .editionMark { height: 146px; }
-  .editionNumber { font-size: 142px; }
-  .numberOrbit { width: 142px; }
+  .editionMark { height: 150px; }
+  .editionNumber { font-size: 168px; }
   .editionMeta > span { max-width: 82px; text-align: right; line-height: 1.5; }
 }
 

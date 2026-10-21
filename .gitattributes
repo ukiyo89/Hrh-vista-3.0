@@ -1,0 +1,8 @@
+# Preserve document offsets and image/font bytes on Windows checkouts.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+*.ics text eol=crlf

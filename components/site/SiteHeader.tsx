@@ -8,6 +8,7 @@ import styles from "./SiteHeader.module.css";
 const LINKS = [
   { label: "Our journey", href: "/#lavasa" },
   { label: "Editions", href: "/#editions" },
+  { label: "Voices", href: "/voices" },
   { label: "People", href: "/#people" },
   { label: "Sponsors", href: "/sponsors" },
   { label: "Brochure", href: "/brochure" },
@@ -20,14 +21,25 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
   const resolve = (href: string) => home && href.startsWith("/#") ? href.slice(1) : href;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let frame = 0;
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const distance = document.documentElement.scrollHeight - window.innerHeight;
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0})`;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+  }, [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -51,7 +63,7 @@ export function SiteHeader() {
         event.preventDefault(); (event.shiftKey ? last : first)?.focus();
       }
     };
-    const media = window.matchMedia("(min-width: 1024px)");
+    const media = window.matchMedia("(min-width: 1100px)");
     const resize = () => { if (media.matches) setOpen(false); };
     media.addEventListener("change", resize);
     document.addEventListener("keydown", keydown);
@@ -82,12 +94,13 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
-      {open && <div ref={panelRef} className={styles.panel} id="mobile-navigation">
+      <div className={styles.readingProgress} aria-hidden="true"><span ref={progressRef} /></div>
+      {open && <div ref={panelRef} className={styles.panel} id="mobile-navigation" data-lenis-prevent>
         <nav aria-label="Mobile">
           {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span aria-hidden="true">↗</span></Link>)}
           <Link href="/brochure" className={styles.mobileJoin} onClick={() => setOpen(false)}>Explore the brochure <span aria-hidden="true">↗</span></Link>
         </nav>
-        <p>21–22 November 2026 · Mumbai</p>
+        <p>21–22 November 2026 · Venue to be announced</p>
       </div>}
     </header>
   );

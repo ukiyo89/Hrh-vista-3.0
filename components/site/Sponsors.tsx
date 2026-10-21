@@ -9,17 +9,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Sponsors.module.css";
 
 const concepts = [
-  { name: "Centre stage", label: "START A CONVERSATION", copy: "A bold brand presence at the centre of the HR VISTA story.", color: "#c4d7ff", turn: "-13deg" },
-  { name: "In the conversation", label: "MAKE A CONNECTION", copy: "An identity woven into the moments where people and ideas meet.", color: "#e7d7ad", turn: "7deg" },
-  { name: "Beyond the event", label: "KEEP THE MOMENTUM", copy: "A lasting place in the community’s next chapter.", color: "#b4d8ca", turn: "-5deg" },
+  { name: "Centre stage", label: "START A CONVERSATION", copy: "A bold brand presence at the centre of the HR VISTA story.", color: "#c4d7ff" },
+  { name: "In the conversation", label: "MAKE A CONNECTION", copy: "An identity woven into the moments where people and ideas meet.", color: "#e7d7ad" },
+  { name: "Beyond the event", label: "KEEP THE MOMENTUM", copy: "A lasting place in the community’s next chapter.", color: "#b4d8ca" },
 ];
 
 function BrandStage({ name = "YOUR BRAND", mode = 0, compact = false }: { name?: string; mode?: number; compact?: boolean }) {
-  return <div className={`${styles.stage} ${compact ? styles.compact : ""}`} style={{ "--stage-accent": concepts[mode].color, "--stage-turn": concepts[mode].turn } as CSSProperties} aria-hidden="true">
+  return <div className={`${styles.stage} ${compact ? styles.compact : ""}`} data-mode={mode} style={{ "--stage-accent": concepts[mode].color } as CSSProperties} aria-hidden="true">
     <div className={styles.stageFloor} />
     <div className={styles.stageAssembly}>
       <div className={`${styles.stagePanel} ${styles.backPanel}`}><span>PEOPLE.</span><span>POSSIBILITY.</span></div>
-      <div className={`${styles.stagePanel} ${styles.midPanel}`}><span>HR VISTA</span><strong>3.0</strong><small>MUMBAI / 2026</small></div>
+      <div className={`${styles.stagePanel} ${styles.midPanel}`}><span>HR VISTA</span><strong>3.0</strong><small>NOVEMBER / 2026</small></div>
       <div className={`${styles.stagePanel} ${styles.frontPanel}`}><span>THE NEXT CHAPTER, TOGETHER.</span><strong data-long={name.trim().length > 16}><span>{name.trim() || "YOUR BRAND"}</span><i>↗</i></strong><small>SPONSOR SHOWCASE / PREVIEW</small></div>
     </div>
     <div className={styles.stageCaption}><i /><span>SPACE FOR A BIGGER IDEA.</span><span>03.0</span></div>
@@ -29,7 +29,7 @@ function BrandStage({ name = "YOUR BRAND", mode = 0, compact = false }: { name?:
 const stairCards = [
   { label: "A SHARED SPOTLIGHT", foot: "THE NEXT CHAPTER, TOGETHER", background: "#c4d7f2", ink: "#172b48" },
   { label: "A NEW CONNECTION", foot: "GOOD COMPANY. GREATER IMPACT.", background: "#152b47", ink: "#dce8f9" },
-  { label: "A BIGGER STAGE", foot: "MUMBAI / NOVEMBER 2026", background: "#d9dfce", ink: "#233a38" },
+  { label: "A BIGGER STAGE", foot: "NOVEMBER 2026 / VENUE TO BE ANNOUNCED", background: "#d9dfce", ink: "#233a38" },
   { label: "A WORLD OF POSSIBILITY", foot: "PEOPLE MEET POSSIBILITY", background: "#2d51ca", ink: "#e5eeff" },
   { label: "A LASTING IMPRESSION", foot: "LET’S MAKE WHAT’S NEXT", background: "#eae6db", ink: "#293c51" },
 ];
@@ -37,34 +37,38 @@ const stairCards = [
 function SponsorStaircase({ name = "", paused = false, home = false }: { name?: string; paused?: boolean; home?: boolean }) {
   const root = useRef<HTMLElement>(null);
   const timeline = useRef<gsap.core.Timeline | null>(null);
+  const [active, setActive] = useState(0);
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
   const brand = name.trim() || "YOUR BRAND";
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
+    media.add("(prefers-reduced-motion: no-preference) and (min-height: 601px)", () => {
       const section = root.current;
       if (!section) return;
       const run = section.querySelector<HTMLElement>("[data-stair-run]");
+      const track = section.querySelector<HTMLElement>("[data-sponsor-track]");
       const cards = section.querySelectorAll<HTMLElement>("[data-sponsor-step]");
+      if (!run || !track) return;
+      const travel = () => Math.max(0, track.scrollWidth - window.innerWidth + window.innerWidth * .12);
       const sequence = gsap.timeline({ scrollTrigger: {
-        trigger: run, start: "top top", end: "bottom bottom", scrub: .65, invalidateOnRefresh: true,
+        trigger: run, start: "top top", end: "bottom bottom", scrub: .45, invalidateOnRefresh: true,
+        onUpdate: (trigger) => {
+          const next = Math.round(trigger.progress * (stairCards.length - 1));
+          setActive(previous => previous === next ? previous : next);
+        },
       } });
+      sequence.fromTo(track, { x: 0 }, { x: () => -travel(), duration: 1, ease: "none" }, 0);
+      sequence.fromTo(section.querySelector("[data-sponsor-type]"), { xPercent: 8 }, { xPercent: -20, duration: 1, ease: "none" }, 0);
       cards.forEach((card, i) => {
-        sequence.fromTo(card, {
-          xPercent: -50, yPercent: -50,
-          x: () => window.innerWidth * (window.innerWidth < 700 ? -.1 + i * .13 : -.1 + i * .17),
-          y: () => window.innerHeight * (.5 + i * .22),
-          rotateY: -68, rotateZ: -8 + i * 3, scale: .9,
-        }, {
-          x: () => window.innerWidth * (window.innerWidth < 700 ? -.37 + i * .13 : -.45 + i * .17),
-          y: () => window.innerHeight * (-.83 + i * .23),
-          rotateY: 68, rotateZ: 7 - i * 3, scale: 1,
-          duration: 1.25, ease: "none",
-        }, i * .09);
+        // Separate horizontal travel from the aperture so reversing scroll
+        // closes each printed identity sheet at exactly the same point.
+        sequence.fromTo(card, { clipPath: i === 0 ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)", y: i === 0 ? 0 : 60 }, {
+          clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: .16, ease: "none",
+        }, Math.max(0, i * .18 - .08));
       });
-      sequence.fromTo(section.querySelector("[data-stair-progress]"), { scaleX: 0 }, { scaleX: 1, duration: 1.61, ease: "none" }, 0);
+      sequence.fromTo(section.querySelector("[data-stair-progress]"), { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
       timeline.current = sequence;
       if (pausedRef.current) sequence.scrollTrigger?.disable(false);
       const heading = section.querySelector("h2");
@@ -78,6 +82,14 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
     if (paused) trigger?.disable(false);
     else trigger?.enable(false, false);
   }, [paused]);
+  const goToConcept = (index: number) => {
+    const trigger = timeline.current?.scrollTrigger;
+    if (!trigger) return;
+    const destination = trigger.start + (trigger.end - trigger.start) * index / (stairCards.length - 1);
+    // Lenis observes native scroll as well; an immediate jump keeps button
+    // selection precise and avoids a second, competing smooth-scroll system.
+    window.scrollTo({ top: destination, behavior: "instant" });
+  };
   return <section ref={root} id={home ? "sponsors" : "sponsor-staircase"} className={styles.staircase} aria-labelledby={home ? "sponsor-teaser-title" : "staircase-title"}>
     <div className={styles.stairHeading}>
       <div><p className={styles.eyebrow}>06 / A SHARED SPOTLIGHT</p><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>Good company.<br /><em>Greater impact.</em></h2></div>
@@ -86,7 +98,8 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
     <div className={styles.stairRun} data-stair-run>
       <div className={styles.stairScene}>
         <div className={styles.stairSceneTop}><span>HR VISTA × WHAT’S NEXT</span><span>05 POSSIBILITIES / ONE COMMUNITY</span></div>
-        <div className={styles.stairGuide} aria-hidden="true" />
+        <p className={styles.stairBackdrop} data-sponsor-type aria-hidden="true">IN GOOD COMPANY.</p>
+        <div className={styles.stairTrack} data-sponsor-track>
         {stairCards.map((card, i) => <article key={card.label} className={styles.stairCard} data-sponsor-step={i} style={{ "--step": i, "--card-bg": card.background, "--card-ink": card.ink } as CSSProperties}>
           <div className={styles.stairCardTop}><span>{card.label}</span><span>0{i + 1}</span></div>
           <div className={styles.stairIdentity}>
@@ -97,7 +110,8 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
           </div>
           <div className={styles.stairCardFoot}><span>{card.foot}</span><span>↗</span></div>
         </article>)}
-        <div className={styles.stairSceneFoot}><div><p>SHOWCASE CONCEPTS · SPONSORS TO BE ANNOUNCED</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/sponsors" : "#brand-preview"} className={styles.stairLink}>{home ? "Find your place" : "Try your brand"}<span>↗</span></Link></div>
+        </div>
+        <div className={styles.stairSceneFoot}><div><p>SHOWCASE CONCEPTS · SPONSORS TO BE ANNOUNCED</p><div className={styles.stairProgress}><span data-stair-progress /></div><div className={styles.conceptNav} role="group" aria-label="Explore showcase concepts">{stairCards.map((card, i) => <button key={card.label} type="button" aria-label={card.label} aria-pressed={active === i} disabled={paused} onClick={() => goToConcept(i)}>0{i + 1}</button>)}</div></div><Link href={home ? "/sponsors" : "#brand-preview"} className={styles.stairLink}>{home ? "Find your place" : "Try your brand"}<span>↗</span></Link></div>
       </div>
     </div>
   </section>;
@@ -119,7 +133,7 @@ export function Sponsors() {
         <div className={styles.heroCopy}><h1 id="sponsor-title">Amplify<br />what’s <em>next.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Extraordinary conversations deserve extraordinary company. Make room for your brand in the future of work.</p><a className={styles.cta} href="#brand-preview">Put your brand in the picture <span>↓</span></a></div>
         <BrandStage name={name} mode={mode} />
       </div>
-      <div className={styles.heroFoot}><span>MUMBAI · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Play motion ▶" : "Pause motion Ⅱ"}</button></div>
+      <div className={styles.heroFoot}><span>NOVEMBER 2026 · VENUE TO BE ANNOUNCED</span><p>One community. Many possibilities.</p><button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Play motion ▶" : "Pause motion Ⅱ"}</button></div>
     </section>
     <div className={styles.ribbon} aria-hidden="true"><div>{Array.from({ length: 4 }, (_, i) => <span key={i}>PEOPLE MEET POSSIBILITY <i>✳</i> BETTER, TOGETHER <i>✳</i></span>)}</div></div>
     <SponsorStaircase name={name} paused={paused} />

@@ -39,9 +39,7 @@ import styles from "./Hero.module.css";
  *     inert unless dragged and leans on its panels being video for life; ours are
  *     stills, so the drum steps — but only between framings, never resting
  *     between two (see DWELL_MS for why that matters).
- *   · Each panel also breathes `translateY 0 → −15px → 0` over 3s, staggered
- *     0.2s per panel, straight from the reference component, and carries a slow
- *     push-in so a still photograph reads a little like a locked-off shot.
+ *   · A slow photographic push-in sits beneath the drag and scroll movement.
  *
  * SAFETY
  *   `prefers-reduced-motion` gets the drum frozen at its opening angle, which is
@@ -406,7 +404,7 @@ export function Hero() {
 
       {/* Copy — the reference's eyebrow over a two-line display headline. */}
       <div className={styles.copy} data-hero-copy>
-        <p className={styles.caption}>HR VISTA 3.0 · 21–22 NOV 2026 · BKC, MUMBAI</p>
+        <p className={styles.caption}>HR VISTA 3.0 · 21–22 NOV 2026 · VENUE TO BE ANNOUNCED</p>
         <h1 id="hero-title" className={styles.title}>
           <span className={styles.titleLine}><span>The Future of Work.</span></span>
           <br />

@@ -32,7 +32,10 @@
 .skip:focus { transform: translateY(0); }
 .header :is(a,button):focus-visible { outline: 3px solid #9dbcff; outline-offset: 4px; }
 .paper :is(a,button):focus-visible { outline-color: #2e5bff; }
-@media (max-width: 1023px) { .desktop { display: none; } .toggle { display: flex; } }
+.readingProgress { position:absolute; inset:auto 0 -1px; height:2px; pointer-events:none; }
+.readingProgress > span { display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left; background:#9abaff; }
+@media (max-width: 1099px) { .desktop { display: none; } .toggle { display: flex; } }
+@media (min-width: 1100px) and (max-width: 1300px) { .desktop { gap:16px; } .desktop a { font-size:13px; } .join { padding-inline:15px; font-size:12px; } .bar { gap:20px; } }
 @media (max-width: 639px) { .join { display: none; } .bar { gap: 12px; } }
 @media (prefers-reduced-motion: reduce) { .header, .toggle span, .desktop a::after { transition: none; } }
 

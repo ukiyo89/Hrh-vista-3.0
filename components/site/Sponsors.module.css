@@ -8,14 +8,16 @@
 .stairHeadingAside > p { font-size:14px; line-height:1.8; color:#b8c8dd; }
 .stairScroll { display:flex; align-items:center; justify-content:space-between; gap:35px; margin-top:40px; font-size:8px; letter-spacing:.12em; color:#bacbe3; }
 .stairScroll i { font-style:normal; font-size:20px; }
-.stairRun { height:300svh; position:relative; }
-.stairScene { position:sticky; top:0; height:100svh; min-height:540px; overflow:clip; perspective:1200px; perspective-origin:50% 45%; background:radial-gradient(ellipse at 50% 45%,#192b4850,transparent 67%); }
+.stairRun { height:250svh; position:relative; }
+.stairScene { position:sticky; top:0; height:100svh; min-height:620px; overflow:clip; background:#08121f; }
 .stairScene::before,.stairScene::after { content:""; position:absolute; left:0; right:0; height:150px; pointer-events:none; z-index:5; }
 .stairScene::before { top:0; background:linear-gradient(#08121f 30%,#08121fbb 65%,transparent); }
 .stairScene::after { bottom:0; height:125px; background:linear-gradient(transparent,#08121fcc 60%,#08121f 90%); }
 .stairSceneTop { position:absolute; top:calc(var(--nav-h,64px) + 32px); left:6vw; right:6vw; display:flex; justify-content:space-between; gap:20px; font-size:8px; letter-spacing:.13em; color:#a2b7d2; z-index:6; }
-.stairGuide { position:absolute; width:150%; height:1px; top:50%; left:-25%; background:linear-gradient(90deg,transparent,#749bdb18,transparent); transform:rotate(30deg); }
-.stairCard { position:absolute; left:50%; top:50%; width:clamp(280px,35vw,500px); aspect-ratio:1.5; padding:26px 30px; display:flex; flex-direction:column; justify-content:space-between; background:var(--card-bg); color:var(--card-ink); border:1px solid #ffffff20; border-radius:12px; box-shadow:0 25px 60px #02071250; backface-visibility:hidden; transform:translate(-50%,-50%) translate(calc((var(--step) - 2) * 17vw),calc((var(--step) - 2) * 23svh)) rotateY(calc((var(--step) - 2) * -16deg)); }
+.stairBackdrop { position:absolute; top:calc(var(--nav-h,64px) + 58px); left:0; margin:0; white-space:nowrap; color:#172b43; font:500 clamp(100px,18vw,290px)/1 var(--font-display),sans-serif; letter-spacing:-.07em; pointer-events:none; }
+.stairTrack { position:absolute; top:48%; left:6vw; display:flex; align-items:center; gap:3vw; width:max-content; transform:translateY(-50%); }
+.stairCard { position:relative; flex-shrink:0; width:clamp(350px,45vw,680px); aspect-ratio:1.5; padding:26px 30px; display:flex; flex-direction:column; justify-content:space-between; background:var(--card-bg); color:var(--card-ink); border:1px solid #ffffff20; border-radius:0; }
+.stairCard:nth-child(even) { margin-top:70px; }
 .stairCardTop,.stairCardFoot { display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:8px; letter-spacing:.12em; line-height:1.5; }
 .stairCardTop > span:last-child { opacity:.6; }
 .stairCardFoot { border-top:1px solid currentColor; padding-top:13px; font-size:7px; }
@@ -34,6 +36,12 @@
 .stairSceneFoot p { font-size:7px; letter-spacing:.12em; color:#b0c2da; line-height:1.8; }
 .stairProgress { width:160px; height:1px; background:#ffffff22; margin-top:15px; }
 .stairProgress > span { display:block; height:100%; background:#b4d0fc; transform-origin:left; }
+.conceptNav { display:flex; gap:8px; margin-top:12px; }
+.conceptNav button { width:44px; min-height:44px; border-bottom:1px solid #7189a4; color:#b7c8dd; font-size:10px; cursor:pointer; transition:background .2s,color .2s; }
+.conceptNav button[aria-pressed=true] { color:#08121f; background:#c4d7f2; }
+.conceptNav button:hover { background:#27415f; color:#fff; }
+.conceptNav button:focus-visible { outline:2px solid #e0ae56; outline-offset:3px; }
+.conceptNav button:disabled { opacity:.5; cursor:default; }
 .stairLink { display:flex; align-items:center; gap:35px; min-height:44px; font-size:13px; color:#e6eeff; border-bottom:1px solid #99bae166; }
 .stairLink > span { font-size:22px; transition:transform .2s ease-out; }
 .stairLink:hover > span { transform:translate(3px,-3px); }
@@ -56,14 +64,20 @@
 .heroFoot p { color:#ccdbff; letter-spacing:0; }
 .heroFoot button { min-height:44px; cursor:pointer; font-size:10px; }
 .stage { position:relative; min-width:0; width:100%; height:530px; perspective:1200px; isolation:isolate; }
-.stageAssembly { position:absolute; inset:8% 2% 15%; transform-style:preserve-3d; transform:rotateX(12deg) rotateY(-22deg) rotateZ(var(--stage-turn,-13deg)); animation:stageFloat 9s ease-in-out infinite; transition:transform 1s cubic-bezier(.2,.7,.2,1); }
-.stagePanel { position:absolute; width:82%; height:65%; left:9%; top:18%; border-radius:10px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; backface-visibility:hidden; box-shadow:12px 30px 40px #02091645; }
+.stageAssembly { position:absolute; inset:8% 2% 15%; transform-style:preserve-3d; transform:translateY(0); transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+.stagePanel { position:absolute; width:82%; height:65%; left:9%; top:18%; border-radius:0; padding:26px; display:flex; flex-direction:column; justify-content:space-between; backface-visibility:hidden; box-shadow:12px 30px 40px #02091645; transition:transform .35s ease-out; }
 .stagePanel > span,.stagePanel small { font-size:8px; letter-spacing:.14em; }
-.backPanel { background:#081a46; color:#bbcfff; transform:translate3d(24px,-58px,-80px) rotate(-10deg); border:1px solid #9fbcff66; }
+.backPanel { background:#081a46; color:#bbcfff; transform:translate3d(-18px,-58px,-80px); border:1px solid #9fbcff66; }
 .backPanel span { font:500 clamp(24px,3vw,45px)/1 var(--font-display),sans-serif; letter-spacing:-.03em; }
-.midPanel { background:#628fff; color:#101e40; transform:translate3d(12px,-10px,0) rotate(4deg); border:1px solid #96b2ff; }
+.midPanel { background:#628fff; color:#101e40; transform:translate3d(12px,-10px,0); border:1px solid #96b2ff; }
 .midPanel strong { align-self:end; font:400 95px/1 var(--font-display),sans-serif; letter-spacing:-.08em; }
-.frontPanel { background:var(--stage-accent,#c4d7ff); color:#172f56; transform:translate3d(-13px,77px,100px) rotate(-3deg); transition:background .45s; border:1px solid #f7faff; }
+.frontPanel { background:var(--stage-accent,#c4d7ff); color:#172f56; transform:translate3d(-13px,77px,100px); transition:background .25s,transform .35s ease-out; border:1px solid #f7faff; }
+.stage[data-mode="1"] .backPanel { transform:translate3d(25px,-58px,-80px); }
+.stage[data-mode="1"] .midPanel { transform:translate3d(-18px,0,0); }
+.stage[data-mode="1"] .frontPanel { transform:translate3d(12px,60px,100px); }
+.stage[data-mode="2"] .backPanel { transform:translate3d(-12px,-70px,-80px); }
+.stage[data-mode="2"] .midPanel { transform:translate3d(22px,5px,0); }
+.stage[data-mode="2"] .frontPanel { transform:translate3d(-13px,50px,100px); }
 .frontPanel strong { display:flex; justify-content:space-between; align-items:center; gap:14px; font:500 clamp(27px,3.8vw,58px)/.95 var(--font-display),sans-serif; letter-spacing:-.05em; overflow-wrap:anywhere; max-width:100%; }
 .frontPanel i { font-size:1.4em; font-style:normal; }
 .frontPanel strong > span { min-width:0; }
@@ -118,17 +132,16 @@
 .compact .frontPanel strong { font-size:clamp(26px,3.3vw,48px); }
 .page :is(a,button,input):focus-visible,.teaser a:focus-visible { outline:3px solid #e0ae56; outline-offset:5px; }
 .page[data-paused=true] * { animation-play-state:paused !important; }
-@keyframes stageFloat { 0%,100% { transform:translateY(0) rotateX(12deg) rotateY(-22deg) rotateZ(var(--stage-turn,-13deg)); } 50% { transform:translateY(-16px) rotateX(6deg) rotateY(-12deg) rotateZ(calc(var(--stage-turn,-13deg) + 4deg)); } }
 @keyframes ribbon { to { transform:translateX(-50%); } }
 @media(max-width:1000px) { .heroGrid { min-height:540px; } .stage { height:430px; } .heroCopy h1 { font-size:clamp(65px,10vw,110px); } .stagePanel { padding:20px; } .headArrow { display:none; } .editor { padding:28px; } .previewCanvas { padding-inline:15px; } }
 @media(max-width:700px) {
- .stairHeading { grid-template-columns:1fr; padding:75px 7vw 48px; gap:30px; }.stairHeading h2 { font-size:clamp(50px,12vw,80px); }.stairHeading .eyebrow { margin-bottom:24px; }.stairHeadingAside { justify-self:start; width:100%; display:flex; justify-content:space-between; align-items:end; gap:20px; }.stairHeadingAside > p { font-size:11px; }.stairScroll { max-width:140px; font-size:7px; gap:12px; margin:0; line-height:1.8; }.stairRun { height:250svh; }.stairScene { min-height:480px; perspective:900px; }.stairSceneTop { left:7vw; right:7vw; font-size:6px; top:calc(var(--nav-h,64px) + 24px); }.stairSceneTop span:last-child { max-width:105px; text-align:right; line-height:1.7; }.stairCard { width:67vw; min-width:0; padding:18px 20px; aspect-ratio:1.35; border-radius:9px; }.stairIdentity { padding:18px 0; }.stairIdentity strong { font-size:clamp(29px,7.3vw,46px); }.stairIdentity strong[data-long=true] { font-size:clamp(22px,5.7vw,34px); }.collabName { font-size:17px; margin-bottom:9px; }.stairIdentity .stairEdition { font-size:90px; }.stairCardTop { font-size:6px; }.stairCardFoot { font-size:5px; padding-top:10px; }.cardSub { font-size:8px; margin-top:13px; }.cardAsterisk { font-size:42px; top:14px; }.stairSceneFoot { left:7vw; right:7vw; bottom:25px; gap:20px; }.stairSceneFoot p { font-size:6px; max-width:160px; }.stairProgress { width:100px; }.stairLink { font-size:11px; gap:15px; white-space:nowrap; }
+ .stairHeading { grid-template-columns:1fr; padding:75px 7vw 48px; gap:30px; }.stairHeading h2 { font-size:clamp(50px,12vw,80px); }.stairHeading .eyebrow { margin-bottom:24px; }.stairHeadingAside { justify-self:start; width:100%; display:flex; justify-content:space-between; align-items:end; gap:20px; }.stairHeadingAside > p { font-size:11px; }.stairScroll { max-width:140px; font-size:7px; gap:12px; margin:0; line-height:1.8; }.stairRun { height:240svh; }.stairScene { min-height:600px; }.stairSceneTop { left:7vw; right:7vw; font-size:6px; top:calc(var(--nav-h,64px) + 24px); }.stairSceneTop span:last-child { max-width:105px; text-align:right; line-height:1.7; }.stairBackdrop { top:calc(var(--nav-h,64px) + 72px); font-size:30vw; }.stairTrack { left:7vw; top:47%; gap:6vw; }.stairCard { width:82vw; min-width:0; padding:22px; aspect-ratio:1.25; border-radius:0; }.stairCard:nth-child(even) { margin-top:36px; }.stairIdentity { padding:18px 0; }.stairIdentity strong { font-size:clamp(29px,7.3vw,46px); }.stairIdentity strong[data-long=true] { font-size:clamp(22px,5.7vw,34px); }.collabName { font-size:17px; margin-bottom:9px; }.stairIdentity .stairEdition { font-size:90px; }.stairCardTop { font-size:6px; }.stairCardFoot { font-size:5px; padding-top:10px; }.cardSub { font-size:8px; margin-top:13px; }.cardAsterisk { font-size:42px; top:14px; }.stairSceneFoot { left:7vw; right:7vw; bottom:25px; gap:20px; }.stairSceneFoot p { font-size:6px; max-width:190px; }.conceptNav { gap:3px; }.conceptNav button { width:34px; min-height:44px; font-size:9px; }.stairProgress { width:100px; }.stairLink { font-size:11px; gap:15px; white-space:nowrap; }
  .hero { padding:110px 7vw 0; } .heroTop { align-items:start; gap:16px; } .heroTop .eyebrow { max-width:150px; font-size:8px; } .previewTag { font-size:7px; white-space:nowrap; padding:7px 9px; }
  .heroGrid { grid-template-columns:1fr; gap:0; } .heroCopy { padding:48px 0 0; } .heroCopy h1 { font-size:clamp(69px,16vw,108px); } .heroCopy > p { margin:26px 0; font-size:12px; max-width:290px; } .stage { height:390px; max-width:440px; margin-inline:auto; } .stageAssembly { inset:8% 4% 16%; } .stagePanel { padding:20px; } .frontPanel strong { font-size:38px; } .stageCaption { bottom:0; } .heroFoot { flex-wrap:wrap; padding:20px 0; gap:10px; margin-top:20px; font-size:8px; } .heroFoot p { display:none; } .heroFoot button { font-size:9px; }
  .ribbon span { font-size:18px; } .preview { padding:70px 7vw 45px; } .previewHeading { grid-template-columns:1fr; gap:24px; margin-bottom:30px; } .previewHeading > p { justify-self:start; max-width:310px; font-size:12px; } .previewGrid { grid-template-columns:1fr; } .editor { padding:25px; } .previewCanvas { padding:0 8px 45px; } .previewCanvas .stage { height:370px; } .sceneDescription { min-height:0; } .previewNote { font-size:6px; } .future { padding:80px 7vw; } .emptyLineup { font-size:7px; gap:10px; }
  .teaser { grid-template-columns:1fr; padding:70px 7vw 45px; gap:20px; } .compact { height:350px; } .compact .frontPanel strong { font-size:36px; } .cta { padding:14px 19px; gap:20px; font-size:10px; }
 }
-@media(prefers-reduced-motion:reduce) { .page *,.staircase * { animation:none !important; transition:none !important; }.stairRun { height:auto; }.stairScene { position:relative; height:auto; min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; padding:30px 6vw 60px; overflow:visible; perspective:none; }.stairCard { position:relative; inset:auto; width:100%; transform:none !important; }.stairCard:last-of-type { grid-column:1 / -1; max-width:550px; justify-self:center; }.stairSceneTop,.stairSceneFoot { position:static; grid-column:1 / -1; }.stairSceneTop { margin-bottom:20px; }.stairSceneFoot { margin-top:20px; }.stairGuide,.stairProgress { display:none; } }
-@media(prefers-reduced-motion:reduce) and (max-width:700px) { .stairScene { grid-template-columns:1fr; padding-inline:7vw; }.stairCard { max-width:480px; justify-self:center; }.stairIdentity strong { font-size:38px; } }
-@media(prefers-reduced-motion:reduce) { .stairScene::before,.stairScene::after { display:none; } }
+@media(prefers-reduced-motion:reduce), (max-height:600px) { .page *,.staircase * { animation:none !important; transition:none !important; }.stairRun { height:auto; }.stairScene { position:relative; height:auto; min-height:0; padding:30px 6vw 60px; overflow:visible; }.stairTrack { position:relative; inset:auto; transform:none !important; width:100%; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }.stairCard { position:relative; inset:auto; width:100%; margin:0 !important; transform:none !important; clip-path:none !important; }.stairCard:last-of-type { grid-column:1 / -1; max-width:550px; justify-self:center; }.stairSceneTop,.stairSceneFoot { position:static; }.stairSceneTop { margin-bottom:30px; }.stairSceneFoot { margin-top:30px; }.stairBackdrop,.stairProgress,.conceptNav { display:none; } }
+@media(prefers-reduced-motion:reduce) and (max-width:700px), (max-height:600px) and (max-width:700px) { .stairScene { padding-inline:7vw; }.stairTrack { grid-template-columns:1fr; }.stairCard { max-width:480px; justify-self:center; }.stairIdentity strong { font-size:38px; } }
+@media(prefers-reduced-motion:reduce), (max-height:600px) { .stairScene::before,.stairScene::after { display:none; } }
 @media(prefers-reduced-motion:reduce) { .future > div { transform:none !important; } }

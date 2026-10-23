@@ -50,6 +50,21 @@
 .earth :global(.journey-globe[data-failed="true"] canvas) {
   visibility: hidden;
 }
+.journey[data-globe-status="loading"] .earth :global([data-globe-interactive]),
+.journey[data-globe-status="fallback"] .earth :global([data-globe-interactive]) { visibility: hidden; pointer-events: none; }
+.journey[data-globe-status="fallback"] .globeFallback {
+  inset: 8% 0;
+  width: 100%;
+  height: 84%;
+  aspect-ratio: auto;
+  transform: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: #071323;
+  mask-image: radial-gradient(ellipse, #000 48%, transparent 73%);
+}
+.journey[data-globe-status="fallback"] .globeFallback::after { display: none; }
 .globeFallback {
   position: absolute;
   width: 61%;
@@ -83,8 +98,10 @@
   width: 68%;
   height: 86%;
   opacity: 0;
-  transform-origin: 65% 62%;
+  background: #071323;
+  mask-image: radial-gradient(ellipse at 58% 53%, #000 44%, #000 65%, transparent 77%);
 }
+.handoffAtmosphere { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse at 72% 50%, #18375e 5%, #0b1c31 36%, #050b14 72%); pointer-events: none; }
 .mapDrawing {
   width: 100%;
   height: 100%;
@@ -136,7 +153,7 @@
 .flightStage .body { max-width: 390px; margin-bottom: 0; font-size: 15px; line-height: 1.7; }
 .flightStage .routeLegend { margin-top: 30px; margin-bottom: 20px; }
 .flightStage .eyebrow { align-items: center; gap: 12px; }
-.flightControls { display: none; max-width: 335px; margin-top: 22px; }
+.flightControls { display: block; max-width: 335px; margin-top: 22px; }
 .journey[data-motion="enhanced"] .flightControls { display: block; }
 .flightControls label { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e0eafa; font-size: 13px; }
 .flightControls input { display: block; width: 100%; margin: 8px 0 0; height: 22px; cursor: ew-resize; accent-color: #b6ceff; }
@@ -501,7 +518,7 @@
   .journey[data-motion="enhanced"] .scene { position: absolute; margin-bottom: 0; }
   .journey[data-motion="enhanced"] .flightChapter { min-height: 100svh; }
   .journey[data-motion="enhanced"] .flightStage { position: relative; height: auto; }
-  .journey[data-motion="enhanced"] .flightControls { display: none; }
+  .journey[data-motion="enhanced"] .flightControls { display: block; }
   .scene {
     position: absolute;
     height: 100%;
@@ -567,12 +584,6 @@
 @media (max-width: 700px) and (max-height: 760px) and (prefers-reduced-motion: no-preference) {
   .journey[data-motion="enhanced"] .flightChapter { min-height: 0; }
   .journey[data-motion="enhanced"] .flightStage { position: relative; height: auto; padding-block: 80px 50px; }
-}
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .mapDrawing {
-    transform: translate(var(--map-x, 0px), var(--map-y, 0px));
-    transition: transform 0.4s ease-out;
-  }
 }
 
 @media (max-width: 700px) {

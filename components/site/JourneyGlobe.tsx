@@ -4,7 +4,13 @@ import { useEffect, useRef, useState, type CSSProperties, type MutableRefObject 
 import * as THREE from "three";
 import styles from "./GlobeControls.module.css";
 
-export type JourneyMotion = { progress: number; x: number; y: number; visible: boolean };
+export type JourneyMotion = {
+  cameraProgress: number;
+  handoffProgress: number;
+  x: number;
+  y: number;
+  visible: boolean;
+};
 type Geography = {
   features: {
     geometry: { type: string; coordinates: number[][][] | number[][][][] };
@@ -14,8 +20,10 @@ type Geography = {
 /** Spin the earth normally; quick direction changes reveal a temporary Easter egg. */
 export default function JourneyGlobe({
   motion,
+  onAvailabilityChange,
 }: {
   motion: MutableRefObject<JourneyMotion>;
+  onAvailabilityChange: (available: boolean) => void;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const shell = useRef<HTMLDivElement>(null);
@@ -66,11 +74,13 @@ export default function JourneyGlobe({
         powerPreference: "low-power",
       });
     } catch {
+      onAvailabilityChange(false);
       return;
     }
     let disposed = false;
     let visible = false;
     let contextLost = false;
+    let geographyReady = false;
     const abort = new AbortController();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 30);
@@ -155,11 +165,13 @@ export default function JourneyGlobe({
             });
           });
           if (texture) texture.needsUpdate = true;
+          geographyReady = true;
+          onAvailabilityChange(!contextLost);
         })
         .catch(() => {
-          /* Grid globe remains usable without geography. */
+          if (!disposed) onAvailabilityChange(false);
         });
-    }
+    } else onAvailabilityChange(false);
     renderer.setPixelRatio(
       Math.min(window.devicePixelRatio, window.innerWidth < 768 ? 1.25 : 1.75),
     );
@@ -179,8 +191,9 @@ export default function JourneyGlobe({
       contextLost = true;
       renderer.setAnimationLoop(null);
       element.dataset.failed = "true";
+      onAvailabilityChange(false);
     };
-    const onRestore = () => { contextLost = false; element.dataset.failed = "false"; updateLoop(); };
+    const onRestore = () => { contextLost = false; element.dataset.failed = "false"; onAvailabilityChange(geographyReady); updateLoop(); };
     renderer.domElement.addEventListener("webglcontextlost", onLoss);
     renderer.domElement.addEventListener("webglcontextrestored", onRestore);
     let lastTime = 0;
@@ -188,7 +201,7 @@ export default function JourneyGlobe({
     let descentTarget = 0;
     const render = (time: number) => {
       if (!visible || document.hidden || disposed || contextLost) return;
-      const p = motion.current.progress;
+      const p = motion.current.cameraProgress;
       if (!motion.current.visible && !reducedRef.current) return;
       const dt = Math.min((time - lastTime) / 16.67 || 1, 3);
       lastTime = time;
@@ -205,8 +218,8 @@ export default function JourneyGlobe({
         state.velocity *= Math.pow(0.94, dt);
       }
       state.angle += (state.target - state.angle) * (reducedRef.current ? 1 : 1 - Math.pow(0.86, dt));
-      marker.scale.setScalar(1 - zoom * .9);
-      markerMaterial.opacity = 1 - THREE.MathUtils.smoothstep(zoom, .5, .88);
+      marker.scale.setScalar(1 - zoom * .45);
+      markerMaterial.opacity = 1 - motion.current.handoffProgress;
       // Restore the visitor's rotation on reverse scroll; settle onto western
       // India during the descent even if the globe was spun beforehand.
       globe.rotation.y = descentAngle === null ? state.angle : THREE.MathUtils.lerp(descentAngle, descentTarget, zoom);
@@ -221,7 +234,7 @@ export default function JourneyGlobe({
         point(
           23 - zoom * 4.5 + motion.current.y * 2 * (1 - zoom),
           54 + zoom * 19.3 + motion.current.x * 3 * (1 - zoom),
-          THREE.MathUtils.lerp(distance, 1.18, zoom),
+          THREE.MathUtils.lerp(distance, 1.8, zoom),
         ),
       );
       camera.lookAt(0, 0, 0);
@@ -260,7 +273,7 @@ export default function JourneyGlobe({
       ].forEach((resource) => resource.dispose());
       texture?.dispose();
     };
-  }, [motion]);
+  }, [motion, onAvailabilityChange]);
   return (
     <div ref={shell} className={styles.shell} data-globe-interactive data-discovering={revealing}>
       <div ref={host} className="journey-globe" aria-hidden="true" />

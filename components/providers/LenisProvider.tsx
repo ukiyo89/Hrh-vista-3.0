@@ -20,6 +20,15 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     let rafId = 0;
     let cancelled = false;
 
+    // Direct flight controls must clear pending smooth-scroll momentum so the
+    // document and the scrubbed globe/map scene settle at the same position.
+    const seek = (event: Event) => {
+      const top = (event as CustomEvent<number>).detail;
+      if (typeof top !== "number" || !Number.isFinite(top)) return;
+      lenis?.scrollTo(top, { immediate: true, force: true });
+    };
+    window.addEventListener("hr-vista:seek", seek);
+
     // The opening curtain and photo wall share a scene. Freeze the scroll
     // engine until that handoff ends so wheel input cannot move it underneath.
     const syncIntro = () => {
@@ -75,6 +84,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       cancelled = true;
       preference.removeEventListener("change", update);
       introObserver.disconnect();
+      window.removeEventListener("hr-vista:seek", seek);
       stop();
     };
   }, []);

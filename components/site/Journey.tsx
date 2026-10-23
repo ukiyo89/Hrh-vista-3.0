@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { JourneyMotion } from "./JourneyGlobe";
@@ -47,6 +47,7 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
           <stop offset="1" stopColor="#a6c5ff" />
         </linearGradient>
       </defs>
+      <rect width="760" height="720" fill="#071323" />
       <rect width="760" height="720" fill={`url(#${id}-grid)`} />
       <path
         d="M280 0 269 65 285 107 262 148 277 178 266 211 281 234 272 257 290 281 283 306 304 332 300 367 315 395 310 426 333 470 339 512 366 568 373 610 401 674 406 720H760V0Z"
@@ -63,6 +64,9 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
           strokeOpacity=".09"
         />
       ))}
+      <circle cx="493" cy="450" r="6" fill="#efc58a" />
+      <circle cx="493" cy="450" r="17" fill="none" stroke="#efc58a" strokeOpacity=".45" />
+      <g data-map-details>
       <path
         d="M493 450 Q480 255 294 278"
         fill="none"
@@ -81,6 +85,7 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
         strokeWidth="9"
         filter={`url(#${id}-glow)`}
         opacity=".5"
+        style={{ strokeDashoffset: completed ? 0 : 1 }}
       />
       <path
         data-route
@@ -90,15 +95,7 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
         stroke="#a8c6ff"
         strokeWidth="2"
         strokeDasharray="1"
-      />
-      <circle cx="493" cy="450" r="6" fill="#efc58a" />
-      <circle
-        cx="493"
-        cy="450"
-        r="17"
-        fill="none"
-        stroke="#efc58a"
-        strokeOpacity=".45"
+        style={{ strokeDashoffset: completed ? 0 : 1 }}
       />
       <circle cx="294" cy="278" r="7" fill="#bfd5ff" />
       <circle
@@ -110,10 +107,10 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
         stroke="#93b9ff"
         strokeOpacity=".5"
       />
-      <text x="514" y="451" fill="#fff" fontSize="21">
+      <text x="526" y="478" fill="#fff" fontSize="21">
         Lavasa
       </text>
-      <text x="272" y="242" textAnchor="end" fill="#fff" fontSize="26">
+      <text x="272" y="224" textAnchor="end" fill="#fff" fontSize="26">
         Mumbai
       </text>
       <g data-airplane transform={completed ? "translate(294 278) rotate(-97)" : "translate(493 450) rotate(-4)"}>
@@ -126,6 +123,7 @@ function RegionalMap({ completed = false, compact = false }: { completed?: boole
           <path d="M-3-11Q0-14 3-11" fill="none" stroke="#355c8c" strokeWidth="1.2" />
         </g>
         </g>
+      </g>
       </g>
     </svg>
   );
@@ -155,186 +153,185 @@ function MumbaiSetting() {
 
 export function Journey() {
   const root = useRef<HTMLDivElement>(null);
-  const flightTrigger = useRef<ScrollTrigger | null>(null);
-  const seekFlight = (progress: number) => {
-    const trigger = flightTrigger.current;
-    if (!trigger) return;
-    window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * progress, behavior: "instant" });
-    ScrollTrigger.update();
-    // A direct seek also crosses the globe/map handoff. Settle this journey's
-    // pending scrub tweens together so the aircraft and scene agree at once.
-    ScrollTrigger.getAll().forEach(sceneTrigger => {
-      if (sceneTrigger.trigger && root.current?.contains(sceneTrigger.trigger)) {
-        sceneTrigger.getTween()?.progress(1);
-      }
-    });
-    trigger.animation?.progress(progress);
-  };
-  const motionState = useRef<JourneyMotion>({ progress: 0, x: 0, y: 0, visible: true });
+  const seekScene = useRef<((progress: number) => void) | null>(null);
+  const renderCurrentScene = useRef<() => void>(() => {});
+  const availability = useRef<boolean | null>(null);
+  const [globeAvailable, setGlobeAvailable] = useState<boolean | null>(null);
+  const motionState = useRef<JourneyMotion>({ cameraProgress: 0, handoffProgress: 0, x: 0, y: 0, visible: true });
   const reduced = useReducedMotionPreference();
   const [near, setNear] = useState(false);
+  const onGlobeAvailability = useCallback((available: boolean) => {
+    availability.current = available;
+    motionState.current.visible = available;
+    setGlobeAvailable(available);
+    renderCurrentScene.current();
+  }, []);
+  const seekFlight = (progress: number) => seekScene.current?.(progress);
+
   useEffect(() => {
-    const el = root.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setNear(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "600px" },
-    );
-    observer.observe(el);
+    const element = root.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
+    }, { rootMargin: "600px" });
+    observer.observe(element);
     return () => observer.disconnect();
   }, []);
+
   useEffect(() => {
-    motionState.current.progress = 0;
-    motionState.current.visible = true;
     const element = root.current;
     if (!element) return;
     const earth = element.querySelector<HTMLElement>("[data-earth]");
     const map = element.querySelector<HTMLElement>("[data-map]");
+    const atmosphere = element.querySelector<HTMLElement>("[data-handoff-atmosphere]");
     const city = element.querySelector<HTMLElement>("[data-city]");
-    const arrivalRing = element.querySelector<SVGCircleElement>("[data-map] [data-arrival-ring]");
-    if (earth) earth.inert = false;
-    if (reduced) return;
+    const lavasa = element.querySelector<HTMLElement>("#lavasa");
+    const flightChapter = element.querySelector<HTMLElement>("#journey");
+    const mumbai = element.querySelector<HTMLElement>("#mumbai");
+    const route = map?.querySelector<SVGPathElement>("[data-route]");
+    if (!earth || !map || !lavasa || !flightChapter || !mumbai || !route) return;
+    const clamp = (value: number) => Math.max(0, Math.min(1, value));
+    const blend = (value: number) => { const p = clamp(value); return p * p * (3 - 2 * p); };
+    const length = route.getTotalLength();
+    const maps = element.querySelectorAll<HTMLElement>("[data-map], [data-inline-map]");
+    const scrubber = element.querySelector<HTMLInputElement>("[data-flight-scrubber]");
+    const controls = element.querySelector<HTMLElement>("[data-flight-controls]");
+    const destination = element.querySelector<HTMLElement>("[data-destination]");
+    const renderFlight = (flight: number) => {
+      const p = blend((flight - .055) / .89);
+      const altitude = Math.sin(Math.PI * p);
+      const point = route.getPointAtLength(length * p);
+      const before = route.getPointAtLength(Math.max(0, length * p - 1));
+      const after = route.getPointAtLength(Math.min(length, length * p + 1));
+      const angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI + 90;
+      maps.forEach(drawing => {
+        drawing.querySelector("[data-airplane]")?.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`);
+        drawing.querySelector("[data-plane-bank]")?.setAttribute("transform", `rotate(${-altitude * 5}) scale(${1 + altitude * .1} ${1 - altitude * .04})`);
+        const shadow = drawing.querySelector<SVGEllipseElement>("[data-plane-shadow]");
+        shadow?.setAttribute("transform", `translate(${altitude * 6} ${altitude * 10}) scale(${1 - altitude * .12})`);
+        if (shadow) shadow.style.opacity = String(.38 - altitude * .15);
+        drawing.querySelectorAll<SVGPathElement>("[data-route]").forEach(path => { path.style.strokeDashoffset = String(1 - p); });
+        const ring = drawing.querySelector<SVGCircleElement>("[data-arrival-ring]");
+        if (ring) {
+          ring.setAttribute("r", String(24 + Math.max(0, p - .8) * 50));
+          ring.style.opacity = String(.4 + p * .6);
+        }
+      });
+      const phase = p < .12 ? "departure" : p > .9 ? "arrival" : "cruise";
+      if (controls) {
+        controls.dataset.phase = phase;
+        controls.style.setProperty("--flight-progress", `${Math.round(flight * 100)}%`);
+        controls.querySelectorAll<HTMLButtonElement>("[data-stop]").forEach(button => {
+          button.setAttribute("aria-pressed", String(button.dataset.stop === phase));
+        });
+      }
+      if (scrubber) {
+        scrubber.value = String(Math.round(flight * 100));
+        scrubber.setAttribute("aria-valuetext", `${Math.round(p * 100)} percent of the illustrated Lavasa to Mumbai journey`);
+      }
+      if (destination) destination.dataset.arrived = String(p > .98);
+      element.dataset.flightProgress = p.toFixed(3);
+    };
+
+    // Reduced motion retains a complete route and direct, non-spatial seeking.
+    if (reduced) {
+      motionState.current.cameraProgress = 0;
+      motionState.current.handoffProgress = 0;
+      motionState.current.visible = availability.current !== false;
+      seekScene.current = progress => renderFlight(clamp(progress));
+      renderFlight(1);
+      return () => { seekScene.current = null; };
+    }
+
     gsap.registerPlugin(ScrollTrigger);
     element.dataset.motion = "enhanced";
-    const ctx = gsap.context(() => {
-      // One renderer owns all scene visibility. Independent opacity tweens
-      // previously restored the map underneath the globe on reverse scroll.
-      const scene = { origin: 0, flight: 0, arrival: 0 };
-      const clamp = (value: number) => Math.max(0, Math.min(1, value));
-      const blend = (value: number) => { const p = clamp(value); return p * p * (3 - 2 * p); };
-      const renderScene = () => {
-        const focus = blend((scene.origin - .16) / .68);
-        const handoff = blend((scene.origin - .62) / .35);
-        const arrival = scene.arrival;
-        const earthOpacity = 1 - handoff;
-        const mapOpacity = handoff * (1 - blend(arrival / .8));
-        motionState.current.progress = focus;
-        motionState.current.visible = earthOpacity > .001;
-        if (earth) {
-          earth.style.opacity = String(earthOpacity);
-          earth.style.visibility = earthOpacity < .001 ? "hidden" : "visible";
-          earth.style.setProperty("--globe-controls", String(1 - blend(scene.origin / .36)));
-          earth.style.setProperty("--earth-zoom", String(1 + focus * 4));
-          earth.inert = scene.origin > .24;
-          earth.setAttribute("aria-hidden", String(scene.origin > .24));
-        }
-        if (map) {
-          map.style.opacity = String(mapOpacity);
-          map.style.visibility = mapOpacity < .001 ? "hidden" : "visible";
-          // Track the aircraft with a restrained camera drift. A single scene
-          // model controls this alongside visibility, including reverse scroll.
-          const cruise = Math.sin(Math.PI * scene.flight);
-          map.style.transform = `translate3d(${(1 - scene.flight) * 24}px,${scene.flight * 22}px,0) scale(${.74 + handoff * .26 + cruise * .08 + arrival * .12})`;
-        }
-      };
-      renderScene();
-      gsap.to(scene, { origin: 1, ease: "none", onUpdate: renderScene,
-        scrollTrigger: {
-          trigger: "#lavasa", start: "top top", end: "bottom 12%", scrub: .75,
-          onRefresh: self => { scene.origin = self.progress; renderScene(); },
-        },
-      });
-      gsap.to(scene, { arrival: 1, ease: "none", onUpdate: renderScene,
-        scrollTrigger: {
-          trigger: "#mumbai", start: "top 95%", end: "top 10%", scrub: .7,
-          onRefresh: self => { scene.arrival = self.progress; renderScene(); },
-        },
-      });
-      // Mumbai belongs to its own chapter, so its whole frame rises with the
-      // document. A smaller inner drift adds depth without pinning the image.
+    const scene = { position: 0 };
+    const bounds = { start: 0, end: 1, originStart: 0, originEnd: 1, flightStart: 0, flightEnd: 1, arrivalStart: 0, arrivalEnd: 1, mumbaiTop: 0, mumbaiHeight: 1 };
+    let trigger: ScrollTrigger | null = null;
+    const measure = () => {
+      const y = window.scrollY;
+      const viewport = window.innerHeight;
+      const top = (node: HTMLElement) => node.getBoundingClientRect().top + y;
+      bounds.start = top(element);
+      bounds.end = Math.max(bounds.start + 1, bounds.start + element.offsetHeight - viewport);
+      bounds.originStart = top(lavasa);
+      bounds.originEnd = bounds.originStart + lavasa.offsetHeight - viewport * .12;
+      bounds.flightStart = top(flightChapter);
+      bounds.flightEnd = Math.max(bounds.flightStart + 1, bounds.flightStart + flightChapter.offsetHeight - viewport * (window.innerWidth <= 700 ? .35 : .82));
+      bounds.mumbaiTop = top(mumbai);
+      bounds.mumbaiHeight = mumbai.offsetHeight;
+      bounds.arrivalStart = bounds.mumbaiTop - viewport * .95;
+      bounds.arrivalEnd = bounds.mumbaiTop - viewport * .1;
+    };
+    const renderScene = () => {
+      const scroll = bounds.start + (bounds.end - bounds.start) * scene.position;
+      const origin = clamp((scroll - bounds.originStart) / Math.max(1, bounds.originEnd - bounds.originStart));
+      const flight = clamp((scroll - bounds.flightStart) / (bounds.flightEnd - bounds.flightStart));
+      const arrival = clamp((scroll - bounds.arrivalStart) / (bounds.arrivalEnd - bounds.arrivalStart));
+      const handoff = blend((origin - .35) / .3);
+      const earthOpacity = 1 - blend(handoff / .72);
+      const mapOpacity = blend((handoff - .12) / .88) * (1 - blend(arrival / .8));
+      motionState.current.cameraProgress = blend(origin / .65);
+      motionState.current.handoffProgress = handoff;
+      motionState.current.visible = earthOpacity > .001 && availability.current !== false;
+      earth.style.opacity = String(earthOpacity);
+      earth.style.visibility = earthOpacity < .001 ? "hidden" : "visible";
+      earth.style.setProperty("--globe-controls", String(1 - blend(origin / .2)));
+      earth.inert = origin > .12 || availability.current === false;
+      earth.setAttribute("aria-hidden", String(earth.inert));
+      map.style.opacity = String(mapOpacity);
+      map.style.visibility = mapOpacity < .001 ? "hidden" : "visible";
+      map.querySelector<SVGGElement>("[data-map-details]")?.style.setProperty("opacity", String(blend((handoff - .82) / .18)));
+      if (atmosphere) atmosphere.style.opacity = String(Math.sin(Math.PI * handoff) * .82);
+      // The regional illustration stays fixed; only the aircraft follows its
+      // route. Tracking the globe marker here made the entire map wander.
+      renderFlight(flight);
       if (city) {
-        gsap.fromTo(city, { y: 90, clipPath: "inset(9% 7% 9% 7%)" }, {
-          y: -48, clipPath: "inset(0% 0% 0% 0%)", ease: "none",
-          scrollTrigger: { trigger: "#mumbai", start: "top bottom", end: "bottom top", scrub: .65 },
-        });
+        const depth = clamp((scroll - bounds.mumbaiTop + window.innerHeight) / (bounds.mumbaiHeight + window.innerHeight));
+        const inset = 6 * (1 - blend(arrival));
+        city.style.transform = `translate3d(0,${24 - depth * 48}px,0)`;
+        city.style.clipPath = `inset(${inset}% ${inset * .8}% ${inset}% ${inset * .8}%)`;
         const photo = city.querySelector("img");
-        if (photo) gsap.fromTo(photo, { yPercent: 5, scale: 1.16 }, {
-          yPercent: -5, scale: 1.08, ease: "none",
-          scrollTrigger: { trigger: "#mumbai", start: "top bottom", end: "bottom top", scrub: .65 },
-        });
+        if (photo) photo.style.transform = `translate3d(0,${2 - depth * 4}%,0) scale(1.04)`;
       }
-
-      const route = element.querySelector<SVGPathElement>("[data-map] [data-route]");
-      const airplane = element.querySelector<SVGGElement>("[data-map] [data-airplane]");
-      const routes = element.querySelectorAll<SVGPathElement>("[data-map] [data-route]");
-      const destination = element.querySelector<HTMLElement>("[data-destination]");
-      const bank = element.querySelector<SVGGElement>("[data-map] [data-plane-bank]");
-      const shadow = element.querySelector<SVGEllipseElement>("[data-map] [data-plane-shadow]");
-      const scrubber = element.querySelector<HTMLInputElement>("[data-flight-scrubber]");
-      const controls = element.querySelector<HTMLElement>("[data-flight-controls]");
-      const inlinePlane = element.querySelector<SVGGElement>("[data-inline-map] [data-airplane]");
-      const inlineBank = element.querySelector<SVGGElement>("[data-inline-map] [data-plane-bank]");
-      const inlineRoutes = element.querySelectorAll<SVGPathElement>("[data-inline-map] [data-route]");
-      if (route && airplane) {
-        const length = route.getTotalLength();
-        const renderFlight = () => {
-          // Hold at departure and arrival; the middle distance accelerates and
-          // settles naturally, rather than making the aircraft slide uniformly.
-          const p = blend((scene.flight - .055) / .89);
-          const altitude = Math.sin(Math.PI * p);
-          const point = route.getPointAtLength(length * p);
-          const before = route.getPointAtLength(Math.max(0, length * p - 1));
-          const after = route.getPointAtLength(Math.min(length, length * p + 1));
-          const angle = Math.atan2(after.y - before.y, after.x - before.x) * 180 / Math.PI + 90;
-          airplane.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`);
-          inlinePlane?.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`);
-          bank?.setAttribute("transform", `rotate(${-altitude * 7}) scale(${1 + altitude * .17} ${1 - altitude * .06})`);
-          inlineBank?.setAttribute("transform", `rotate(${-altitude * 7}) scale(${1 + altitude * .17} ${1 - altitude * .06})`);
-          shadow?.setAttribute("transform", `translate(${altitude * 8} ${altitude * 13}) scale(${1 - altitude * .15})`);
-          if (shadow) shadow.style.opacity = String(.38 - altitude * .15);
-          routes.forEach(path => { path.style.strokeDashoffset = String(1 - p); });
-          inlineRoutes.forEach(path => { path.style.strokeDashoffset = String(1 - p); });
-          const phase = p < .12 ? "departure" : p > .9 ? "arrival" : "cruise";
-          if (controls) {
-            controls.dataset.phase = phase;
-            controls.querySelectorAll<HTMLButtonElement>("[data-stop]").forEach(button => {
-              button.setAttribute("aria-pressed", String(button.dataset.stop === phase));
-            });
-          }
-          if (scrubber) {
-            scrubber.value = String(Math.round(scene.flight * 100));
-            scrubber.setAttribute("aria-valuetext", `${Math.round(p * 100)} percent of the illustrated Lavasa to Mumbai journey`);
-          }
-          if (destination) destination.dataset.arrived = String(p > .98);
-          if (arrivalRing) {
-            arrivalRing.setAttribute("r", String(24 + Math.max(0, p - .8) * 70));
-            arrivalRing.style.opacity = String(.4 + p * .6);
-          }
-        };
-        renderFlight();
-        gsap.to(scene, {
-          flight: 1, ease: "none", onUpdate: () => { renderFlight(); renderScene(); },
-          scrollTrigger: {
-            trigger: "#journey", start: "top top", end: () => window.innerWidth <= 700 ? "bottom 35%" : "bottom 82%", scrub: .7,
-            onRefresh: self => { flightTrigger.current = self; scene.flight = self.progress; renderFlight(); renderScene(); },
-            onUpdate: self => { flightTrigger.current = self; },
-          },
-        });
-      }
-
-      root.current?.querySelectorAll<HTMLElement>(`.${styles.travelChapter}`).forEach(chapter => {
-        const heading = chapter.querySelector("h2");
-        const details = chapter.querySelectorAll(`.${styles.body}, .${styles.routeLegend}, .${styles.venue}`);
-        gsap.fromTo(heading, { y: 66 }, {
-          y: 0, opacity: 1, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: chapter, start: "top 75%", end: "top 25%", scrub: .5 },
-        });
-        gsap.fromTo(details, { y: 32 }, {
-          y: 0, opacity: 1, duration: .85, stagger: .1, ease: "power3.out",
-          scrollTrigger: { trigger: chapter, start: "top 65%", end: "top 20%", scrub: .5 },
+      element.dataset.handoffProgress = handoff.toFixed(3);
+      element.dataset.cameraProgress = motionState.current.cameraProgress.toFixed(3);
+    };
+    renderCurrentScene.current = renderScene;
+    measure();
+    const ctx = gsap.context(() => {
+      // Every visible scene property derives from this one scrubbed position.
+      // Direct seeking settles this same tween, so all layers agree immediately.
+      gsap.to(scene, {
+        position: 1, ease: "none", onUpdate: renderScene,
+        scrollTrigger: {
+          trigger: element, start: "top top", end: "bottom bottom", scrub: .45,
+          onRefresh: self => { trigger = self; measure(); scene.position = self.progress; renderScene(); },
+          onUpdate: self => { trigger = self; },
+        },
+      });
+      element.querySelectorAll<HTMLElement>(`.${styles.travelChapter}`).forEach(chapter => {
+        gsap.fromTo(chapter.querySelector("h2"), { y: 24, opacity: 0 }, {
+          y: 0, opacity: 1, duration: .6, ease: "power3.out",
+          scrollTrigger: { trigger: chapter, start: "top 78%", toggleActions: "play none none reverse" },
         });
         const photograph = chapter.querySelector(`.${styles.lavasaPhoto}`);
-        if (photograph) gsap.fromTo(photograph, { y: 38 }, {
-          y: -16, ease: "none",
-          scrollTrigger: { trigger: photograph, start: "top bottom", end: "bottom 25%", scrub: .8 },
+        if (photograph) gsap.fromTo(photograph, { y: 16 }, {
+          y: -8, ease: "none",
+          scrollTrigger: { trigger: photograph, start: "top bottom", end: "bottom 25%", scrub: .45 },
         });
       });
-    }, root);
+    }, element);
+    seekScene.current = progress => {
+      const scroll = bounds.flightStart + (bounds.flightEnd - bounds.flightStart) * clamp(progress);
+      window.scrollTo({ top: scroll, behavior: "instant" });
+      window.dispatchEvent(new CustomEvent("hr-vista:seek", { detail: scroll }));
+      ScrollTrigger.update();
+      trigger?.getTween()?.progress(1);
+      scene.position = clamp((scroll - bounds.start) / (bounds.end - bounds.start));
+      renderScene();
+    };
+    renderScene();
     let refreshFrame = 0;
     let disposed = false;
     const refresh = () => {
@@ -346,73 +343,52 @@ export function Journey() {
     void document.fonts.ready.then(() => { if (!disposed) refresh(); });
     return () => {
       disposed = true;
-      flightTrigger.current = null;
+      seekScene.current = null;
+      renderCurrentScene.current = () => {};
+      motionState.current.cameraProgress = 0;
+      motionState.current.handoffProgress = 0;
+      motionState.current.visible = availability.current !== false;
       resize.disconnect();
       cancelAnimationFrame(refreshFrame);
       ctx.revert();
       delete element.dataset.motion;
-      for (const layer of [earth, map, city]) {
+      for (const layer of [earth, map, city, atmosphere]) {
         if (!layer) continue;
-        layer.style.removeProperty("opacity");
-        layer.style.removeProperty("visibility");
-        layer.style.removeProperty("transform");
-        layer.style.removeProperty("clip-path");
+        ["opacity", "visibility", "transform", "clip-path"].forEach(property => layer.style.removeProperty(property));
         layer.inert = false;
       }
-      earth?.removeAttribute("aria-hidden");
-      earth?.style.removeProperty("--globe-controls");
-      earth?.style.removeProperty("--earth-zoom");
+      earth.removeAttribute("aria-hidden");
+      earth.style.removeProperty("--globe-controls");
       if (city) gsap.set(city.querySelector("img"), { clearProps: "transform" });
-      motionState.current.progress = 0;
-      motionState.current.visible = true;
-      // Staggered fromTo tweens can restore their initial pose on revert.
-      // Clear those local reveal styles so a live preference change leaves
-      // every paragraph and action fully visible.
-      gsap.set(element.querySelectorAll(
-        `.${styles.travelChapter} h2, .${styles.travelChapter} .${styles.body}, .${styles.routeLegend}, .${styles.venue}, .${styles.lavasaPhoto}`,
-      ), { clearProps: "opacity,transform" });
-      element.querySelectorAll<SVGPathElement>("[data-route]").forEach(path => path.style.removeProperty("stroke-dashoffset"));
-      element.querySelectorAll<SVGGElement>("[data-airplane]").forEach(plane => plane.setAttribute("transform", "translate(294 278) rotate(-97)"));
-      element.querySelectorAll("[data-plane-bank]").forEach(bank => bank.removeAttribute("transform"));
-      element.querySelector("[data-map] [data-plane-shadow]")?.removeAttribute("transform");
-      element.querySelector<SVGEllipseElement>("[data-map] [data-plane-shadow]")?.style.removeProperty("opacity");
-      element.querySelector("[data-flight-controls]")?.removeAttribute("data-phase");
-      element.querySelector("[data-destination]")?.removeAttribute("data-arrived");
-      if (arrivalRing) { arrivalRing.setAttribute("r", "24"); arrivalRing.style.removeProperty("opacity"); }
-      if (earth) earth.inert = false;
+      gsap.set(element.querySelectorAll(`.${styles.travelChapter} h2, .${styles.lavasaPhoto}`), { clearProps: "opacity,transform" });
+      map.querySelector<SVGGElement>("[data-map-details]")?.style.removeProperty("opacity");
     };
   }, [reduced]);
   return (
     <div
       className={styles.journey}
       ref={root}
+      data-globe-status={globeAvailable === null ? "loading" : globeAvailable ? "ready" : "fallback"}
       onPointerMove={(e) => {
         if (e.pointerType !== "mouse" || reduced) return;
         const r = e.currentTarget.getBoundingClientRect();
         motionState.current.x = (e.clientX - r.left) / r.width - 0.5;
         motionState.current.y = e.clientY / window.innerHeight - 0.5;
-        e.currentTarget.style.setProperty(
-          "--map-x",
-          `${motionState.current.x * 12}px`,
-        );
-        e.currentTarget.style.setProperty(
-          "--map-y",
-          `${motionState.current.y * 8}px`,
-        );
       }}
-      onPointerLeave={(e) => {
+      onPointerLeave={() => {
         motionState.current.x = 0;
         motionState.current.y = 0;
-        e.currentTarget.style.setProperty("--map-x", "0px");
-        e.currentTarget.style.setProperty("--map-y", "0px");
       }}
     >
       <div className={styles.scene}>
         <div className={styles.sceneGrid} />
         <div className={styles.earth} data-earth>
-          <div className={styles.globeFallback} />
-          {near && <Globe motion={motionState} />}
+          <div className={styles.globeFallback} aria-hidden="true">
+            {globeAvailable === false && <RegionalMap />}
+          </div>
+          {near && <Globe motion={motionState} onAvailabilityChange={onGlobeAvailability} />}
         </div>
+        <div className={styles.handoffAtmosphere} data-handoff-atmosphere aria-hidden="true" />
         <div className={styles.regionalMap} data-map aria-hidden="true">
           <RegionalMap />
         </div>

@@ -420,9 +420,6 @@ export function Journey() {
             />
             <figcaption>Lavasa, in the Sahyadri hills</figcaption>
           </figure>
-          <a className={styles.textLink} href="#journey">
-            Follow the journey <span>↓</span>
-          </a>
         </div>
       </section>
       <section
@@ -454,9 +451,6 @@ export function Journey() {
               <input id="journey-flight" data-flight-scrubber type="range" min="0" max="100" defaultValue="0" aria-label="Scroll through the illustrated Lavasa to Mumbai flight" onChange={event => seekFlight(Number(event.currentTarget.value) / 100)} />
               <div><button type="button" data-stop="departure" onClick={() => seekFlight(0)}>Departure</button><button type="button" data-stop="cruise" onClick={() => seekFlight(.5)}>In flight</button><button type="button" data-stop="arrival" onClick={() => seekFlight(1)}>Arrival</button></div>
             </div>
-            <a className={styles.textLink} href="#mumbai">
-              Meet our next destination <span>↓</span>
-            </a>
           </div>
         </div>
       </section>
@@ -491,9 +485,6 @@ export function Journey() {
               </p>
             </details>
           </div>
-          <a className={styles.textLink} href="#editions">
-            See how we got here <span>↓</span>
-          </a>
         </div>
       </section>
     </div>
@@ -504,7 +495,6 @@ export function JourneyFinale() {
   return (
     <section id="next" className={styles.finale} aria-labelledby="finale-title">
       <div className={styles.finaleOrbit} aria-hidden="true" />
-      <p className={styles.eyebrow}>LAVASA ROOTS. MUMBAI HORIZONS.</p>
       <h2 id="finale-title">
         The future of work.
         <br />

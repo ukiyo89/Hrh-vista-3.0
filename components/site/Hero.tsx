@@ -416,7 +416,6 @@ export function Hero() {
         <span>DRAG THE WALL</span>
         <span className={styles["cue-line"]} />
       </div>
-      <a href="#lavasa" className={styles.storyLink}>Explore the journey <span aria-hidden="true">↓</span></a>
     </section>
   );
 }

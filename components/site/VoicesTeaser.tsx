@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { ActionLink } from "./ActionLink";
 import { useEffect, useId, useRef, useState, type PointerEvent } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,7 +14,7 @@ const perspectives = [
 ];
 
 /** The archive is an image interaction, independent of the pending quotes. */
-export function ArchivePerspective({ wide = false, teaserReveal = false }: { wide?: boolean; teaserReveal?: boolean }) {
+export function ArchivePerspective({ wide = false, teaserReveal = false, images = perspectives }: { wide?: boolean; teaserReveal?: boolean; images?: readonly { src: string; alt: string }[] }) {
   const root = useRef<HTMLDivElement>(null);
   const picture = useRef<HTMLDivElement>(null);
   const grab = useRef<{ x: number; id: number } | null>(null);
@@ -37,7 +37,7 @@ export function ArchivePerspective({ wide = false, teaserReveal = false }: { wid
 
   const change = (direction: number) => {
     if (root.current) root.current.dataset.direction = direction < 0 ? "previous" : "next";
-    setActive(previous => (previous + direction + perspectives.length) % perspectives.length);
+    setActive(previous => (previous + direction + images.length) % images.length);
   };
   const resetCrop = () => {
     picture.current?.style.setProperty("--crop-x", "0px");
@@ -66,14 +66,14 @@ export function ArchivePerspective({ wide = false, teaserReveal = false }: { wid
   };
 
   return <div ref={root} className={`${styles.perspective} ${wide ? styles.wide : ""}`} role="group" aria-roledescription="carousel" aria-label="Photographs from HR VISTA 2.0">
-    <div ref={picture} className={styles.perspectivePicture} data-voices-photo={teaserReveal ? "" : undefined} tabIndex={0} role="group" aria-label={perspectives[active].alt} aria-describedby={hintId}
+    <div ref={picture} className={styles.perspectivePicture} data-voices-photo={teaserReveal ? "" : undefined} tabIndex={0} role="group" aria-label={images[active].alt} aria-describedby={hintId}
       onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { grab.current = null; if (picture.current) picture.current.dataset.dragging = "false"; resetCrop(); }} onPointerLeave={() => { if (!grab.current) resetCrop(); }}
       onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); change(event.key === "ArrowLeft" ? -1 : 1); } }}>
-      <div className={styles.archiveVisual} data-archive-visual><div className={styles.cropLayer}>{perspectives.map((image, index) => <div key={image.src} className={styles.perspectiveSlide} data-active={active === index} aria-hidden={active !== index}><img src={image.src} alt="" width={1600} height={900} loading={wide && index === 0 ? "eager" : "lazy"} fetchPriority={wide && index === 0 ? "high" : "auto"} draggable={false} /></div>)}</div></div>
+      <div className={styles.archiveVisual} data-archive-visual><div className={styles.cropLayer}>{images.map((image, index) => <div key={image.src} className={styles.perspectiveSlide} data-active={active === index} aria-hidden={active !== index}><img src={image.src} alt="" width={1600} height={900} loading={wide && index === 0 ? "eager" : "lazy"} fetchPriority={wide && index === 0 ? "high" : "auto"} draggable={false} /></div>)}</div></div>
       <div className={styles.shutters} aria-hidden="true">{[0, 1, 2].map(index => <i key={index} data-archive-shutter />)}</div>
       <span className={styles.srOnly} id={hintId}>Drag, swipe, or use the left and right arrow keys to explore the photographs.</span>
     </div>
-    <div className={styles.perspectiveControls}><span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {perspectives.length}: {perspectives[active].alt}</span><div><button type="button" onClick={() => change(-1)} aria-label="Previous archive photograph">←</button><button type="button" onClick={() => change(1)} aria-label="Next archive photograph">→</button></div></div>
+    <div className={styles.perspectiveControls}><span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {images.length}: {images[active].alt}</span><div><button type="button" onClick={() => change(-1)} aria-label="Previous archive photograph">←</button><button type="button" onClick={() => change(1)} aria-label="Next archive photograph">→</button></div></div>
   </div>;
 }
 
@@ -100,7 +100,7 @@ export function VoicesTeaser() {
       <div className={styles.copy}>
         <h2 id="voices-teaser-title"><span data-voices-word>What stays</span><span data-voices-word><em>with you.</em></span></h2>
         <p>Perspectives from the people<br />who experienced HR VISTA 2.0.</p>
-        <Link href="/voices" className={styles.link}>Explore the voices <span aria-hidden="true">↗</span></Link>
+        <ActionLink href="/voices" variant="light" className={styles.link}>Explore the voices</ActionLink>
       </div>
       <div className={styles.art}>
         <span className={styles.quote} aria-hidden="true"><i data-quote-left>“</i><i data-quote-right>“</i></span>

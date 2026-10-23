@@ -12,6 +12,7 @@ import { SponsorTeaser } from "@/components/site/Sponsors";
 import { EventCountdown } from "@/components/site/EventCountdown";
 import { HomeMotion } from "@/components/site/HomeMotion";
 import { VoicesTeaser } from "@/components/site/VoicesTeaser";
+import { MainGuests } from "@/components/site/MainGuests";
 export default function HomePage() {
   return (
     <div id="top" className="min-h-screen bg-[var(--ink-900)]">
@@ -24,8 +25,9 @@ export default function HomePage() {
         <Journey />
         <EditionJourney />
         <VoicesTeaser />
-        <People />
+        <MainGuests />
         <SponsorTeaser />
+        <People />
         <JourneyFinale />
       </main>
       <SiteFooter />

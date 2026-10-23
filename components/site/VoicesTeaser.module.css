@@ -4,9 +4,7 @@
 .copy h2 > span { display:block; }
 .copy h2 em { font-style:normal; color:#3b6088; }
 .copy > p { font-size:15px; line-height:1.8; margin-top:32px; color:#3b526c; }
-.link { display:flex; align-items:center; justify-content:space-between; gap:40px; width:fit-content; margin-top:30px; border-bottom:1px solid #6d879f; min-height:48px; font-size:13px; }
-.link > span { font-size:24px; transition:transform .2s; }
-.link:hover > span { transform:translate(3px,-3px); }
+.link { margin-top:30px; }
 .art { position:relative; display:block; padding-top:80px; }
 .quote { position:absolute; z-index:2; top:-26px; left:-30px; width:200px; height:220px; font:400 250px/1 var(--font-display),sans-serif; color:#234b78; pointer-events:none; }
 .quote > i { position:absolute; inset:0; font:inherit; font-style:normal; }

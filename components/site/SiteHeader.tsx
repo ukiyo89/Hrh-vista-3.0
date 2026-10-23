@@ -80,7 +80,7 @@ export function SiteHeader() {
       <a href="#main-content" className={styles.skip}>Skip to content</a>
       <div className={styles.bar}>
         <Link href={home ? "#top" : "/"} className={styles.wordmark} aria-label="HR VISTA 3.0 home">
-          <span className={styles.dot} aria-hidden="true" />
+          <img className={styles.logo} src="/media/raw/logo_hr_vista.png" alt="" width={34} height={34} />
           <span>HR VISTA <span className={styles.version}>3.0</span></span>
         </Link>
         <nav className={styles.desktop} aria-label="Primary">

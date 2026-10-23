@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { feedback } from "@/lib/data/voices";
+import { pastVoices, speakerProfiles, voicesArchiveImages } from "@/lib/data/voices-media";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { ArchivePerspective } from "./VoicesTeaser";
+import { ActionLink } from "./ActionLink";
 import styles from "./Voices.module.css";
 
 export function Voices() {
@@ -15,6 +16,7 @@ export function Voices() {
   const [selected, setSelected] = useState(0);
   const reduced = useReducedMotionPreference();
   const current = feedback[selected];
+  const unmatchedPortraits = pastVoices.filter(portrait => !speakerProfiles.some(profile => profile.portraitId === portrait.id));
 
   useEffect(() => {
     const element = root.current;
@@ -31,14 +33,19 @@ export function Voices() {
       const reflection = gsap.timeline({ scrollTrigger: {
         trigger: "[data-reflection-stage]", start: "top 95%", end: "top 5%", scrub: .6,
       } });
-      reflection.fromTo("[data-quote-mark]", { y: 140, x: -45 }, { y: 0, x: 0, duration: 1, ease: "none" }, 0)
-        .fromTo("[data-reflection-heading]", { x: 100 }, { x: 0, duration: 1, ease: "none" }, 0)
+      reflection.fromTo("[data-reflection-heading]", { x: 100 }, { x: 0, duration: 1, ease: "none" }, 0)
         .fromTo("[data-perspective-line]", { scaleX: .12 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
-      const roomImage = element.querySelector("[data-room-image]");
-      if (roomImage) {
-        reflection.fromTo(roomImage, { clipPath: "inset(0% 0% 100% 0%)", y: 90 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 1, ease: "none" }, 0);
-        gsap.fromTo(roomImage.querySelector("img"), { scale: 1.22, yPercent: 6 }, { scale: 1.05, yPercent: -5, ease: "none", scrollTrigger: { trigger: roomImage, start: "top bottom", end: "bottom top", scrub: .5 } });
+      if (element.querySelector("[data-quote-mark]")) {
+        reflection.fromTo("[data-quote-mark]", { y: 140, x: -45 }, { y: 0, x: 0, duration: 1, ease: "none" }, 0);
       }
+      gsap.utils.toArray<HTMLElement>("[data-past-voice]").forEach(card => {
+        const frame = card.querySelector("[data-portrait-frame]");
+        if (!frame) return;
+        gsap.fromTo(frame, { clipPath: "inset(12% 0% 0% 0%)" }, {
+          clipPath: "inset(0% 0% 0% 0%)", ease: "none",
+          scrollTrigger: { trigger: card, start: "top 95%", end: "top 45%", scrub: .45 },
+        });
+      });
       gsap.fromTo("[data-continue-word]", { yPercent: 50 }, {
         yPercent: 0, stagger: .08, ease: "none",
         scrollTrigger: { trigger: "[data-voice-continue]", start: "top 95%", end: "top 40%", scrub: .5 },
@@ -61,18 +68,35 @@ export function Voices() {
     readerHeading.current?.focus({ preventScroll: true });
     readerHeading.current?.scrollIntoView({ block: "start", behavior: "instant" });
   };
+  const jumpToProfile = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const destination = document.getElementById(id);
+    const heading = destination?.querySelector<HTMLHeadingElement>("h3");
+    if (!destination || !heading) return;
+    event.preventDefault();
+    // Lenis also observes anchor clicks at window level. This local seek owns
+    // the jump, so prevent its second scroll from overriding the destination.
+    event.stopPropagation();
+    const margin = parseFloat(getComputedStyle(destination).scrollMarginTop) || 0;
+    const top = Math.max(0, destination.getBoundingClientRect().top + window.scrollY - margin);
+    const hash = `#${id}`;
+    if (window.location.hash !== hash) window.history.pushState(null, "", hash);
+    window.scrollTo({ top, behavior: "instant" });
+    window.dispatchEvent(new CustomEvent("hr-vista:seek", { detail: top }));
+    heading.focus({ preventScroll: true });
+  };
 
   return <main id="main-content" ref={root} className={styles.page}>
     <section className={styles.opening} data-voice-opening aria-labelledby="voices-title">
       <h1 id="voices-title"><span data-opening-line="first">What stays</span><span data-opening-line="last"><em>with us.</em></span></h1>
-      <div className={styles.openingFoot}><p>The conversations end.<br />The perspectives stay.</p><a href="#reflections">Into the conversation <span aria-hidden="true">↓</span></a></div>
+      <div className={styles.openingFoot}><p>The conversations end.<br />The perspectives stay.</p><ActionLink href="#speaker-profiles" variant="light" direction="down">Explore past voices</ActionLink></div>
       <figure className={styles.archivePhoto}>
-        <div className={styles.aperture} data-voice-aperture><ArchivePerspective wide /><span className={styles.photoNumber} data-photo-number aria-hidden="true">2.0</span></div>
-        <figcaption>HR VISTA 2.0 · Lavasa, November 2025</figcaption>
+        <div className={styles.aperture} data-voice-aperture><ArchivePerspective wide images={voicesArchiveImages} /><span className={styles.photoNumber} data-photo-number aria-hidden="true">2.0</span></div>
+        <figcaption>From the HR VISTA archive</figcaption>
       </figure>
     </section>
 
-    <section id="reflections" className={styles.reflections} data-reflection-stage aria-labelledby="reflections-title">
+    <section id="reflections" className={styles.reflections} data-reflection-stage aria-labelledby={current ? "reflections-title" : "profiles-title"}>
       <div className={styles.perspectiveRule} aria-hidden="true"><i data-perspective-line /></div>
       {current ? <div className={styles.reader}>
         <div className={styles.readerHeading}><h2 id="reflections-title" ref={readerHeading} tabIndex={-1} data-reflection-heading>In their<br /><em>own words.</em></h2><span className={styles.readerCount}>{String(selected + 1).padStart(2, "0")} / {String(feedback.length).padStart(2, "0")}</span></div>
@@ -83,13 +107,37 @@ export function Voices() {
         </div>
         {feedback.length > 1 && <div className={styles.readerControls}><button type="button" onClick={() => readFromIndex(selected - 1)} aria-label="Previous reflection">←</button><p>Another perspective</p><button type="button" onClick={() => readFromIndex(selected + 1)} aria-label="Next reflection">→</button></div>}
         {feedback.length > 1 && <details className={styles.voiceIndex}><summary>Browse all {feedback.length} voices <span aria-hidden="true">+</span></summary><ol>{feedback.map((item, index) => <li key={`${item.name}-${index}`}><button type="button" aria-pressed={selected === index} onClick={() => readFromIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item.name}</strong><span>{selected === index ? "Reading" : "Read reflection"}</span></button></li>)}</ol></details>}
-      </div> : <div className={styles.awaiting}>
-        <span className={styles.quoteMark} data-quote-mark aria-hidden="true">“</span>
-        <div className={styles.awaitingCopy}><h2 id="reflections-title" data-reflection-heading>Reflections<br /><em>coming soon.</em></h2><p>The people who were there.<br />The ideas they carried home.</p><Link href="/work#hr-vista-2" className={styles.textLink}>Revisit the second edition <span aria-hidden="true">↗</span></Link></div>
-        <figure className={styles.roomPhoto} data-room-image><img src="/media/flickr/room-3.jpg" alt="A moment from the HR VISTA 2.0 event archive" width={1000} height={1200} loading="lazy" /></figure>
-      </div>}
+      </div> : null}
+      <section id="speaker-profiles" className={styles.profiles} aria-labelledby="profiles-title">
+        <div className={styles.profileIntroduction}>
+          <div><h2 id="profiles-title" data-reflection-heading>Past <em>voices.</em></h2></div>
+          <p className={styles.profileIntroCopy}>Meet the leaders and practitioners who bring their experience to the conversation.</p>
+        </div>
+        <details className={styles.profileDirectory}>
+          <summary>Find a speaker <span>{String(speakerProfiles.length).padStart(2, "0")} profiles <span aria-hidden="true">+</span></span></summary>
+          <ol>{speakerProfiles.map((profile, index) => <li key={profile.id}><a href={`#${profile.id}`} onClick={event => jumpToProfile(event, profile.id)}><span>{String(index + 1).padStart(2, "0")}</span>{profile.name}<span aria-hidden="true">↘</span></a></li>)}</ol>
+        </details>
+        <div className={styles.profileList}>
+          {speakerProfiles.map((profile, index) => {
+            const portrait = pastVoices.find(image => image.id === profile.portraitId);
+            return <article key={profile.id} id={profile.id} className={styles.speakerProfile} data-has-portrait={Boolean(portrait)} data-past-voice aria-labelledby={`${profile.id}-name`}>
+              <div className={styles.profileNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+              {portrait && <div className={styles.profilePortrait} data-portrait-frame><img src={portrait.image} alt={profile.name} width={portrait.width} height={portrait.height} loading="lazy" decoding="async" /></div>}
+              <div className={styles.profileCopy}><h3 id={`${profile.id}-name`} tabIndex={-1}>{profile.name}</h3><p>{profile.biography}</p>{profile.linkedIn && <a href={profile.linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span><span className={styles.srOnly}> for {profile.name} (opens in a new tab)</span></a>}</div>
+            </article>;
+          })}
+        </div>
+      </section>
+      {unmatchedPortraits.length > 0 && <section className={styles.pastVoices} aria-labelledby="portrait-archive-title">
+        <div className={styles.archiveHeading}><div><h2 id="portrait-archive-title">More from <em>HR VISTA.</em></h2></div><p>Portraits from previous conversations.</p></div>
+        <div className={styles.portraitGrid}>
+          {unmatchedPortraits.map(voice => <figure key={voice.id} className={styles.portraitEntry} data-past-voice>
+            <div className={styles.portraitFrame} data-portrait-frame><img src={voice.image} alt={voice.alt} width={voice.width} height={voice.height} loading="lazy" decoding="async" /></div>
+          </figure>)}
+        </div>
+      </section>}
     </section>
 
-    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026 · Venue to be announced</p><Link href="/#next-chapter" className={styles.nextLink}>See what’s taking shape <span aria-hidden="true">↗</span></Link></div></section>
+    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026 · Venue to be announced</p><ActionLink href="/#next-chapter" variant="light">See what’s taking shape</ActionLink></div></section>
   </main>;
 }

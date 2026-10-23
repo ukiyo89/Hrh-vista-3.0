@@ -174,9 +174,6 @@ export function EditionJourney() {
       <header className={styles.header}>
         <div className={styles.headerMain}>
           <h2 id="editions-heading"><span data-header-line>Every chapter.</span><span data-header-line><em>More possibility.</em></span></h2>
-          <div className={styles.headerAside}>
-            <a href="#edition-1">Follow our evolution <span aria-hidden="true">↓</span></a>
-          </div>
         </div>
       </header>
 

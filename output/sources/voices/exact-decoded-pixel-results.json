@@ -1,0 +1,46 @@
+{
+  "method": "Exact decoded sRGB RGB pixel SHA256 plus matching dimensions. No resizing, perceptual hashing or facial comparison.",
+  "checkedAt": "2026-10-23T19:50:16.249Z",
+  "results": [
+    {
+      "name": "Balasubramanian Sethuraman",
+      "sourcePage": "https://www.hrvista.live/",
+      "imageUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGsjtad0SSsIg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1724664750297?e=1764806400&v=beta&t=D3g5Z_A6UOeFwsRSBA0OFstKrKyvyp-Dsw-O5r6Ctl4",
+      "evidence": "Explicit img alt on official event page; does not establish supplied JPEG identity",
+      "status": 403,
+      "matches": []
+    },
+    {
+      "name": "Rajendra Lingwal",
+      "sourcePage": "https://www.hrvista.live/",
+      "imageUrl": "https://media.licdn.com/dms/image/v2/D4D03AQFshcc7hhA1JQ/profile-displayphoto-scale_400_400/B4DZllpqm0IYAg-/0/1758347046222?e=1763596800&v=beta&t=EtWBClmczuHKUlwumfC16ivBSmnLw1qmc_tk72qXMvc",
+      "evidence": "Explicit img alt on official event page; does not establish supplied JPEG identity",
+      "status": 403,
+      "matches": []
+    },
+    {
+      "name": "Dr. Saumya Badgayan Dutta",
+      "sourcePage": "https://www.hrvista.live/",
+      "imageUrl": "https://media.licdn.com/dms/image/v2/D4D03AQE2_AqTmrbhBQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729660311860?e=1763596800&v=beta&t=crLkgxZAwyFkrMUO-sV7MppTc8i4HanGnywSuddlRLc",
+      "evidence": "Explicit img alt on official event page; does not establish supplied JPEG identity",
+      "status": 403,
+      "matches": []
+    },
+    {
+      "name": "Balasubramanian Sethuraman",
+      "sourcePage": "https://www.hrvista.live/",
+      "imageUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGsjtad0SSsIg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724664750297?e=1764806400&v=beta&t=tTsKYVpUIpndoVhC9bmnc9-j7anih5sTEyl4zaO14iQ",
+      "evidence": "Explicit img alt on official event page; does not establish supplied JPEG identity",
+      "status": 403,
+      "matches": []
+    },
+    {
+      "name": "Senthil Kumar S",
+      "sourcePage": "https://www.hrvista.live/",
+      "imageUrl": "https://media.licdn.com/dms/image/v2/C4E03AQFpPMnqtm-P0Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1596017508793?e=1764806400&v=beta&t=JC4_v-z_Op36Fp0iNEJLI4P_9V1QEuQ4Pf-HGtUgKMc",
+      "evidence": "Explicit img alt on official event page; does not establish supplied JPEG identity",
+      "status": 403,
+      "matches": []
+    }
+  ]
+}

@@ -80,7 +80,7 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   return <section ref={root} id={home ? "sponsors" : "sponsor-staircase"} className={styles.staircase} aria-labelledby={home ? "sponsor-teaser-title" : "staircase-title"}>
     <div className={styles.stairHeading}>
       <div><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>Good company.<br /><em>Greater impact.</em></h2></div>
-      <div className={styles.stairHeadingAside}><p>The right names.<br />The right conversations.<br />A bigger world of possibilities.</p><span className={styles.stairScroll}>SCROLL TO FIND YOUR PLACE <i>↓</i></span></div>
+      <div className={styles.stairHeadingAside}><p>The right names.<br />The right conversations.<br />A bigger world of possibilities.</p></div>
     </div>
     <div className={styles.stairRun} data-stair-run>
       <div className={styles.stairScene}>

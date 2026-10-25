@@ -13,7 +13,7 @@
 .progress > span { display:block; width:100%; height:100%; background:#b4ceff; transform-origin:left; transition:transform .4s ease-out; }
 .status { display:block; font-size:8px; letter-spacing:.23em; color:#91a6c5; margin-top:16px; }
 .bottomline button { min-height:44px; cursor:pointer; color:#dae5f9; font-size:11px; letter-spacing:0; display:flex; align-items:center; gap:28px; }
-.bottomline button span { font-size:20px; transition:transform .2s ease-out; }.bottomline button:hover span { transform:translate(3px,-3px); }.bottomline button:focus-visible { outline:2px solid #a4c2f4; outline-offset:8px; }
+.bottomline button span { font-size:20px; transition:transform .2s ease-out; }.bottomline button:focus-visible { outline:2px solid #a4c2f4; outline-offset:8px; }
 .intro[data-phase=opening] { pointer-events:none; animation:none; }
 .intro[data-phase=opening] .shutters > div { animation:openShutter 1.08s cubic-bezier(.76,0,.24,1) calc(.12s + var(--strip) * .022s) both; }
 .intro[data-phase=opening] .shutters > div:nth-child(even) { animation-name:openShutterDown; }

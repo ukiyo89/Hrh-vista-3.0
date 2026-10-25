@@ -24,16 +24,16 @@ export function PhotoLightbox({ photos, index, onChange, onClose, label }: {
   const photo = photos[index];
   return (
     <dialog ref={dialog} className={styles.dialog} aria-label={label} onKeyDown={onKeyDown} onCancel={(event) => { event.preventDefault(); onClose(); }} data-lenis-prevent="true">
-      <div className={styles.toolbar}><p>{label}</p><button type="button" autoFocus onClick={onClose} aria-label="Close photo gallery">Close <span aria-hidden="true">×</span></button></div>
+      <div className={styles.toolbar}><p>{label}</p><button type="button" data-ui="control" data-ui-tone="dark" autoFocus onClick={onClose} aria-label="Close photo gallery">Close <span data-ui-glyph aria-hidden="true">×</span></button></div>
       <figure>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className={styles.photo} src={photo.src} alt={photo.alt} width={1600} height={900} />
-        <figcaption className={styles.caption} aria-live="polite">{photo.caption}{photo.source && <a href={photo.source} target="_blank" rel="noreferrer">Photo: CHRIST Lavasa / Flickr ↗</a>}</figcaption>
+        <figcaption className={styles.caption} aria-live="polite">{photo.caption}{photo.source && <a href={photo.source} data-ui="text" data-ui-tone="dark" target="_blank" rel="noreferrer">Photo: CHRIST Lavasa / Flickr <span data-ui-glyph aria-hidden="true">↗</span></a>}</figcaption>
       </figure>
       <div className={styles.controls}>
-        <button type="button" onClick={() => move(-1)} aria-label="Previous photo">← <span>Previous</span></button>
+        <button type="button" data-ui="control" data-ui-tone="dark" onClick={() => move(-1)} aria-label="Previous photo"><span data-ui-glyph aria-hidden="true">←</span> <span>Previous</span></button>
         <span aria-live="polite">{index + 1} / {photos.length}</span>
-        <button type="button" onClick={() => move(1)} aria-label="Next photo"><span>Next</span> →</button>
+        <button type="button" data-ui="control" data-ui-tone="dark" onClick={() => move(1)} aria-label="Next photo"><span>Next</span> <span data-ui-glyph aria-hidden="true">→</span></button>
       </div>
     </dialog>
   );

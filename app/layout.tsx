@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { RevealSafety } from "@/components/site/Reveal";
 import "./globals.css";
+import "./interactions.css";
 
 /**
  * Display — Nohemi.

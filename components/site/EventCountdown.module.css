@@ -21,7 +21,7 @@
 .foot i { flex-shrink:0; width:4px; height:4px; border-radius:50%; background:#adcaee; }
 .foot a { display:inline-flex; min-height:40px; align-items:center; gap:28px; font-size:10px; }
 .foot a span { font-size:17px; transition:transform .2s; }
-.foot a:hover span { transform:translateY(4px); }
+
 .foot a:focus-visible { outline:2px solid #b7d1ff; outline-offset:6px; }
 .noScript { grid-column:1/-1; color:#bdcbe0; font-size:12px; line-height:1.8; margin-top:12px; }
 @keyframes secondIn { from { transform:translateY(7%); opacity:.6; } to { transform:none; opacity:1; } }

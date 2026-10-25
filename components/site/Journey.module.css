@@ -158,9 +158,9 @@
 .flightControls label { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #e0eafa; font-size: 13px; }
 .flightControls input { display: block; width: 100%; margin: 8px 0 0; height: 22px; cursor: ew-resize; accent-color: #b6ceff; }
 .flightControls input:focus-visible { outline: 2px solid #b7d1ff; outline-offset: 4px; }
-.flightControls > div { display: flex; justify-content: space-between; gap: 18px; }
-.flightControls button { min-height: 44px; padding: 0; background: none; border: 0; border-bottom: 1px solid transparent; color: #a8b9d1; font: 13px var(--font-body), sans-serif; cursor: pointer; transition: color .2s, border-color .2s; }
-.flightControls button:hover, .flightControls[data-phase="departure"] [data-stop="departure"], .flightControls[data-phase="cruise"] [data-stop="cruise"], .flightControls[data-phase="arrival"] [data-stop="arrival"] { color: #f5f7ff; border-color: #9bbdff; }
+.flightControls > div { display: flex; justify-content: space-between; gap: 8px; }
+.flightControls button[data-ui] { padding-inline:12px; font-size:12px; }
+
 .anchorAlias { position: absolute; top: 0; left: 0; scroll-margin-top: 65px; }
 .routeLegend [data-arrived="true"] { color: #a6c5ff; }
 .airplane { filter: drop-shadow(0 2px 5px #030810) drop-shadow(0 0 8px #9fc3ff55); }
@@ -260,9 +260,7 @@
   transition: transform 0.2s;
   font-size: 19px;
 }
-.textLink:hover span {
-  transform: translate(3px, -3px);
-}
+
 .routeLegend {
   display: flex;
   align-items: center;
@@ -380,25 +378,7 @@
 .finaleActions .textLink {
   margin: 0;
 }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 38px;
-  min-height: 54px;
-  padding: 16px 24px;
-  background: #dce8fc;
-  color: #101d32;
-  border-radius: 2px;
-  font-size: 13px;
-  transition:
-    background-color 0.2s,
-    transform 0.2s;
-}
-.button:hover {
-  background: white;
-  transform: translateY(-3px);
-}
+
 .finaleMeta {
   border-top: 1px solid #6b81a14d;
   padding: 24px 0;

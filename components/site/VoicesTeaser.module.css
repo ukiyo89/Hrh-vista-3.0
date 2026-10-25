@@ -14,11 +14,10 @@
 .photo:focus-within [data-voices-photo] { clip-path:none !important; transform:none !important; }
 .artFoot { display:flex; justify-content:flex-end; gap:24px; align-items:center; padding-top:22px; }
 .number { font:400 clamp(48px,6vw,88px)/1 var(--font-display),sans-serif; letter-spacing:-.08em; }
-.section :is(a,button,[tabindex]):focus-visible { outline:3px solid #234b78; outline-offset:7px; }
 .perspective { --archive-mask:#c8d8e8; position:relative; width:100%; }
 .perspectivePicture { position:relative; aspect-ratio:1.25; overflow:hidden; background:#14283b; cursor:grab; touch-action:pan-y; isolation:isolate; }
+.perspectivePicture[data-ui] { cursor:grab; }
 .perspectivePicture[data-dragging=true] { cursor:grabbing; }
-.perspectivePicture:focus-visible { outline:3px solid #234b78; outline-offset:6px; }
 .archiveVisual,.cropLayer,.perspectiveSlide { position:absolute; inset:0; }
 .cropLayer { transform:translate(var(--crop-x,0px),var(--crop-y,0px)) scale(1.08); transition:transform .35s cubic-bezier(.2,.7,.2,1); }
 .perspectivePicture[data-dragging=true] .cropLayer { transition:none; }
@@ -32,15 +31,9 @@
 .shutters i:nth-child(2) { transform-origin:bottom; }
 .perspectiveControls { display:flex; align-items:center; justify-content:flex-end; gap:20px; padding-top:12px; color:#213d5f; }
 .perspectiveControls > div { display:flex; gap:8px; }
-.perspectiveControls button { display:grid; place-items:center; width:44px; height:44px; border:1px solid #627e9b; border-radius:50%; font-size:20px; cursor:pointer; transition:background .2s,color .2s; }
-.perspectiveControls button:hover { background:#173251; color:#f3f6fd; }
-.perspectiveControls button:focus-visible { outline:3px solid #234b78; outline-offset:5px; }
 .wide { --archive-mask:#eeede6; height:100%; }
 .wide .perspectivePicture { height:100%; aspect-ratio:auto; }
 .wide .perspectiveControls { position:absolute; right:20px; bottom:18px; z-index:5; padding:8px; color:#edf3ff; background:#0a182ce8; }
-.wide .perspectiveControls button { border-color:#c8d8e8; }
-.wide .perspectiveControls button:hover { background:#dce8f7; color:#14283b; }
-.wide .perspectiveControls button:focus-visible { outline-color:#f0bb70; }
 @media(max-width:760px) {
   .section { padding:64px 7vw 48px; }
   .layout { grid-template-columns:1fr; gap:24px; }

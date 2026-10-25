@@ -25,9 +25,10 @@ export function SiteFooter() {
         <a
           href="/#top"
           className={styles.back}
+          data-ui="icon"
           aria-label="Back to homepage top"
         >
-          ↑
+          <span data-ui-glyph aria-hidden="true">↑</span>
         </a>
       </div>
       <div className={styles.grid}>
@@ -44,38 +45,41 @@ export function SiteFooter() {
             and Career Guidance.
           </p>
         </div>
-        <nav aria-label="Journey chapters">
-          <a href="/#lavasa">Our Lavasa roots</a>
-          <a href="/#journey">The journey</a>
-          <a href="/#mumbai">Hello, Mumbai</a>
-          <a href="/#editions">1.0 → 2.0 → 3.0</a>
+        <nav className={styles.linkColumn} aria-labelledby="footer-explore">
+          <h2 id="footer-explore" className={styles.columnHeading}>Explore</h2>
+          <a data-ui="text" href="/#lavasa">Lavasa</a>
+          <a data-ui="text" href="/#journey">Journey</a>
+          <a data-ui="text" href="/#mumbai">Mumbai</a>
+          <a data-ui="text" href="/#editions">Editions</a>
         </nav>
-        <nav aria-label="More about HR Vista">
-          <a href="/work">The edition archive ↗</a>
-          <a href="/voices">Voices from 2.0 ↗</a>
-          <a href="/#people">The people behind it ↗</a>
-          <a href="/sponsors">Sponsor showcase ↗</a>
-          <a href="/brochure">Read the brochure ↗</a>
-          <a href="/brochure/HR-VISTA-3.0.pdf" download>
-            Download brochure ↓
+        <nav className={styles.linkColumn} aria-labelledby="footer-discover">
+          <h2 id="footer-discover" className={styles.columnHeading}>Discover</h2>
+          <a data-ui="text" href="/work">Archive</a>
+          <a data-ui="text" href="/voices">Voices 2.0</a>
+          <a data-ui="text" href="/#people">Christ staff</a>
+          <a data-ui="text" href="/sponsors">Sponsors</a>
+          <a data-ui="text" href="/brochure">Brochure</a>
+          <a data-ui="text" href="/brochure/HR-VISTA-3.0.pdf" download>
+            Download PDF <span data-ui-glyph aria-hidden="true">↓</span>
           </a>
         </nav>
-      </div>
-      <div className={styles.socials}>
-        {socialGroups.map(group => (
-          <section key={group.id} className={styles.socialGroup} aria-labelledby={`footer-${group.id}-socials`}>
-            <h2 id={`footer-${group.id}-socials`}>{group.name}</h2>
-            <nav className={styles.socialLinks} aria-label={`${group.name} social media`}>
-              {group.channels.map(channel => (
-                <a key={channel.href} className={styles.socialLink} href={channel.href} target="_blank" rel="noopener noreferrer" aria-label={`${group.name} on ${channel.platform}, ${channel.handle} (opens in a new tab)`}>
-                  <span className={styles.socialIcon}><SocialIcon platform={channel.platform} /></span>
-                  <span className={styles.socialIdentity}><strong>{channel.platform}</strong><span>{channel.handle}</span></span>
-                  <span className={styles.socialArrow} aria-hidden="true">↗</span>
-                </a>
-              ))}
-            </nav>
-          </section>
-        ))}
+        <div className={styles.socials}>
+          <h2 className={styles.columnHeading}>Connect</h2>
+          {socialGroups.map(group => (
+            <section key={group.id} className={styles.socialGroup} aria-labelledby={`footer-${group.id}-socials`}>
+              <h3 id={`footer-${group.id}-socials`}>{group.name}</h3>
+              <nav className={styles.socialLinks} aria-label={`${group.name} social media`}>
+                {group.channels.map(channel => (
+                  <a key={channel.href} className={styles.socialLink} data-ui="text" href={channel.href} target="_blank" rel="noopener noreferrer" aria-label={`${group.name} on ${channel.platform}, ${channel.handle} (opens in a new tab)`}>
+                    <span className={styles.socialIcon}><SocialIcon platform={channel.platform} /></span>
+                    <span>{channel.platform}</span>
+                    <span className={styles.socialArrow} data-ui-glyph aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </nav>
+            </section>
+          ))}
+        </div>
       </div>
       <div className={styles.bottom}>
         <span>HR VISTA 3.0 · 21–22 NOVEMBER 2026</span>

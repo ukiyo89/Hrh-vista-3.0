@@ -28,9 +28,9 @@ export default async function BrochurePage({ searchParams }: { searchParams: Pro
             <div className={styles.summaryGrid}>
               {brochurePages.map((page, index) => (
                 <details key={page.src}>
-                  <summary><span>{String(index + 1).padStart(2, "0")}</span>{page.title}</summary>
+                  <summary data-ui="row"><span>{String(index + 1).padStart(2, "0")}</span>{page.title}</summary>
                   <p>{page.summary}</p>
-                  <a href={page.src} target="_blank" rel="noreferrer">Open page {index + 1} image <span aria-hidden="true">↗</span></a>
+                  <a href={page.src} data-ui="text" target="_blank" rel="noreferrer">Open page {index + 1} image <span data-ui-glyph aria-hidden="true">↗</span></a>
                 </details>
               ))}
             </div>

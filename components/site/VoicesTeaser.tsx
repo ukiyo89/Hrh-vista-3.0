@@ -66,14 +66,14 @@ export function ArchivePerspective({ wide = false, teaserReveal = false, images 
   };
 
   return <div ref={root} className={`${styles.perspective} ${wide ? styles.wide : ""}`} role="group" aria-roledescription="carousel" aria-label="Photographs from HR VISTA 2.0">
-    <div ref={picture} className={styles.perspectivePicture} data-voices-photo={teaserReveal ? "" : undefined} tabIndex={0} role="group" aria-label={images[active].alt} aria-describedby={hintId}
+    <div ref={picture} className={styles.perspectivePicture} data-ui="media" data-ui-tone="dark" data-voices-photo={teaserReveal ? "" : undefined} tabIndex={0} role="group" aria-label={images[active].alt} aria-describedby={hintId}
       onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={() => { grab.current = null; if (picture.current) picture.current.dataset.dragging = "false"; resetCrop(); }} onPointerLeave={() => { if (!grab.current) resetCrop(); }}
       onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); change(event.key === "ArrowLeft" ? -1 : 1); } }}>
       <div className={styles.archiveVisual} data-archive-visual><div className={styles.cropLayer}>{images.map((image, index) => <div key={image.src} className={styles.perspectiveSlide} data-active={active === index} aria-hidden={active !== index}><img src={image.src} alt="" width={1600} height={900} loading={wide && index === 0 ? "eager" : "lazy"} fetchPriority={wide && index === 0 ? "high" : "auto"} draggable={false} /></div>)}</div></div>
       <div className={styles.shutters} aria-hidden="true">{[0, 1, 2].map(index => <i key={index} data-archive-shutter />)}</div>
       <span className={styles.srOnly} id={hintId}>Drag, swipe, or use the left and right arrow keys to explore the photographs.</span>
     </div>
-    <div className={styles.perspectiveControls}><span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {images.length}: {images[active].alt}</span><div><button type="button" onClick={() => change(-1)} aria-label="Previous archive photograph">←</button><button type="button" onClick={() => change(1)} aria-label="Next archive photograph">→</button></div></div>
+    <div className={styles.perspectiveControls}><span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {images.length}: {images[active].alt}</span><div><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(-1)} aria-label="Previous archive photograph"><span data-ui-glyph aria-hidden="true">←</span></button><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(1)} aria-label="Next archive photograph"><span data-ui-glyph aria-hidden="true">→</span></button></div></div>
   </div>;
 }
 

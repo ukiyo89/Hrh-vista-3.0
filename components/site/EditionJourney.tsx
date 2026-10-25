@@ -179,7 +179,7 @@ export function EditionJourney() {
 
       <nav className={styles.timeline} aria-label="Edition timeline">
         {editions.map((edition, index) => (
-          <a key={edition.number} href={`#edition-${index + 1}`} aria-current={active === index ? "step" : undefined}>
+          <a key={edition.number} href={`#edition-${index + 1}`} data-ui="row" aria-current={active === index ? "step" : undefined}>
             <span className={styles.navNumber}>{edition.number}</span>
             <span className={styles.navText}>{edition.nav}</span>
             <span className={styles.navDot} aria-hidden="true" />
@@ -208,16 +208,16 @@ export function EditionJourney() {
 
               <figure className={styles.editionPhoto}>
                 <div className={styles.photoReveal} data-photo-reveal>
-                  <a href={edition.href} className={styles.photoFrame} aria-label={edition.label}>
+                  <a href={edition.href} className={styles.photoFrame} data-ui="media" data-ui-tone="dark" aria-label={edition.label}>
                     <img data-photo-image src={edition.image} alt={edition.alt} width={1600} height={900} loading="lazy" decoding="async" />
-                    <span className={styles.photoArrow} aria-hidden="true">↗</span>
+                    <span className={styles.photoArrow} data-ui-glyph aria-hidden="true">↗</span>
                   </a>
                 </div>
                 <figcaption>{edition.caption}</figcaption>
               </figure>
               <div className={styles.editionDetails}>
                 <p className={styles.copy}>{edition.copy}</p>
-                <a href={edition.href} className={styles.textLink}>{edition.label}<span aria-hidden="true">↗</span></a>
+                <a href={edition.href} className={styles.textLink} data-ui="text">{edition.label}<span data-ui-glyph aria-hidden="true">↗</span></a>
               </div>
             </div>
           </article>

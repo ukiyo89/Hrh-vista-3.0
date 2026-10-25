@@ -14,11 +14,6 @@
   scroll-margin-top: var(--nav-h, 64px);
 }
 
-.editions :is(a, button):focus-visible {
-  outline: 3px solid #2558cb;
-  outline-offset: 6px;
-}
-
 .header,
 .story,
 .timeline {
@@ -67,11 +62,6 @@
 
 .headerAside a span {
   font-size: 18px;
-  transition: transform .2s;
-}
-
-.headerAside a:hover span {
-  transform: translateY(3px);
 }
 
 .timeline {
@@ -94,16 +84,6 @@
   padding: 16px 24px;
   border-left: 1px solid var(--archive-rule);
   text-decoration: none;
-  transition: color .2s, background-color .2s;
-}
-
-.timeline > a:hover {
-  background: #e1e4e3;
-}
-
-.timeline > a[aria-current] {
-  color: #f5f5ed;
-  background: #16283e;
 }
 
 .navNumber {
@@ -267,16 +247,10 @@
   font-size: 12px;
   color: #243b57;
   text-decoration: none;
-  border-bottom: 1px solid #8798ac;
 }
 
 .textLink span {
   font-size: 24px;
-  transition: transform .2s;
-}
-
-.textLink:hover span {
-  transform: translate(3px, -3px);
 }
 
 .editionPhoto {
@@ -317,12 +291,6 @@
   object-fit: cover;
   object-position: 50% 40%;
   filter: saturate(.72);
-  transition: filter .2s;
-}
-
-.photoFrame:hover img,
-.photoFrame:focus-visible img {
-  filter: saturate(1);
 }
 
 .photoArrow {
@@ -338,13 +306,6 @@
   background: var(--archive-paper);
   color: var(--archive-ink);
   font-size: 24px;
-  transition: background-color .2s, color .2s, transform .2s;
-}
-
-.photoFrame:hover .photoArrow {
-  background: #16283e;
-  color: #f5f5ed;
-  transform: translate(3px, -3px);
 }
 
 .editionPhoto figcaption {

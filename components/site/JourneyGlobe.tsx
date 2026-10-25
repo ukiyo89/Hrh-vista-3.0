@@ -277,7 +277,7 @@ export default function JourneyGlobe({
   return (
     <div ref={shell} className={styles.shell} data-globe-interactive data-discovering={revealing}>
       <div ref={host} className="journey-globe" aria-hidden="true" />
-      <div className={styles.dragSurface} tabIndex={0} role="group" aria-label="Interactive earth. Drag or use arrow keys to spin. Shake back and forth to find a surprise, or press Space. Home resets the globe."
+      <div className={styles.dragSurface} data-ui="media" data-ui-tone="dark" tabIndex={0} role="group" aria-label="Interactive earth. Drag or use arrow keys to spin. Shake back and forth to find a surprise, or press Space. Home resets the globe."
         onKeyDown={(event) => {
           if (!["ArrowLeft", "ArrowRight", "Home", " ", "Enter"].includes(event.key)) return;
           event.preventDefault();
@@ -339,9 +339,9 @@ export default function JourneyGlobe({
       <div className={styles.controls}>
         <p>Drag to explore</p>
         <div className={styles.buttons}>
-          <button type="button" onClick={discover} aria-label="Shake the globe to reveal the Easter egg">Give it a shake <span>↔</span></button>
-          <button type="button" onClick={reset} aria-label="Reset globe rotation">Reset <span>↺</span></button>
-          <button type="button" aria-pressed={paused} aria-label={paused ? "Enable globe momentum" : "Pause globe momentum"} onClick={() => { pauseRef.current = !paused; spin.current.velocity = 0; setPaused(!paused); }}>{paused ? "▶" : "Ⅱ"}</button>
+          <button type="button" data-ui="control" data-ui-tone="dark" onClick={discover} aria-label="Shake the globe to reveal the Easter egg">Give it a shake <span data-ui-glyph aria-hidden="true">↔</span></button>
+          <button type="button" data-ui="control" data-ui-tone="dark" onClick={reset} aria-label="Reset globe rotation">Reset <span data-ui-glyph aria-hidden="true">↺</span></button>
+          <button type="button" data-ui="icon" data-ui-tone="dark" aria-pressed={paused} aria-label={paused ? "Enable globe momentum" : "Pause globe momentum"} onClick={() => { pauseRef.current = !paused; spin.current.velocity = 0; setPaused(!paused); }}><span data-ui-glyph aria-hidden="true">{paused ? "▶" : "Ⅱ"}</span></button>
         </div>
         <span className={styles.srOnly} role="status">{revealing ? "You found the Easter egg: HR VISTA and CHRIST University. Two identities, one world." : discovery ? "Easter egg discovered. Shake the globe to see it again." : ""}</span>
       </div>

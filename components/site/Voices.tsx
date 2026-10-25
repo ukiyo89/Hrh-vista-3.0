@@ -103,10 +103,10 @@ export function Voices() {
         <span className={styles.readerMark} data-quote-mark aria-hidden="true">“</span>
         <div className={styles.quoteContent} aria-live="polite" aria-atomic="true">
           <blockquote><p>{current.quote}</p></blockquote>
-          <div className={styles.attribution}>{current.portrait && <img src={current.portrait} alt="" width={72} height={72} loading="lazy" />}<div><strong>{current.name}</strong><p>{current.role}{current.role && current.org ? " · " : ""}{current.org}</p>{current.source && <a href={current.source} target="_blank" rel="noopener noreferrer">Original source <span aria-hidden="true">↗</span><span className={styles.srOnly}> (opens in a new tab)</span></a>}</div></div>
+          <div className={styles.attribution}>{current.portrait && <img src={current.portrait} alt="" width={72} height={72} loading="lazy" />}<div><strong>{current.name}</strong><p>{current.role}{current.role && current.org ? " · " : ""}{current.org}</p>{current.source && <a href={current.source} data-ui="text" data-ui-tone="dark" target="_blank" rel="noopener noreferrer">Original source <span data-ui-glyph aria-hidden="true">↗</span><span className={styles.srOnly}> (opens in a new tab)</span></a>}</div></div>
         </div>
-        {feedback.length > 1 && <div className={styles.readerControls}><button type="button" onClick={() => readFromIndex(selected - 1)} aria-label="Previous reflection">←</button><p>Another perspective</p><button type="button" onClick={() => readFromIndex(selected + 1)} aria-label="Next reflection">→</button></div>}
-        {feedback.length > 1 && <details className={styles.voiceIndex}><summary>Browse all {feedback.length} voices <span aria-hidden="true">+</span></summary><ol>{feedback.map((item, index) => <li key={`${item.name}-${index}`}><button type="button" aria-pressed={selected === index} onClick={() => readFromIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item.name}</strong><span>{selected === index ? "Reading" : "Read reflection"}</span></button></li>)}</ol></details>}
+        {feedback.length > 1 && <div className={styles.readerControls}><button type="button" data-ui="icon" data-ui-tone="dark" onClick={() => readFromIndex(selected - 1)} aria-label="Previous reflection"><span data-ui-glyph aria-hidden="true">←</span></button><p>Another perspective</p><button type="button" data-ui="icon" data-ui-tone="dark" onClick={() => readFromIndex(selected + 1)} aria-label="Next reflection"><span data-ui-glyph aria-hidden="true">→</span></button></div>}
+        {feedback.length > 1 && <details className={styles.voiceIndex}><summary data-ui="row" data-ui-tone="dark">Browse all {feedback.length} voices <span data-ui-glyph aria-hidden="true">+</span></summary><ol>{feedback.map((item, index) => <li key={`${item.name}-${index}`}><button type="button" data-ui="row" data-ui-tone="dark" aria-pressed={selected === index} onClick={() => readFromIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item.name}</strong><span>{selected === index ? "Reading" : "Read reflection"}</span></button></li>)}</ol></details>}
       </div> : null}
       <section id="speaker-profiles" className={styles.profiles} aria-labelledby="profiles-title">
         <div className={styles.profileIntroduction}>
@@ -114,8 +114,8 @@ export function Voices() {
           <p className={styles.profileIntroCopy}>Meet the leaders and practitioners who bring their experience to the conversation.</p>
         </div>
         <details className={styles.profileDirectory}>
-          <summary>Find a speaker <span>{String(speakerProfiles.length).padStart(2, "0")} profiles <span aria-hidden="true">+</span></span></summary>
-          <ol>{speakerProfiles.map((profile, index) => <li key={profile.id}><a href={`#${profile.id}`} onClick={event => jumpToProfile(event, profile.id)}><span>{String(index + 1).padStart(2, "0")}</span>{profile.name}<span aria-hidden="true">↘</span></a></li>)}</ol>
+          <summary data-ui="row" data-ui-tone="dark">Find a speaker <span>{String(speakerProfiles.length).padStart(2, "0")} profiles <span data-ui-glyph aria-hidden="true">+</span></span></summary>
+          <ol>{speakerProfiles.map((profile, index) => <li key={profile.id}><a href={`#${profile.id}`} data-ui="row" data-ui-tone="dark" onClick={event => jumpToProfile(event, profile.id)}><span>{String(index + 1).padStart(2, "0")}</span>{profile.name}<span data-ui-glyph aria-hidden="true">↘</span></a></li>)}</ol>
         </details>
         <div className={styles.profileList}>
           {speakerProfiles.map((profile, index) => {
@@ -123,7 +123,7 @@ export function Voices() {
             return <article key={profile.id} id={profile.id} className={styles.speakerProfile} data-has-portrait={Boolean(portrait)} data-past-voice aria-labelledby={`${profile.id}-name`}>
               <div className={styles.profileNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
               {portrait && <div className={styles.profilePortrait} data-portrait-frame><img src={portrait.image} alt={profile.name} width={portrait.width} height={portrait.height} loading="lazy" decoding="async" /></div>}
-              <div className={styles.profileCopy}><h3 id={`${profile.id}-name`} tabIndex={-1}>{profile.name}</h3><p>{profile.biography}</p>{profile.linkedIn && <a href={profile.linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span><span className={styles.srOnly}> for {profile.name} (opens in a new tab)</span></a>}</div>
+              <div className={styles.profileCopy}><h3 id={`${profile.id}-name`} tabIndex={-1}>{profile.name}</h3><p>{profile.biography}</p>{profile.linkedIn && <a href={profile.linkedIn} data-ui="text" data-ui-tone="dark" target="_blank" rel="noopener noreferrer">LinkedIn <span data-ui-glyph aria-hidden="true">↗</span><span className={styles.srOnly}> for {profile.name} (opens in a new tab)</span></a>}</div>
             </article>;
           })}
         </div>

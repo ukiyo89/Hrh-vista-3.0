@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ActionLink } from "./ActionLink";
 import styles from "./SiteHeader.module.css";
 
 const LINKS = [
@@ -84,11 +85,11 @@ export function SiteHeader() {
           <span>HR VISTA <span className={styles.version}>3.0</span></span>
         </Link>
         <nav className={styles.desktop} aria-label="Primary">
-          {LINKS.map((link) => <Link key={link.label} href={resolve(link.href)} aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link>)}
+          {LINKS.map((link) => <Link key={link.label} href={resolve(link.href)} data-ui="text" data-ui-tone="dark" aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link>)}
         </nav>
         <div className={styles.actions}>
-          <a href="/brochure/HR-VISTA-3.0.pdf" download className={styles.join}>Download brochure <span aria-hidden="true">↓</span></a>
-          <button ref={toggleRef} className={styles.toggle} type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>
+          <ActionLink href="/brochure/HR-VISTA-3.0.pdf" download size="compact" direction="down" className={styles.join}><span className={styles.downloadFull}>Download brochure</span><span className={styles.downloadShort}><span className={styles.srOnly}>Download </span>Brochure</span></ActionLink>
+          <button ref={toggleRef} className={styles.toggle} data-ui="icon" data-ui-tone="dark" type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)}>
             <span className={open ? styles.topOpen : ""} />
             <span className={open ? styles.bottomOpen : ""} />
           </button>
@@ -97,8 +98,8 @@ export function SiteHeader() {
       <div className={styles.readingProgress} aria-hidden="true"><span ref={progressRef} /></div>
       {open && <div ref={panelRef} className={styles.panel} id="mobile-navigation" data-lenis-prevent>
         <nav aria-label="Mobile">
-          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span aria-hidden="true">↗</span></Link>)}
-          <Link href="/brochure" className={styles.mobileJoin} onClick={() => setOpen(false)}>Explore the brochure <span aria-hidden="true">↗</span></Link>
+          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} data-ui="row" data-ui-tone="dark" onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span data-ui-glyph aria-hidden="true">↗</span></Link>)}
+          <ActionLink href="/brochure" className={styles.mobileJoin} onClick={() => setOpen(false)}>Explore the brochure</ActionLink>
         </nav>
         <p>21–22 November 2026 · Venue to be announced</p>
       </div>}

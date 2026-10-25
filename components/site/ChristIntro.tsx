@@ -172,7 +172,7 @@ export function ChristIntro() {
         </div>
         <span className={styles.status} role="status">{phase === "opening" ? "WELCOME TO WHAT’S NEXT" : "SETTING THE STAGE"}</span>
       </div>
-      <div className={styles.bottomline}><button ref={skip} type="button" onClick={() => enter.current()}>Enter the experience <span>↗</span></button></div>
+      <div className={styles.bottomline}><button ref={skip} type="button" data-ui="control" data-ui-tone="dark" onClick={() => enter.current()}>Enter the experience <span data-ui-glyph aria-hidden="true">↗</span></button></div>
     </div>
     </>
   );

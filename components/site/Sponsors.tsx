@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ActionLink } from "./ActionLink";
 import styles from "./Sponsors.module.css";
 
 const concepts = [
@@ -79,21 +80,24 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   }, [paused]);
   return <section ref={root} id={home ? "sponsors" : "sponsor-staircase"} className={styles.staircase} aria-labelledby={home ? "sponsor-teaser-title" : "staircase-title"}>
     <div className={styles.stairHeading}>
-      <div><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>Good company.<br /><em>Greater impact.</em></h2></div>
-      <div className={styles.stairHeadingAside}><p>The right names.<br />The right conversations.<br />A bigger world of possibilities.</p></div>
+      <div><p className={styles.eyebrow}>06 / A SHARED SPOTLIGHT</p><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>Good company.<br /><em>Greater impact.</em></h2></div>
+      <div className={styles.stairHeadingAside}><p>The right names.<br />The right conversations.<br />A bigger world of possibilities.</p><span className={styles.stairScroll}>SCROLL TO FIND YOUR PLACE <i>↓</i></span></div>
     </div>
     <div className={styles.stairRun} data-stair-run>
       <div className={styles.stairScene}>
+        <div className={styles.stairSceneTop}><span>HR VISTA × WHAT’S NEXT</span><span>05 POSSIBILITIES / ONE COMMUNITY</span></div>
         <div className={styles.stairGuide} aria-hidden="true" />
         {stairCards.map((card, i) => <article key={card.label} className={styles.stairCard} data-sponsor-step={i} style={{ "--step": i, "--card-bg": card.background, "--card-ink": card.ink } as CSSProperties}>
+          <div className={styles.stairCardTop}><span>{card.label}</span><span>0{i + 1}</span></div>
           <div className={styles.stairIdentity}>
             {i === 0 ? <><span className={styles.collabName}>HR VISTA <i>×</i></span><strong data-long={brand.length > 15}>{brand}</strong></> :
               i === 1 ? <><span className={styles.cardAsterisk} aria-hidden="true">✳</span><strong>Your next<br />connection.</strong></> :
               i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>A new dimension for your brand.</span></> :
               i === 3 ? <strong>People.<br />Possibility.</strong> : <><span className={styles.collabName}>THE NEXT CHAPTER</span><strong data-long={brand.length > 15}>{brand}<i className={styles.cardArrow}>↗</i></strong></>}
           </div>
+          <div className={styles.stairCardFoot}><span>{card.foot}</span><span>↗</span></div>
         </article>)}
-        <div className={styles.stairSceneFoot}><div><p>Sponsor showcase · Lineup coming soon</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/sponsors" : "#brand-preview"} className={styles.stairLink}>{home ? "Find your place" : "Try your brand"}<span>↗</span></Link></div>
+        <div className={styles.stairSceneFoot}><div><p>SHOWCASE CONCEPTS · SPONSORS TO BE ANNOUNCED</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/sponsors" : "#brand-preview"} className={styles.stairLink}>{home ? "Find your place" : "Try your brand"}<span>↗</span></Link></div>
       </div>
     </div>
   </section>;
@@ -112,10 +116,10 @@ export function Sponsors() {
     <section className={styles.hero} aria-labelledby="sponsor-title">
       <div className={styles.heroTop}><p className={styles.eyebrow}>HR VISTA 3.0 / PARTNERSHIPS</p><span className={styles.previewTag}>SHOWCASE PREVIEW</span></div>
       <div className={styles.heroGrid}>
-        <div className={styles.heroCopy}><h1 id="sponsor-title">Amplify<br />what’s <em>next.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Extraordinary conversations deserve extraordinary company. Make room for your brand in the future of work.</p><a className={styles.cta} href="#brand-preview">Put your brand in the picture <span>↓</span></a></div>
+        <div className={styles.heroCopy}><h1 id="sponsor-title">Amplify<br />what’s <em>next.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Extraordinary conversations deserve extraordinary company. Make room for your brand in the future of work.</p><ActionLink className={styles.cta} href="#brand-preview" direction="down">Put your brand in the picture</ActionLink></div>
         <BrandStage name={name} mode={mode} />
       </div>
-      <div className={styles.heroFoot}><span>MUMBAI · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "Play motion ▶" : "Pause motion Ⅱ"}</button></div>
+      <div className={styles.heroFoot}><span>MUMBAI · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={paused} onClick={() => setPaused(!paused)} disabled={!!reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span data-ui-glyph aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button></div>
     </section>
     <div className={styles.ribbon} aria-hidden="true"><div>{Array.from({ length: 4 }, (_, i) => <span key={i}>PEOPLE MEET POSSIBILITY <i>✳</i> BETTER, TOGETHER <i>✳</i></span>)}</div></div>
     <SponsorStaircase name={name} paused={paused} />
@@ -124,7 +128,7 @@ export function Sponsors() {
       <div className={styles.previewGrid}>
         <div className={styles.editor}>
           <label htmlFor="brand-name">YOUR BRAND NAME</label><input id="brand-name" value={name} onChange={event => setName(event.target.value)} maxLength={24} placeholder="Your brand" autoComplete="organization" aria-describedby="brand-help" /><p id="brand-help">A live visual preview. Nothing is submitted or saved.</p>
-          <div className={styles.sceneOptions} role="group" aria-label="Choose a sponsor showcase scene">{concepts.map((concept, i) => <button key={concept.name} type="button" aria-pressed={mode === i} onClick={() => setMode(i)}><span>0{i + 1}</span><strong>{concept.name}</strong><span>{mode === i ? "↗" : "+"}</span></button>)}</div>
+          <div className={styles.sceneOptions} role="group" aria-label="Choose a sponsor showcase scene">{concepts.map((concept, i) => <button key={concept.name} type="button" data-ui="row" aria-pressed={mode === i} onClick={() => setMode(i)}><span>0{i + 1}</span><strong>{concept.name}</strong><span data-ui-glyph aria-hidden="true">{mode === i ? "↗" : "+"}</span></button>)}</div>
           <div className={styles.sceneDescription} aria-live="polite"><span>{concepts[mode].label}</span><p>{concepts[mode].copy}</p></div>
         </div>
         <div className={styles.previewCanvas}><BrandStage name={name} mode={mode} /></div>
@@ -135,7 +139,7 @@ export function Sponsors() {
       <motion.div initial={reduced ? false : { y: 35 }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: .7 }}>
         <h2 id="future-sponsors-title">The next names<br />start <em>here.</em></h2><p>Our HR VISTA 3.0 sponsor lineup will be announced here.</p>
         <div className={styles.emptyLineup} aria-label="No confirmed sponsors announced"><span>SPONSORS</span><span className={styles.emptyDash}>—</span><span>TO BE ANNOUNCED</span></div>
-        <a className={styles.cta} href="mailto:hrvista.lavasa@christuniversity.in?subject=HR%20VISTA%203.0%20%E2%80%94%20Partnership%20enquiry">Let’s start a conversation <span>↗</span></a><p className={styles.email}>hrvista.lavasa@christuniversity.in</p>
+        <ActionLink className={styles.cta} href="mailto:hrvista.lavasa@christuniversity.in?subject=HR%20VISTA%203.0%20%E2%80%94%20Partnership%20enquiry">Let’s start a conversation</ActionLink><p className={styles.email}>hrvista.lavasa@christuniversity.in</p>
       </motion.div>
     </section>
   </main>;

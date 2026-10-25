@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { JourneyMotion } from "./JourneyGlobe";
 import { content } from "@/lib/data/content";
 import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
+import { ActionLink } from "./ActionLink";
 import styles from "./Journey.module.css";
 
 const Globe = dynamic(() => import("./JourneyGlobe"), { ssr: false });
@@ -446,10 +447,10 @@ export function Journey() {
                 Mumbai
               </span>
             </div>
-            <div className={styles.flightControls} data-flight-controls>
+            <div className={styles.flightControls} data-flight-controls data-ui-tone="dark">
               <label htmlFor="journey-flight">Explore the flight</label>
               <input id="journey-flight" data-flight-scrubber type="range" min="0" max="100" defaultValue="0" aria-label="Scroll through the illustrated Lavasa to Mumbai flight" onChange={event => seekFlight(Number(event.currentTarget.value) / 100)} />
-              <div><button type="button" data-stop="departure" onClick={() => seekFlight(0)}>Departure</button><button type="button" data-stop="cruise" onClick={() => seekFlight(.5)}>In flight</button><button type="button" data-stop="arrival" onClick={() => seekFlight(1)}>Arrival</button></div>
+              <div><button type="button" data-ui="tab" data-stop="departure" onClick={() => seekFlight(0)}>Departure</button><button type="button" data-ui="tab" data-stop="cruise" onClick={() => seekFlight(.5)}>In flight</button><button type="button" data-ui="tab" data-stop="arrival" onClick={() => seekFlight(1)}>Arrival</button></div>
             </div>
           </div>
         </div>
@@ -475,8 +476,8 @@ export function Journey() {
             <span>21—22 NOVEMBER 2026</span>
             <strong>Mumbai. Venue to be announced.</strong>
             <details>
-              <summary>
-                About the next chapter <span>+</span>
+              <summary data-ui="row" data-ui-tone="dark">
+                About the next chapter <span data-ui-glyph>+</span>
               </summary>
               <p>
                 Mumbai brings together business, finance and professional
@@ -506,11 +507,9 @@ export function JourneyFinale() {
         Discover what’s ahead at HR VISTA 3.0.
       </p>
       <div className={styles.finaleActions}>
-        <a className={styles.button} href={PDF} download>
-          Download brochure <span>↓</span>
-        </a>
-        <a className={styles.textLink} href="/brochure">
-          Read online <span>↗</span>
+        <ActionLink href={PDF} download direction="down">Download brochure</ActionLink>
+        <a className={styles.textLink} href="/brochure" data-ui="text" data-ui-tone="dark">
+          Read online <span data-ui-glyph aria-hidden="true">↗</span>
         </a>
       </div>
       <div className={styles.finaleMeta}>

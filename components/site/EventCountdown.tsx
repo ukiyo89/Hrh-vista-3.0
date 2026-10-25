@@ -65,7 +65,7 @@ export function EventCountdown() {
       </div>)}
     </div>
     <div className={styles.rule} aria-hidden="true"><span data-clock-rule /></div>
-    <div className={styles.foot}><p>{phase === "live" ? "The HR VISTA days are here" : phase === "ended" ? "HR VISTA 3.0 · November 2026" : "Until 21 November · 00:00 IST"}</p><a href="/hr-vista-2026.ics" download>Save the dates <span aria-hidden="true">↓</span></a></div>
+    <div className={styles.foot}><p>{phase === "live" ? "The HR VISTA days are here" : phase === "ended" ? "HR VISTA 3.0 · November 2026" : "Until 21 November · 00:00 IST"}</p><a href="/hr-vista-2026.ics" download data-ui="text" data-ui-tone="dark">Save the dates <span data-ui-glyph aria-hidden="true">↓</span></a></div>
     <noscript><p className={styles.noScript}>HR VISTA 3.0 takes place on {event.dates}. Enable JavaScript for the live countdown.</p></noscript>
   </section>;
 }

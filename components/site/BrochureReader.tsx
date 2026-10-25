@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { brochurePages } from "@/lib/data/brochure";
+import { ActionLink } from "./ActionLink";
 import styles from "./BrochureReader.module.css";
 
 export function BrochureMasthead() {
@@ -20,11 +21,11 @@ export function BrochureMasthead() {
             <h1 className={styles.introTitle}><span>Your next</span><span>chapter<span className={styles.titleDot}>.</span></span></h1>
             <p className={styles.introDeck}>The vision. The people. The possibilities.</p>
             <p className={styles.introDescription}>The vision, the people and the experience of HR VISTA 3.0. The complete official brochure, one page at a time.</p>
-            <a className={styles.downloadLink} href="/brochure/HR-VISTA-3.0.pdf" download>Download brochure PDF <span aria-hidden="true">↓</span></a><a className={styles.readLink} href="#brochure-reader"><span>Step inside the brochure</span><span aria-hidden="true">↓</span></a>
+            <ActionLink className={styles.downloadLink} href="/brochure/HR-VISTA-3.0.pdf" download direction="down">Download brochure PDF</ActionLink><a className={styles.readLink} data-ui="text" data-ui-tone="dark" href="#brochure-reader"><span>Step inside the brochure</span><span data-ui-glyph aria-hidden="true">↓</span></a>
           </div>
           <div className={styles.coverComposition}>
             <span className={styles.coverCount} aria-hidden="true">12</span>
-            <motion.a href="#brochure-reader" className={styles.coverStack} style={{ y: reduceMotion ? 0 : coverDrift, rotate: reduceMotion ? 0 : 7 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }} aria-label="Start reading the official HR VISTA 3.0 brochure">
+            <motion.a href="#brochure-reader" className={styles.coverStack} data-ui="media" data-ui-tone="dark" style={{ y: reduceMotion ? 0 : coverDrift, rotate: reduceMotion ? 0 : 7 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }} aria-label="Start reading the official HR VISTA 3.0 brochure">
               <Image className={styles.introCover} src={brochurePages[0].src} alt="HR VISTA 3.0 official brochure cover" width={334} height={422} sizes="(max-width: 560px) 220px, (max-width: 900px) 280px, 334px" priority />
               <span className={styles.coverCaption}>HR VISTA 3.0 / 2026 <span aria-hidden="true">↗</span></span>
             </motion.a>
@@ -53,8 +54,8 @@ function ReadingDialog({ index, onChange, onClose }: { index: number; onChange: 
       <div className={styles.dialogToolbar}>
         <span className={styles.dialogTitle}>HR VISTA 3.0 · {index + 1} / {brochurePages.length}</span>
         <div className={styles.dialogActions}>
-          <button type="button" aria-pressed={zoomed} onClick={() => setZoomed(!zoomed)}>{zoomed ? "Fit to screen" : "Zoom in"} <span aria-hidden="true">{zoomed ? "−" : "+"}</span></button>
-          <button type="button" autoFocus onClick={onClose} aria-label="Close reading mode">Close <span aria-hidden="true">×</span></button>
+          <button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={zoomed} onClick={() => setZoomed(!zoomed)}>{zoomed ? "Fit to screen" : "Zoom in"} <span data-ui-glyph aria-hidden="true">{zoomed ? "−" : "+"}</span></button>
+          <button type="button" data-ui="control" data-ui-tone="dark" autoFocus onClick={onClose} aria-label="Close reading mode">Close <span data-ui-glyph aria-hidden="true">×</span></button>
         </div>
       </div>
       <div className={styles.dialogViewport} ref={viewport} data-lenis-prevent="true">
@@ -62,9 +63,9 @@ function ReadingDialog({ index, onChange, onClose }: { index: number; onChange: 
         <img className={zoomed ? styles.zoomedPage : styles.dialogPage} src={brochurePages[index].src} alt={`Page ${index + 1}: ${brochurePages[index].title}. ${brochurePages[index].summary}`} width={834} height={1053} />
       </div>
       <div className={styles.dialogFooter}>
-        <button type="button" onClick={() => onChange(index - 1)} disabled={index === 0}>← Previous</button>
+        <button type="button" data-ui="control" data-ui-tone="dark" onClick={() => onChange(index - 1)} disabled={index === 0}><span data-ui-glyph aria-hidden="true">←</span> Previous</button>
         <p aria-live="polite">{brochurePages[index].title}</p>
-        <button type="button" onClick={() => onChange(index + 1)} disabled={index === brochurePages.length - 1}>Next →</button>
+        <button type="button" data-ui="control" data-ui-tone="dark" onClick={() => onChange(index + 1)} disabled={index === brochurePages.length - 1}>Next <span data-ui-glyph aria-hidden="true">→</span></button>
       </div>
     </dialog>
   );
@@ -105,22 +106,22 @@ export function BrochureReader({ initialPage = 1 }: { initialPage?: number }) {
     <section id="brochure-reader" className={styles.reader} aria-label="12-page brochure reader" tabIndex={0} onKeyDown={(event) => handlePageKeys(event, index, setIndex)}>
       <div className={styles.readerHeader}>
         <div><p className="hv-eyebrow">HR VISTA / 12-page official brochure</p><h2>Take a closer look.</h2></div>
-        <button type="button" className="hv-button hv-button--secondary" onClick={() => setReading(true)}>Open reading mode <span aria-hidden="true">↗</span></button>
+        <button type="button" data-ui="control" data-ui-tone="dark" onClick={() => setReading(true)}>Open reading mode <span data-ui-glyph aria-hidden="true">↗</span></button>
       </div>
       <div className={styles.toolbar}>
-        <button type="button" className={styles.navButton} onClick={() => setIndex(index - 1)} disabled={index === 0}><span aria-hidden="true">←</span> Previous</button>
+        <button type="button" className={styles.navButton} data-ui="control" data-ui-tone="dark" onClick={() => setIndex(index - 1)} disabled={index === 0}><span data-ui-glyph aria-hidden="true">←</span> Previous</button>
         <label className={styles.pageSelector}>Page
-          <select aria-label="Choose a brochure page" value={index} onChange={(event) => setIndex(Number(event.target.value))}>
+          <select data-ui="control" aria-label="Choose a brochure page" value={index} onChange={(event) => setIndex(Number(event.target.value))}>
             {brochurePages.map((item, i) => <option key={item.src} value={i}>{i + 1} — {item.title}</option>)}
           </select>
           <span>of {brochurePages.length}</span>
         </label>
-        <button type="button" className={styles.navButton} onClick={() => setIndex(index + 1)} disabled={index === brochurePages.length - 1}>Next <span aria-hidden="true">→</span></button>
+        <button type="button" className={styles.navButton} data-ui="control" data-ui-tone="dark" onClick={() => setIndex(index + 1)} disabled={index === brochurePages.length - 1}>Next <span data-ui-glyph aria-hidden="true">→</span></button>
       </div>
       <div className={styles.stage}>
         <span className={styles.stageNumber} aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
         <figure>
-          <button type="button" className={styles.pageButton} onClick={() => setReading(true)} aria-label={`Open page ${index + 1} in larger reading mode`}>
+          <button type="button" className={styles.pageButton} data-ui="media" onClick={() => setReading(true)} aria-label={`Open page ${index + 1} in larger reading mode`}>
             {/* Keep the cover rendered and meaningful before JavaScript loads. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className={styles.documentPage} src={page.src} alt={`HR VISTA 3.0 brochure, page ${index + 1}: ${page.title}`} width={834} height={1053} decoding="async" />
@@ -134,7 +135,7 @@ export function BrochureReader({ initialPage = 1 }: { initialPage?: number }) {
       </div>
       <nav className={styles.thumbnailTrack} aria-label="Brochure page thumbnails" data-lenis-prevent="true">
         {brochurePages.map((item, i) => (
-          <button type="button" key={item.src} ref={(element) => { thumbnailButtons.current[i] = element; }} aria-pressed={index === i} aria-label={`Read page ${i + 1}: ${item.title}`} onClick={() => setIndex(i)}>
+          <button type="button" data-ui="media" data-ui-tone="dark" key={item.src} ref={(element) => { thumbnailButtons.current[i] = element; }} aria-pressed={index === i} aria-label={`Read page ${i + 1}: ${item.title}`} onClick={() => setIndex(i)}>
             <Image src={item.src} alt="" width={72} height={91} sizes="72px" loading="lazy" />
             <span>{String(i + 1).padStart(2, "0")}</span>
           </button>

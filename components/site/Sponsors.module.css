@@ -1,6 +1,6 @@
 .page { color:#f4f3ed; background:#07111e; }
-.staircase { background:#08121f; color:#f3f3eb; }
-.stairHeading { display:grid; grid-template-columns:1.5fr 1fr; align-items:end; gap:7vw; padding:110px 6vw 95px; }
+.staircase { background:#08121f; color:#f3f3eb; overflow:clip; isolation:isolate; }
+.stairHeading { position:relative; z-index:1; background:#08121f; display:grid; grid-template-columns:1.5fr 1fr; align-items:end; gap:7vw; padding:110px 6vw 16px; }
 .stairHeading .eyebrow { color:#acbfdb; margin-bottom:32px; }
 .stairHeading h2 { font:400 clamp(56px,7.4vw,120px)/.98 var(--font-display),sans-serif; letter-spacing:-.05em; }
 .stairHeading h2 em { font-style:normal; color:#a9c7fa; }
@@ -8,7 +8,7 @@
 .stairHeadingAside > p { font-size:14px; line-height:1.8; color:#b8c8dd; }
 .stairScroll { display:flex; align-items:center; justify-content:space-between; gap:35px; margin-top:40px; font-size:8px; letter-spacing:.12em; color:#bacbe3; }
 .stairScroll i { font-style:normal; font-size:20px; }
-.stairRun { height:300svh; position:relative; }
+.stairRun { height:300svh; position:relative; z-index:0; margin-top:-65svh; }
 .stairScene { position:sticky; top:0; height:100svh; min-height:540px; overflow:clip; perspective:1200px; perspective-origin:50% 45%; background:radial-gradient(ellipse at 50% 45%,#192b4850,transparent 67%); }
 .stairScene::before,.stairScene::after { content:""; position:absolute; left:0; right:0; height:150px; pointer-events:none; z-index:5; }
 .stairScene::before { top:0; background:linear-gradient(#08121f 30%,#08121fbb 65%,transparent); }
@@ -49,12 +49,10 @@
 .heroCopy h1 em { font-style:normal; color:#b9d0ff; }
 .headArrow { display:inline-block; font-size:.58em; margin-left:15px; vertical-align:top; line-height:1.4; }
 .heroCopy > p { max-width:320px; margin:38px 0 28px; font-size:13px; line-height:1.8; color:#d6e2ff; }
-.cta { display:inline-flex; align-items:center; justify-content:space-between; gap:35px; min-height:50px; background:#edf1e9; color:#142844; border-radius:30px; padding:15px 24px; font-size:11px; transition:transform .2s,background .2s; }
-.cta > span { font-size:19px; }
-.cta:hover { transform:translateY(-3px); background:#fff; }
+.cta { max-width:100%; }
 .heroFoot { padding:25px 0; border-top:1px solid #b7cbff45; font-size:9px; letter-spacing:.08em; }
 .heroFoot p { color:#ccdbff; letter-spacing:0; }
-.heroFoot button { min-height:44px; cursor:pointer; font-size:10px; }
+.heroFoot button { flex-shrink:0; }
 .stage { position:relative; min-width:0; width:100%; height:530px; perspective:1200px; isolation:isolate; }
 .stageAssembly { position:absolute; inset:8% 2% 15%; transform-style:preserve-3d; transform:rotateX(12deg) rotateY(-22deg) rotateZ(var(--stage-turn,-13deg)); animation:stageFloat 9s ease-in-out infinite; transition:transform 1s cubic-bezier(.2,.7,.2,1); }
 .stagePanel { position:absolute; width:82%; height:65%; left:9%; top:18%; border-radius:10px; padding:26px; display:flex; flex-direction:column; justify-content:space-between; backface-visibility:hidden; box-shadow:12px 30px 40px #02091645; }
@@ -90,11 +88,10 @@
 .editor input::placeholder { color:#788598; }
 .editor > p { font-size:9px; color:#5b6b81; line-height:1.7; margin:12px 0 32px; }
 .sceneOptions { display:grid; }
-.sceneOptions button { display:flex; align-items:center; gap:18px; border-bottom:1px solid #c1c9d3; padding:20px 8px; cursor:pointer; text-align:left; transition:background .2s,padding .2s; }
+.sceneOptions button { display:flex; align-items:center; gap:18px; border-bottom:1px solid #c1c9d3; padding:20px 8px; text-align:left; }
 .sceneOptions button > span { font-size:10px; color:#526b8d; }
 .sceneOptions button > span:last-child { margin-left:auto; font-size:21px; }
 .sceneOptions button strong { font-size:13px; font-weight:500; }
-.sceneOptions button[aria-pressed=true] { background:#d7e0ed; padding-inline:16px; }
 .sceneDescription { margin-top:30px; min-height:80px; }
 .sceneDescription span { font-size:8px; letter-spacing:.13em; color:#375789; }
 .sceneDescription p { font-size:12px; line-height:1.7; max-width:280px; margin-top:12px; color:#52657d; }
@@ -116,32 +113,24 @@
 .teaser h2 + p { font-size:13px; color:#d1dfff; margin:28px 0; line-height:1.7; }
 .compact { height:420px; }
 .compact .frontPanel strong { font-size:clamp(26px,3.3vw,48px); }
-.page :is(a,button,input):focus-visible,.teaser a:focus-visible { outline:3px solid #e0ae56; outline-offset:5px; }
+.page input:focus-visible { outline:3px solid #e0ae56; outline-offset:5px; }
 .page[data-paused=true] * { animation-play-state:paused !important; }
 @keyframes stageFloat { 0%,100% { transform:translateY(0) rotateX(12deg) rotateY(-22deg) rotateZ(var(--stage-turn,-13deg)); } 50% { transform:translateY(-16px) rotateX(6deg) rotateY(-12deg) rotateZ(calc(var(--stage-turn,-13deg) + 4deg)); } }
 @keyframes ribbon { to { transform:translateX(-50%); } }
 @media(max-width:1000px) { .heroGrid { min-height:540px; } .stage { height:430px; } .heroCopy h1 { font-size:clamp(65px,10vw,110px); } .stagePanel { padding:20px; } .headArrow { display:none; } .editor { padding:28px; } .previewCanvas { padding-inline:15px; } }
 @media(max-width:700px) {
- .stairHeading { grid-template-columns:1fr; padding:75px 7vw 48px; gap:30px; }.stairHeading h2 { font-size:clamp(50px,12vw,80px); }.stairHeading .eyebrow { margin-bottom:24px; }.stairHeadingAside { justify-self:start; width:100%; display:flex; justify-content:space-between; align-items:end; gap:20px; }.stairHeadingAside > p { font-size:11px; }.stairScroll { max-width:140px; font-size:7px; gap:12px; margin:0; line-height:1.8; }.stairRun { height:250svh; }.stairScene { min-height:480px; perspective:900px; }.stairSceneTop { left:7vw; right:7vw; font-size:6px; top:calc(var(--nav-h,64px) + 24px); }.stairSceneTop span:last-child { max-width:105px; text-align:right; line-height:1.7; }.stairCard { width:67vw; min-width:0; padding:18px 20px; aspect-ratio:1.35; border-radius:9px; }.stairIdentity { padding:18px 0; }.stairIdentity strong { font-size:clamp(29px,7.3vw,46px); }.stairIdentity strong[data-long=true] { font-size:clamp(22px,5.7vw,34px); }.collabName { font-size:17px; margin-bottom:9px; }.stairIdentity .stairEdition { font-size:90px; }.stairCardTop { font-size:6px; }.stairCardFoot { font-size:5px; padding-top:10px; }.cardSub { font-size:8px; margin-top:13px; }.cardAsterisk { font-size:42px; top:14px; }.stairSceneFoot { left:7vw; right:7vw; bottom:25px; gap:20px; }.stairSceneFoot p { font-size:6px; max-width:160px; }.stairProgress { width:100px; }.stairLink { font-size:11px; gap:15px; white-space:nowrap; }
+ .stairHeading { grid-template-columns:1fr; padding:75px 7vw 16px; gap:30px; }.stairHeading h2 { font-size:clamp(50px,12vw,80px); }.stairHeading .eyebrow { margin-bottom:24px; }.stairHeadingAside { justify-self:start; width:100%; display:flex; justify-content:space-between; align-items:end; gap:20px; }.stairHeadingAside > p { font-size:11px; }.stairScroll { max-width:140px; font-size:7px; gap:12px; margin:0; line-height:1.8; }.stairRun { height:250svh; margin-top:-73svh; }.stairScene { min-height:480px; perspective:900px; }.stairSceneTop { left:7vw; right:7vw; font-size:6px; top:calc(var(--nav-h,64px) + 24px); }.stairSceneTop span:last-child { max-width:105px; text-align:right; line-height:1.7; }.stairCard { width:67vw; min-width:0; padding:18px 20px; aspect-ratio:1.35; border-radius:9px; }.stairIdentity { padding:18px 0; }.stairIdentity strong { font-size:clamp(29px,7.3vw,46px); }.stairIdentity strong[data-long=true] { font-size:clamp(22px,5.7vw,34px); }.collabName { font-size:17px; margin-bottom:9px; }.stairIdentity .stairEdition { font-size:90px; }.stairCardTop { font-size:6px; }.stairCardFoot { font-size:5px; padding-top:10px; }.cardSub { font-size:8px; margin-top:13px; }.cardAsterisk { font-size:42px; top:14px; }.stairSceneFoot { left:7vw; right:7vw; bottom:25px; gap:20px; }.stairSceneFoot p { font-size:6px; max-width:160px; }.stairProgress { width:100px; }.stairLink { font-size:11px; gap:15px; white-space:nowrap; }
  .hero { padding:110px 7vw 0; } .heroTop { align-items:start; gap:16px; } .heroTop .eyebrow { max-width:150px; font-size:8px; } .previewTag { font-size:7px; white-space:nowrap; padding:7px 9px; }
- .heroGrid { grid-template-columns:1fr; gap:0; } .heroCopy { padding:48px 0 0; } .heroCopy h1 { font-size:clamp(69px,16vw,108px); } .heroCopy > p { margin:26px 0; font-size:12px; max-width:290px; } .stage { height:390px; max-width:440px; margin-inline:auto; } .stageAssembly { inset:8% 4% 16%; } .stagePanel { padding:20px; } .frontPanel strong { font-size:38px; } .stageCaption { bottom:0; } .heroFoot { flex-wrap:wrap; padding:20px 0; gap:10px; margin-top:20px; font-size:8px; } .heroFoot p { display:none; } .heroFoot button { font-size:9px; }
+ .heroGrid { grid-template-columns:1fr; gap:0; } .heroCopy { padding:48px 0 0; } .heroCopy h1 { font-size:clamp(69px,16vw,108px); } .heroCopy > p { margin:26px 0; font-size:12px; max-width:290px; } .stage { height:390px; max-width:440px; margin-inline:auto; } .stageAssembly { inset:8% 4% 16%; } .stagePanel { padding:20px; } .frontPanel strong { font-size:38px; } .stageCaption { bottom:0; } .heroFoot { flex-wrap:wrap; padding:20px 0; gap:10px; margin-top:20px; font-size:8px; } .heroFoot p { display:none; }
  .ribbon span { font-size:18px; } .preview { padding:70px 7vw 45px; } .previewHeading { grid-template-columns:1fr; gap:24px; margin-bottom:30px; } .previewHeading > p { justify-self:start; max-width:310px; font-size:12px; } .previewGrid { grid-template-columns:1fr; } .editor { padding:25px; } .previewCanvas { padding:0 8px 45px; } .previewCanvas .stage { height:370px; } .sceneDescription { min-height:0; } .previewNote { font-size:6px; } .future { padding:80px 7vw; } .emptyLineup { font-size:7px; gap:10px; }
- .teaser { grid-template-columns:1fr; padding:70px 7vw 45px; gap:20px; } .compact { height:350px; } .compact .frontPanel strong { font-size:36px; } .cta { padding:14px 19px; gap:20px; font-size:10px; }
+ .teaser { grid-template-columns:1fr; padding:70px 7vw 45px; gap:20px; } .compact { height:350px; } .compact .frontPanel strong { font-size:36px; }
 }
-@media(prefers-reduced-motion:reduce) { .page *,.staircase * { animation:none !important; transition:none !important; }.stairRun { height:auto; }.stairScene { position:relative; height:auto; min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; padding:30px 6vw 60px; overflow:visible; perspective:none; }.stairCard { position:relative; inset:auto; width:100%; transform:none !important; }.stairCard:last-of-type { grid-column:1 / -1; max-width:550px; justify-self:center; }.stairSceneTop,.stairSceneFoot { position:static; grid-column:1 / -1; }.stairSceneTop { margin-bottom:20px; }.stairSceneFoot { margin-top:20px; }.stairGuide,.stairProgress { display:none; } }
+@media(prefers-reduced-motion:reduce) { .page *,.staircase * { animation:none !important; transition:none !important; }.stairRun { height:auto; margin-top:0; }.stairScene { position:relative; height:auto; min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; padding:30px 6vw 60px; overflow:visible; perspective:none; }.stairCard { position:relative; inset:auto; width:100%; transform:none !important; }.stairCard:last-of-type { grid-column:1 / -1; max-width:550px; justify-self:center; }.stairSceneTop,.stairSceneFoot { position:static; grid-column:1 / -1; }.stairSceneTop { margin-bottom:20px; }.stairSceneFoot { margin-top:20px; }.stairGuide,.stairProgress { display:none; } }
 @media(prefers-reduced-motion:reduce) and (max-width:700px) { .stairScene { grid-template-columns:1fr; padding-inline:7vw; }.stairCard { max-width:480px; justify-self:center; }.stairIdentity strong { font-size:38px; } }
 @media(prefers-reduced-motion:reduce) { .stairScene::before,.stairScene::after { display:none; } }
 @media(prefers-reduced-motion:reduce) { .future > div { transform:none !important; } }
 
-/* Preserve the original staircase choreography with quieter typography. */
-.stairIdentity { flex:1; justify-content:center; }
-.stairSceneFoot p { font-size:12px; letter-spacing:0; line-height:1.6; }
-.stairScroll { font-size:11px; letter-spacing:.03em; }
-.stairLink { font-size:14px; }
-.cardSub { font-size:12px; line-height:1.5; }
 .disclaimer { font-size:12px; }
-@media(max-width:700px) { .stairSceneFoot p { font-size:11px; max-width:180px; } .stairScroll { font-size:11px; max-width:130px; } .stairLink { font-size:12px; } .cardSub { font-size:11px; } .heroFoot { font-size:11px; } .heroFoot button { font-size:12px; } .previewTag { font-size:10px; } .emptyLineup { font-size:11px; letter-spacing:.03em; } }
+@media(max-width:700px) { .heroFoot { font-size:11px; } .previewTag { font-size:10px; } .emptyLineup { font-size:11px; letter-spacing:.03em; } }
 
 .frontPanel { justify-content:center; }
-
-.stairSceneFoot { z-index:15; padding-top:16px; background:linear-gradient(180deg,transparent,#081525c4 40%); }

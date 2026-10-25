@@ -1,50 +1,41 @@
-# Past voice source research
+# Past voice portrait sources
 
-Researched 24 October 2026. This records textual attribution and source provenance. It does not identify people from facial appearance, and does not establish a portrait ID merely because the biography and image lists have the same length.
+Verified 24 October 2026. All thirteen profiles now have individually sourced portrait assignments in `lib/data/voices-media.ts`. The previous assumption that supplied photo order matched biography order was incorrect and has been removed.
 
-The supplied `Content pics/Past speak pics/Website Content(Speaker feed back.txt` contains thirteen third-person biographies, not first-person feedback quotations. Keep its copy distinguishable from speaker testimonials.
+Seven supplied photographs match the same complete photographs from named LinkedIn or speaker sources after resizing and decoding. Their whole-image pixel RMSE is 0.67–1.90; the next closest supplied images score above 59. Six profiles use named source portraits instead. These are image-asset comparisons and named source associations, not facial identification.
 
-## Content-owner-confirmed portrait mapping
+## Current assignments
 
-On 24 October 2026, the content owner explicitly confirmed in chat that numbered photos 01–13 follow the exact order of the thirteen names in the supplied biography file. `speakerProfiles` now assigns portrait IDs 01 through 13 in that order and records this human confirmation in every `portraitSource`. This establishes the implementation mapping by content-owner confirmation; it is not facial comparison or independent LinkedIn portrait verification. The textual LinkedIn associations and role discrepancies documented below remain unchanged by the photo-order confirmation.
+| Profile | Displayed asset in `public/media/voices/` | Basis | Source |
+| --- | --- | --- | --- |
+| Dr. Amit Sawhney | `past-voice-12.webp` | Supplied photo 12; same whole-photo match | [Source](https://www.linkedin.com/posts/amitsawhney_history-charity-conquering-activity-7231747078245236737-PT2r) |
+| Mr. Shyambahadur Prajapati | `past-voice-11.webp` | Supplied photo 11; same whole-photo match | [Source](https://www.linkedin.com/in/shyamprajapati/) |
+| Dr. Balasubramanian Sethuraman | `past-voice-10.webp` | Supplied photo 10; same whole-photo match | [Source](https://bizintegration.in/india-hr-summit-mumbai-2025/speakers/) |
+| Mr. Narasimha Murthy Aradhyula | `narasimha-murthy-aradhyula.webp` | Named source portrait | [Source](https://www.thebrainalytics.com/event/3rd-edition-nbfc-fintech-summit-awards-2026-3/) |
+| Mr. Rajendra Lingwal | `past-voice-08.webp` | Supplied photo 08; same whole-photo match | [Source](https://www.linkedin.com/posts/rajendra-lingwal-7bb2161_pulse-activity-7423707293625778176-49vc) |
+| Ms. Gauri Das | `past-voice-07.webp` | Supplied photo 07; same whole-photo match | [Source](https://in.linkedin.com/in/gauridas) |
+| Dr. Saumya Badgayan Dutta | `saumya-badgayan-dutta.webp` | Named source portrait | [Source](https://bizintegration.in/india-hr-summit-mumbai-2025/speakers/) |
+| Mr. George Kutty | `george-kutty.webp` | Named source portrait | [Source](https://india.techhrconference.com/agenda) |
+| Mr. Senthil Kumar S | `senthil-kumar-s.webp` | Named source portrait | [Source](https://www.bigmarker.com/internshala8/how-hdfc-life-hires-freshers-roles-skills-and-selection-criteria) |
+| Dr. Himanshu Talwar | `himanshu-talwar.webp` | Named source portrait | [Source](https://ylc.aima.in/mentors/himanshu-talwar.php) |
+| Mr. Debansh Roy | `past-voice-02.webp` | Supplied photo 02; same whole-photo match | [Source](https://www.linkedin.com/in/debanshroy/) |
+| Dr. Ganesh Natarajan | `ganesh-natarajan.webp` | Named source portrait | [Source](https://ganeshnatarajan.in/) |
+| Mr. Sumit Atri | `past-voice-01.webp` | Supplied photo 01; same whole-photo match | [Source](https://www.linkedin.com/in/sumit-atri-a7b661b/) |
 
-## Profile sources
+Narasimha Murthy's event card names Head – Retail Credit at John Deere Financial India. His [self-authored LinkedIn role announcement](https://www.linkedin.com/posts/narasimha-murthy-aradhyula_johndeere-johndeerefinancial-retailcredit-activity-7455939794720841728-MnXp) supplies the full surname and the same role/employer. Saumya's named event portrait uses the shorter name Saumya Dutta; the official HR VISTA attribution supplies Badgayan Dutta with the same employer and role. Senthil's presenter attribution matches the HR VISTA event's HDFC Life HR attribution.
 
-The table records the earlier web-research findings. Statements that research did not establish supplied portrait IDs describe that research only; the subsequent content-owner confirmation above supplies the current mapping.
+## Evidence and maintenance
 
-| Supplied name | LinkedIn source | Evidence and limitation |
-| --- | --- | --- |
-| Dr Amit Sawhney | https://es.linkedin.com/in/amitsawhney | Profile about text identifies MD of Nippon Group; title also associates CHRIST University Pune Lavasa. Textual profile association is strong; no supplied portrait ID established. |
-| Mr Shyambahadur Prajapati | https://in.linkedin.com/in/shyamprajapati | Profile explicitly names GM Infotech. Existing local `public/media/people/sources.json` associates a named portrait with this profile. No supplied portrait ID established by this research. |
-| Dr Balasubramanian Sethuraman | https://in.linkedin.com/in/bala-s | Profile names Parekh Integrated Services and honorary degree in HR and organisational development. Official event site explicitly labels named portrait asset. |
-| Mr Narasimha Murthy Aradhyula | https://www.linkedin.com/posts/narasimha-murthy-aradhyula_johndeere-deere-johndeerefinancial-activity-7308678063230259202-Ohg2 | Self-authored post identifies John Deere award. Profile slug inferred from post author route; direct profile fetch unavailable. This is a candidate textual association, not definitive event attribution. |
-| Mr Rajendra Lingwal | https://in.linkedin.com/in/rajendra-lingwal-7bb2161 | Profile identifies Persistent Systems and shared posts explicitly name SVP HR. Official event site explicitly labels named portrait asset. |
-| Ms Gauri Das | https://in.linkedin.com/in/gauridas | Profile names India Factoring and Finance Solutions and HR/CSR. No supplied portrait ID established. |
-| Dr Saumya Badgayan Dutta | https://in.linkedin.com/in/dr-saumya-badgayan-dutta-70b4b114 | Exact name profile. Official event page identifies VP HR Business Strategy at Gold Star Jewellery and explicitly labels portrait. Current profile surfaced Lovely Professional University among experience, so historical event role should not automatically be treated as current employment. |
-| Mr George Kutty | https://in.linkedin.com/in/george-kutty-578bb234 | Candidate profile: Mumbai HR leader, Malabar Group, formerly Jio. Supplied biography is generic and lacks employer, so exact event-person association remains unconfirmed. |
-| Mr Senthil Kumar S | https://in.linkedin.com/in/senthil-kumar-s-90754110 | Candidate profile names HDFC Life and HR/talent acquisition. Official event page explicitly names Senthil Kumar S, AVP Human Resources, HDFC Life. This conflicts with supplied supply-chain biography; needs clarification. |
-| Dr. Himanshu Talwar | https://in.linkedin.com/in/drhimanshutalwar | Profile identifies public speaking and links his own website. Other same-name profiles concern unrelated professions. No supplied portrait ID established. |
-| Mr.Debansh Roy | https://in.linkedin.com/in/debanshroy | Profile currently names Addepar. Supplied AllianceBernstein role is historical according to current employer's welcome post. No supplied portrait ID established. |
-| Dr. Ganesh Natarajan | https://in.linkedin.com/in/ganeshnatarajan | Exact-name profile and 5F World association. No supplied portrait ID established. |
-| Mr.Sumit Atri | https://in.linkedin.com/in/sumit-atri-a7b661b | Profile identifies Reliance Jio and HR expertise. No supplied portrait ID established. |
+`output/sources/voices/verified-portrait-mapping.json` records each display path, source page, original source-image URL, attribution evidence, dimensions, SHA256 and comparison result where applicable. `whole-image-comparison.json` preserves the complete-photo comparison results. Temporary research pages, downloads and unused comparison assets were removed; these files record URLs and evidence rather than claiming cached pages remain available. Public CDN image links may expire, so the page serves local WebP files.
 
-## Official event image provenance
+Portrait IDs are stable speaker slugs. File numbers are only archive filenames and must never determine a person's assignment. All supplied originals remain intact in `Content pics/` and the original numbered WebPs remain in `public/media/voices/`. Only the thirteen verified entries are exported in `pastVoices`, avoiding a second unnamed gallery of unused photographs.
 
-The live official page https://www.hrvista.live/ explicitly associates image tags with Balasubramanian Sethuraman, Rajendra Lingwal, Dr. Saumya Badgayan Dutta, and Senthil Kumar S. Full image URLs extracted from the local official-page snapshot are preserved in `output/sources/voices/named-image-sources.json`. LinkedIn image URLs contain expiry parameters and may be unavailable later.
+## Biography caveats
 
-These named image associations can support exact file or decoded-pixel comparison. Facial resemblance, matching list order, clothing, or approximate visual similarity are not identity evidence. A SHA256 comparison of the thirteen supplied original JPEG files against all JPG, JPEG, PNG and WebP files under `public/` and `output/` found no exact file matches. That does not rule out resized or recompressed copies. This research established no verified supplied portrait ID mapping. The subsequent content-owner confirmation above assigns IDs 01 through 13 by the explicitly confirmed biography order.
+The supplied `Content pics/Past speak pics/Website Content(Speaker feed back.txt` contains third-person biographies, not testimonials. This portrait correction preserves those biographies. Portrait/source verification does not independently verify every credential or promotional statement.
 
-### Final source check
+- Senthil Kumar S is attributed by the official event and his named presenter source to Human Resources at HDFC Life; the supplied biography instead describes supply-chain leadership.
+- Debansh Roy's supplied AllianceBernstein role is historical relative to the researched Addepar role.
+- Saumya's Gold Star Jewellery role is the historical event attribution and should not automatically be treated as current employment.
 
-The final source check attempted to retrieve all five explicitly named LinkedIn CDN assets in `named-image-sources.json` and compare decoded sRGB RGB pixel SHA256 and dimensions against all thirteen supplied originals. Every CDN request returned HTTP 403, so no remote image was decoded and no same-asset match was established. The structured result is `output/sources/voices/exact-decoded-pixel-results.json`. No resizing, perceptual similarity, or face comparison was used.
-
-Direct LinkedIn profile opens for Balasubramanian, Senthil and Debansh returned HTTP 999. A fresh web search again surfaced their exact profiles and the same textual associations: Parekh Integrated Services, HDFC Life HR/talent acquisition, and Addepar respectively. These search-index results support the profile research but do not independently verify the supplied photos. Applied photo assignments remain based on the user's explicit order confirmation.
-
-## Supporting attribution and discrepancy sources
-
-- Official HR VISTA brochure: https://www.hrvista.live/HRPoster.pdf (Senthil Kumar S, HDFC Life; Balasubramanian S, Parekh).
-- Saumya speaker introduction by D Y Patil University: https://www.linkedin.com/posts/vpsm_introducing-dr-saumya-badgayan-a-visionary-activity-7303822409265037313-IpOf (historical Gold Star Jewellery role).
-- George Kutty self-authored employer announcement: https://www.linkedin.com/posts/george-kutty-578bb234_new-chapter-new-industry-im-thrilled-activity-7365791363637854209-xXhJ (Group CHRO, Malabar Gold & Diamonds; still requires event-person confirmation).
-- Addepar employer welcome surfaced in an employee's shared post: https://in.linkedin.com/in/vishyb (Addepar announcement names Debansh Roy as Regional Director, People Partner APAC).
-
-Do not silently rewrite the supplied biographies from these sources. Ask the content owner to resolve role/date conflicts and approve corrections. No source above verifies every promotional statement or credential in the supplied text.
+Resolve these copy/date discrepancies with the content owner before changing biography text. The earlier official event named-image references remain recorded in `named-image-sources.json`; the earlier failed expired-CDN comparison is retained in `exact-decoded-pixel-results.json` as historical evidence, superseded by the current mapping above.

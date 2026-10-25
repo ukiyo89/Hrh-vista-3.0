@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { content, type PastEdition } from "@/lib/data/content";
 import { PhotoLightbox, type GalleryPhoto } from "./PhotoLightbox";
+import { ActionLink } from "./ActionLink";
 import styles from "./EditionsArchive.module.css";
 
 const galleries: { id: string; edition: string; photos: GalleryPhoto[] }[] = [
@@ -49,19 +49,19 @@ function EditionChapter({ id, edition, photos }: { id: string; edition: PastEdit
         <div className={styles.gallery}>
           <div className={styles.galleryIndex}><span>From the archive</span><span>{String(selected + 1).padStart(2, "0")} / {String(photos.length).padStart(2, "0")}</span></div>
           <figure>
-            <button type="button" className={styles.featurePhoto} onClick={() => setOpen(true)} aria-label={`Enlarge photo ${selected + 1}: ${photo.alt}`}>
+            <button type="button" className={styles.featurePhoto} data-ui="media" data-ui-tone="dark" onClick={() => setOpen(true)} aria-label={`Enlarge photo ${selected + 1}: ${photo.alt}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo.src} alt={photo.alt} width={1600} height={900} loading="lazy" />
               <span className={styles.enlarge}><span aria-hidden="true">↗</span> View larger</span>
             </button>
             <figcaption className={styles.caption} aria-live="polite">
               <span>{photo.caption}</span>
-              <a href={photo.source} target="_blank" rel="noreferrer">Photo: CHRIST Lavasa / Flickr <span aria-hidden="true">↗</span></a>
+              <a href={photo.source} data-ui="text" data-ui-tone="dark" target="_blank" rel="noreferrer">Photo: CHRIST Lavasa / Flickr <span data-ui-glyph aria-hidden="true">↗</span></a>
             </figcaption>
           </figure>
           <div className={styles.photoPicker} aria-label={`${edition.edition} photos`}>
             {photos.map((item, index) => (
-              <button type="button" key={item.src} aria-pressed={selected === index} aria-label={`Photo ${index + 1}: ${item.alt}`} onClick={() => setSelected(index)}>
+              <button type="button" data-ui="media" data-ui-tone="dark" key={item.src} aria-pressed={selected === index} aria-label={`Photo ${index + 1}: ${item.alt}`} onClick={() => setSelected(index)}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.src} alt="" width={160} height={90} loading="lazy" /><span>{String(index + 1).padStart(2, "0")}</span>
               </button>
@@ -94,12 +94,12 @@ export function EditionsArchive() {
               </div>
               <div className={styles.photoSpread}>
                 <span className={styles.orbitMark} aria-hidden="true">2025</span>
-                <motion.a className={styles.heroPhotoMain} href="#hr-vista-2" style={{ y: reduceMotion ? 0 : photoDrift, rotate: reduceMotion ? 0 : 5 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }}>
+                <motion.a className={styles.heroPhotoMain} data-ui="media" data-ui-tone="dark" href="#hr-vista-2" style={{ y: reduceMotion ? 0 : photoDrift, rotate: reduceMotion ? 0 : 5 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/media/flickr/story-1.jpg" alt="Two speakers in conversation at HR VISTA 2.0, November 2025" width={1600} height={900} />
                   <span>02 / Conversations in motion <span aria-hidden="true">↗</span></span>
                 </motion.a>
-                <motion.a className={styles.heroPhotoSmall} href="#hr-vista-1" style={{ y: reduceMotion ? 0 : smallPhotoDrift, rotate: reduceMotion ? 0 : -9 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }}>
+                <motion.a className={styles.heroPhotoSmall} data-ui="media" data-ui-tone="dark" href="#hr-vista-1" style={{ y: reduceMotion ? 0 : smallPhotoDrift, rotate: reduceMotion ? 0 : -9 }} whileHover={reduceMotion ? undefined : { rotate: 0, scale: 1.025 }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src="/media/flickr/raw/hrvista1_feb21.jpg" alt="Delegates in the amphitheatre at HR VISTA 1.0, February 2025" width={1600} height={900} />
                   <span>01 / Where it began <span aria-hidden="true">↗</span></span>
@@ -107,8 +107,8 @@ export function EditionsArchive() {
               </div>
             </div>
           <nav className={styles.editionNav} aria-label="Jump to an edition">
-            <a href="#hr-vista-2"><strong>2.0</strong><span>November 2025</span><span className={styles.navArrow} aria-hidden="true">↓</span></a>
-            <a href="#hr-vista-1"><strong>1.0</strong><span>February 2025</span><span className={styles.navArrow} aria-hidden="true">↓</span></a>
+            <a href="#hr-vista-2" data-ui="row" data-ui-tone="dark"><strong>2.0</strong><span>November 2025</span><span className={styles.navArrow} data-ui-glyph aria-hidden="true">↓</span></a>
+            <a href="#hr-vista-1" data-ui="row" data-ui-tone="dark"><strong>1.0</strong><span>February 2025</span><span className={styles.navArrow} data-ui-glyph aria-hidden="true">↓</span></a>
             <p>Two editions.<br />One growing community.</p>
           </nav>
           </div>
@@ -127,8 +127,8 @@ export function EditionsArchive() {
             <p className={styles.upcomingLocation}>Venue to be announced</p>
             <p className="hv-copy">{content.hero.theme}. Two days of keynote conversations, leadership panels and connections across the HR community.</p>
             <div className={styles.actions}>
-              <a className={styles.nextAction} href="/brochure/HR-VISTA-3.0.pdf" download>Download brochure <span aria-hidden="true">↓</span></a>
-              <Link className="hv-link" href="/">Explore HR VISTA 3.0 <span aria-hidden="true">→</span></Link>
+              <ActionLink href="/brochure/HR-VISTA-3.0.pdf" download direction="down">Download brochure</ActionLink>
+              <ActionLink href="/" direction="right" size="compact">Explore HR VISTA 3.0</ActionLink>
             </div>
           </div>
         </div>

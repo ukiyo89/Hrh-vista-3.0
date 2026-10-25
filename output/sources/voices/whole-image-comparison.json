@@ -1,0 +1,241 @@
+{
+  "verifiedOn": "2026-10-24",
+  "method": "Whole photograph decoded and resized to 64x64 RGB, compared with supplied originals using pixel RMSE; no facial analysis.",
+  "note": "comparisonImageAtVerification records the temporary comparison input path used during verification. Retention is stated separately. Low whole-image error established seven same-photo matches; unmatched inputs were not assigned by appearance.",
+  "comparisons": [
+    {
+      "id": "amit-sawhney",
+      "comparisonImageAtVerification": "public/media/voices/amit-sawhney.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-12.webp",
+      "sourcePage": "https://www.linkedin.com/posts/amitsawhney_history-charity-conquering-activity-7231747078245236737-PT2r",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQFROy3nmtyyLQ/profile-displayphoto-scale_400_400/B4DaBeWMiqJcAk-/0/1788289272788?e=2147483647&v=beta&t=m3T7iMZxqMar90CoNJvt1UaeTYgTSwSQ9y2JdMihbws",
+      "matches": [
+        {
+          "id": "12",
+          "rmse": 1.3981828795201767
+        },
+        {
+          "id": "06",
+          "rmse": 80.46591166110731
+        }
+      ]
+    },
+    {
+      "id": "shyambahadur-prajapati",
+      "comparisonImageAtVerification": "public/media/people/shyambahadur-prajapati.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/past-voice-11.webp",
+      "sourcePage": "https://www.linkedin.com/in/shyamprajapati/",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQHHRnyb82B5HQ/profile-displayphoto-crop_800_800/B4DZgH0XtSGgAI-/0/1752477827322?e=1793232000&v=beta&t=VoCg-Xe2b_w1IvdV62buigkwAjTotDE_alj2kPNrwBc",
+      "matches": [
+        {
+          "id": "11",
+          "rmse": 1.250292934425769
+        },
+        {
+          "id": "04",
+          "rmse": 59.06462532000612
+        }
+      ]
+    },
+    {
+      "id": "balasubramanian-sethuraman",
+      "comparisonImageAtVerification": "public/media/voices/balasubramanian-sethuraman.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-10.webp",
+      "sourcePage": "https://bizintegration.in/india-hr-summit-mumbai-2025/speakers/",
+      "sourceImage": "https://bizintegration.in/wp-content/uploads/2025/05/BalasubramanianSethuraman.jpg",
+      "matches": [
+        {
+          "id": "10",
+          "rmse": 1.0120530134747554
+        },
+        {
+          "id": "04",
+          "rmse": 67.99086505641615
+        }
+      ]
+    },
+    {
+      "id": "narasimha-murthy-aradhyula",
+      "comparisonImageAtVerification": "public/media/voices/narasimha-murthy-aradhyula.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/narasimha-murthy-aradhyula.webp",
+      "sourcePage": "https://www.thebrainalytics.com/event/3rd-edition-nbfc-fintech-summit-awards-2026-3/",
+      "sourceImage": "https://www.thebrainalytics.com/wp-content/uploads/2026/05/Untitled-1-27.png",
+      "matches": [
+        {
+          "id": "06",
+          "rmse": 80.04125116476399
+        },
+        {
+          "id": "12",
+          "rmse": 84.21293608178986
+        }
+      ]
+    },
+    {
+      "id": "rajendra-lingwal",
+      "comparisonImageAtVerification": "public/media/voices/rajendra-lingwal.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-08.webp",
+      "sourcePage": "https://www.linkedin.com/posts/rajendra-lingwal-7bb2161_pulse-activity-7423707293625778176-49vc",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQG-tqKIhngbSA/profile-displayphoto-scale_400_400/B4DaAkuR.oLAAg-/0/1787322508013?e=2147483647&v=beta&t=5szR-nMzga2tdPUdam3Ne52eLk5Z2eIUhdWKB3weJo0",
+      "matches": [
+        {
+          "id": "08",
+          "rmse": 1.2134634273777407
+        },
+        {
+          "id": "03",
+          "rmse": 79.33028903965108
+        }
+      ]
+    },
+    {
+      "id": "gauri-das",
+      "comparisonImageAtVerification": "public/media/voices/gauri-das.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-07.webp",
+      "sourcePage": "https://in.linkedin.com/in/gauridas",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQHVgJ8dUTmf2g/profile-displayphoto-scale_200_200/B4DZ8rVH.yGkAc-/0/1783138386680?e=2147483647&v=beta&t=V47gq9awP-bg7OlhQu0HIAvLl2xjJKlMxCAo2Epd0w8",
+      "matches": [
+        {
+          "id": "07",
+          "rmse": 1.8976925407364247
+        },
+        {
+          "id": "11",
+          "rmse": 80.44048249456448
+        }
+      ]
+    },
+    {
+      "id": "saumya-badgayan-dutta",
+      "comparisonImageAtVerification": "public/media/voices/saumya-badgayan-dutta.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/saumya-badgayan-dutta.webp",
+      "sourcePage": "https://bizintegration.in/india-hr-summit-mumbai-2025/speakers/",
+      "sourceImage": "https://bizintegration.in/wp-content/uploads/2025/05/SaumyaDutta.jpg",
+      "matches": [
+        {
+          "id": "06",
+          "rmse": 67.2811332780765
+        },
+        {
+          "id": "01",
+          "rmse": 76.32620583564747
+        }
+      ]
+    },
+    {
+      "id": "george-kutty",
+      "comparisonImageAtVerification": "public/media/voices/george-kutty.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/george-kutty.webp",
+      "sourcePage": "https://india.techhrconference.com/agenda",
+      "sourceImage": "https://res.cloudinary.com/people-matters/image/upload/v1784359515/techr/spkr-george.jpg",
+      "matches": [
+        {
+          "id": "10",
+          "rmse": 65.5510589149389
+        },
+        {
+          "id": "04",
+          "rmse": 81.25054787475538
+        }
+      ]
+    },
+    {
+      "id": "senthil-kumar-s",
+      "comparisonImageAtVerification": "public/media/voices/senthil-kumar-s.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/senthil-kumar-s.webp",
+      "sourcePage": "https://www.bigmarker.com/internshala8/how-hdfc-life-hires-freshers-roles-skills-and-selection-criteria",
+      "sourceImage": "https://d5ln38p3754yc.cloudfront.net/presenters/37930278/medium/1769689649-a5a3444616cc474d.jpg?1769689649",
+      "matches": [
+        {
+          "id": "08",
+          "rmse": 97.2653405283658
+        },
+        {
+          "id": "12",
+          "rmse": 108.02369750200744
+        }
+      ]
+    },
+    {
+      "id": "himanshu-talwar",
+      "comparisonImageAtVerification": "public/media/voices/himanshu-talwar.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/himanshu-talwar.webp",
+      "sourcePage": "https://ylc.aima.in/mentors/himanshu-talwar.php",
+      "sourceImage": "https://ylc.aima.in/images/team/himanshu-talwar.png",
+      "matches": [
+        {
+          "id": "09",
+          "rmse": 63.72237836040217
+        },
+        {
+          "id": "04",
+          "rmse": 73.46434072884584
+        }
+      ]
+    },
+    {
+      "id": "debansh-roy",
+      "comparisonImageAtVerification": "public/media/voices/debansh-roy.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-02.webp",
+      "sourcePage": "https://www.linkedin.com/in/debanshroy/",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQHE3VJ_PiDrrQ/profile-displayphoto-crop_800_800/B4DZ9p.4h4JwAI-/0/1784189520529?e=1794441600&v=beta&t=AQ8d5iNS6jq4P1MnAKXi5wJS_ZjeWSJMNtMqeyn3mgw",
+      "matches": [
+        {
+          "id": "02",
+          "rmse": 0.6722988004476382
+        },
+        {
+          "id": "11",
+          "rmse": 68.85787701172974
+        }
+      ]
+    },
+    {
+      "id": "ganesh-natarajan",
+      "comparisonImageAtVerification": "public/media/voices/ganesh-natarajan.webp",
+      "comparisonImageRetained": true,
+      "displayedImage": "/media/voices/ganesh-natarajan.webp",
+      "sourcePage": "https://ganeshnatarajan.in/",
+      "sourceImage": "https://ganeshnatarajan.in/wp-content/uploads/2026/05/Ganesh-Natarajan.webp",
+      "matches": [
+        {
+          "id": "12",
+          "rmse": 48.88036705266364
+        },
+        {
+          "id": "06",
+          "rmse": 88.40888818674662
+        }
+      ]
+    },
+    {
+      "id": "sumit-atri",
+      "comparisonImageAtVerification": "public/media/voices/sumit-atri.webp",
+      "comparisonImageRetained": false,
+      "displayedImage": "/media/voices/past-voice-01.webp",
+      "sourcePage": "https://www.linkedin.com/in/sumit-atri-a7b661b/",
+      "sourceImage": "https://media.licdn.com/dms/image/v2/D4D03AQGwuwxs1f03tg/profile-displayphoto-crop_800_800/B4DZ_gpihnKwAM-/0/1786180414278?e=1794441600&v=beta&t=iYDdyhvnI_FHT1cKgJKI7Z48IlSsv259uG9p4m3tEA4",
+      "matches": [
+        {
+          "id": "01",
+          "rmse": 0.7412137252225793
+        },
+        {
+          "id": "02",
+          "rmse": 75.269983352464
+        }
+      ]
+    }
+  ]
+}

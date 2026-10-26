@@ -41,7 +41,7 @@
 .person > a:focus-visible .profileIcon svg:first-child { transform:translate(160%,-160%); }
 .person > a:focus-visible .profileIcon svg:last-child { transform:translate(0,0); }
 @media(hover:hover) and (pointer:fine) {
-  .person[data-linked=true]:hover { translate:0 -3px; background:#1b304c; border-color:#a9c5ecad; box-shadow:0 12px 28px #050b152e; }
+  .person:hover { translate:0 -3px; background:#1b304c; border-color:#a9c5ecad; box-shadow:0 12px 28px #050b152e; }
   .person > a:hover:not(:focus-visible) { outline:none; }
   .person > a:hover :is(.portrait,.glyphTrack) { transform:scale(1.045); }
   .person > a:hover .portrait { filter:brightness(1.04); }

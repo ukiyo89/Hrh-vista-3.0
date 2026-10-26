@@ -21,6 +21,8 @@ assert.equal(cpcgMembers.filter(member => member.group === "CPCG · Pune City").
 assert.equal(people.length, 51, "Only the new roster and faculty remain");
 assert.equal(people.filter(person => person.group === "Faculty & leadership").length, 4);
 assert.deepEqual(people.slice(4), cpcgMembers);
+const profilePaths = cpcgMembers.filter(member => member.linkedin).map(member => new URL(member.linkedin).pathname.replace(/\/$/, ""));
+assert.equal(new Set(profilePaths).size, profilePaths.length, "Different members must not share a guessed profile");
 
 const existingPortraits = JSON.parse(await readFile(new URL("../public/media/people/sources.json", import.meta.url), "utf8"));
 for (const [index, member] of cpcgMembers.entries()) {
@@ -30,7 +32,7 @@ for (const [index, member] of cpcgMembers.entries()) {
     const existing = existingPortraits.find(person => person.name === member.name);
     assert.equal(member.linkedin, existing.profileUrl, "Retain the previously sourced website credit");
     assert.equal(member.portrait, existing.portrait);
-  } else if (finding.status === "verified") {
+  } else if (finding.status === "verified" || finding.status === "matched-context") {
     assert.equal(member.linkedin, finding.linkedin, `${member.name}: link must match the documented profile`);
     assert.equal(member.portrait, finding.portrait, `${member.name}: do not substitute an unverified portrait`);
   } else {

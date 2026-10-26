@@ -1,7 +1,7 @@
 [
   {
     "name": "Sabhya Walani",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://www.linkedin.com/posts/cpcgchristlavasa_hrvista2025-studentcommittee-christuniversitypune-activity-7395016372440940545-ls3q",
@@ -10,9 +10,14 @@
       {
         "url": "https://lavasa.christuniversity.in/uploads/activities/IGNITE%2025_20251009031625.pdf",
         "finding": "CHRIST Lavasa IGNITE 2025 report names Sabhya Walani as event coordinator."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/cpcgchristlavasa_hrvista2025-studentcommittee-christuniversitypune-activity-7395016372440940545-ls3q",
+        "finding": "Opened public CPCG committee post. Logistics & Transportation tag named Sabhya Walani resolves to /in/sabhya-walani-80954330b (tracking removed)."
       }
     ],
-    "note": "Campus and CPCG identity established, but indexed LinkedIn directories expose multiple entries without a verifiable profile URL. No portrait obtained."
+    "note": "Verified by direct named profile tag in official CPCG HR Vista student committee; direct profile page may return 999 while tagged URL remains established.",
+    "linkedin": "https://in.linkedin.com/in/sabhya-walani-80954330b"
   },
   {
     "name": "Aditi Mishra",
@@ -93,7 +98,7 @@
   {
     "name": "Jose Jasmine Fernandez",
     "linkedin": "https://in.linkedin.com/in/jasmine-jose-fernandez",
-    "status": "candidate",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/jasmine-jose-fernandez",
@@ -102,9 +107,13 @@
       {
         "url": "https://in.linkedin.com/in/mrinalini-sharma-3586ab2b1",
         "finding": "Indexed CPCG Connexions 2026 committee repost names Food POC Jasmine Jose Fernandez."
+      },
+      {
+        "url": "https://in.linkedin.com/in/jasmine-jose-fernandez",
+        "finding": "Indexed public LinkedIn profile now exposes CHRIST Pune-Lavasa 2024-2029 law education and activities: Department Representative for CPCG (2025-26)."
       }
     ],
-    "note": "Likely reordered roster name, but supplied name is Jose Jasmine Fernandez while public profile is Jasmine Jose Fernandez. Leave portrait unset until name order is confirmed."
+    "note": "Roster preserves Jose Jasmine Fernandez; public profile uses reordered Jasmine Jose Fernandez. Exact three name tokens, same university and explicit CPCG Department Representative establish the match."
   },
   {
     "name": "Vashitav Bali",
@@ -140,19 +149,28 @@
   },
   {
     "name": "Yuvaraj A K",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/yajur-471989303",
         "finding": "Lavasa law student's indexed activity includes a post by Yuvaraj A K about RVK Law Associates internship and ChristUniversity."
+      },
+      {
+        "url": "https://linkedin.com/in/yuvaraj-a-k-598413320",
+        "finding": "Exa public search indexes law student profile, CHRIST Pune-Lavasa BBA LLB 2024-present, internship committee and RVK Law Associates internship in Hyderabad Jan2025."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/shivam-bhardwaj-0b939a30b_careerawareness-businessanalytics-dataanalytics-activity-7364197274249224193-HJ0H",
+        "finding": "Opened public post contains comment by Yuvaraj A K; named author link resolves to /in/yuvaraj-a-k-598413320."
       }
     ],
-    "note": "Name appears in a Lavasa peer's activity, but no exact profile URL or direct campus evidence surfaced. No portrait selected."
+    "note": "Verified active law profile through exact name, CHRIST Lavasa BBA LLB 2024-present and RVK internship matching campus peer activity. A second sparse same-name campus profile was not selected.",
+    "linkedin": "https://in.linkedin.com/in/yuvaraj-a-k-598413320"
   },
   {
     "name": "Himali M Suresh",
     "linkedin": "https://in.linkedin.com/in/hellohimali",
-    "status": "candidate",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/hellohimali",
@@ -161,9 +179,13 @@
       {
         "url": "https://www.linkedin.com/posts/indu-pv_i-still-vividly-remember-my-first-train-journey-activity-7343714622736146433-9KXe",
         "finding": "Lavasa graduate's post thanks Himali Suresh as part of Data Department team."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/indu-pv_i-still-vividly-remember-my-first-train-journey-activity-7343714622736146433-9KXe",
+        "finding": "Opened public post by CHRIST Lavasa graduate directly tags Himali Suresh in Data Department team; tag resolves to /in/hellohimali."
       }
     ],
-    "note": "Strong campus/CPCG candidate, but profile abbreviates surname and no source establishes middle initial M. Keep supplied roster name and portrait unset."
+    "note": "Full surname established by Lavasa graduate's direct Himali Suresh tag to the abbreviated Himali S. profile. Same campus and explicit CPCG department representative role establish a strong unique match; supplied middle initial retained."
   },
   {
     "name": "Laxika Bisht",
@@ -183,7 +205,7 @@
   },
   {
     "name": "Ankita Panda",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://christuniversitylavasa.blogspot.com/2026/09/th-club-investiture-ceremony.html",
@@ -192,9 +214,18 @@
       {
         "url": "https://in.linkedin.com/in/vibhanshi-rajput-4105a0371",
         "finding": "Indexed repost by Ankita Panda discusses her winning HRM team at CHRIST Lavasa IGNITE 2025."
+      },
+      {
+        "url": "https://www.linkedin.com/in/ankita-panda-1805202411062009122007",
+        "finding": "Exa public search indexes exact-name BBA Business Analytics student at CHRIST University Pune-Lavasa, education2025-present."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/ankita-panda-451503381_ignite2025-christuniversitylavasa-hrmclub-activity-7380657107504680960-FlD4",
+        "finding": "Opened original public IGNITE2025 post names Lavasa HRM team and campus. Current author link resolves to /in/ankita-panda-1805202411062009122007."
       }
     ],
-    "note": "Lavasa identity established, but exact LinkedIn profile URL unresolved amid many namesakes. No portrait selected."
+    "note": "Verified BBA Business Analytics student at CHRIST Lavasa. Original IGNITE post has older /ankita-panda-451503381 slug but its current author link resolves to the selected long vanity URL.",
+    "linkedin": "https://in.linkedin.com/in/ankita-panda-1805202411062009122007"
   },
   {
     "name": "Shourya Chhabra",
@@ -254,14 +285,23 @@
   },
   {
     "name": "Harmandeep Kaur Bhogal",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://www.linkedin.com/company/student-council-christ-university-pune-lavasa-campus",
         "finding": "Official Lavasa Student Council post names member Harmandeep Kaur, without Bhogal."
+      },
+      {
+        "url": "https://lavasa.christuniversity.in/department-activities/COMPUTER-SCIENCE/MzY4ODM%3D",
+        "finding": "Official School of Sciences student achievements names Harmandeep Kaur Bhogal (1-BCA), appointed General Body Head SDG, CHRIST Pune Lavasa,7Nov2025."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/student-council-christ-university-pune-lavasa-campus_christuniversity-daksh2025-careerguidance-activity-7397844883866181632-iooE",
+        "finding": "Opened official Lavasa Student Council Daksh post; Harmandeep Kaur named member tag resolves to /in/harmandeepkaurbhogal."
       }
     ],
-    "note": "No exact full-name LinkedIn profile located. Campus post supports only shortened name; unrelated dentist and other namesakes rejected. No portrait selected."
+    "note": "Verified through official university full name, BCA campus and SDG leadership plus official Student Council named tag to the full-name profile slug.",
+    "linkedin": "https://in.linkedin.com/in/harmandeepkaurbhogal"
   },
   {
     "name": "Sparsh Parashar",
@@ -289,9 +329,15 @@
   },
   {
     "name": "Avika Bansal",
-    "status": "unresolved",
-    "evidence": [],
-    "note": "Search found namesakes at SCMC/Symbiosis, Chitkara and Carnegie Mellon/BCG, none with CHRIST Lavasa or CPCG evidence. No profile or portrait selected."
+    "status": "verified",
+    "evidence": [
+      {
+        "url": "https://linkedin.com/in/avika-bansal-8458ba36b",
+        "finding": "Indexed LinkedIn profile explicitly describes BBA student at Christ University and education CHRIST University Pune-Lavasa2025-2028."
+      }
+    ],
+    "note": "Exact name and CHRIST Pune-Lavasa BBA2025-2028 establish matching campus profile; SCMC/Chitkara/BCG namesakes rejected. Evidence obtained through agent-reach web search using Exa, indexed first-party profile.",
+    "linkedin": "https://www.linkedin.com/in/avika-bansal-8458ba36b"
   },
   {
     "name": "Hafsa Khamkar",
@@ -319,7 +365,7 @@
   },
   {
     "name": "Siya Sobti",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/shreya-thakur-52a618381",
@@ -328,8 +374,17 @@
       {
         "url": "https://in.linkedin.com/in/hafsa-khamkar-348641359",
         "finding": "Lavasa BCom classmate thanks teammate Siya Sobti in Investment Management coursework."
+      },
+      {
+        "url": "https://in.linkedin.com/in/siya-sobti-270275332",
+        "finding": "Exa public search indexes exact-name BCom Financial Analytics student at Christ University Lavasa."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/priyamhalder16_leadership-inclusiverse-christuniversity-activity-7453826420629225472-xDEa",
+        "finding": "Opened public Lavasa INCLUSIVERSE team roster repost. Head of Media & Social Media Siya Sobti tag resolves to /in/siya-sobti-270275332."
       }
     ],
-    "note": "Campus identity supported by two peer posts, but exact LinkedIn profile URL unresolved. No portrait selected."
+    "note": "Verified exact-name BCom Financial Analytics student at CHRIST Lavasa with direct named INCLUSIVERSE roster tag and independently corroborating classmate coursework.",
+    "linkedin": "https://in.linkedin.com/in/siya-sobti-270275332"
   }
 ]

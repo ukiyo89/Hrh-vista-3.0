@@ -44,16 +44,17 @@ export function People() {
       <motion.div layout={!reduced} className={styles.grid}>
         {shown.map(person => {
           const index = people.indexOf(person);
-          const Profile = person.linkedin ? "a" : "div";
-          return <motion.article layout={!reduced} key={person.name} className={styles.person} data-linked={!!person.linkedin} initial={reduced ? false : { y: 35 }} whileInView={{ y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .55, delay: Math.min(index * .045, .18) }}>
-            <Profile className={styles.personCard} href={person.linkedin} data-ui={person.linkedin ? "media" : undefined} data-ui-tone={person.linkedin ? "dark" : undefined} target={person.linkedin ? "_blank" : undefined} rel={person.linkedin ? "noopener noreferrer" : undefined} aria-label={person.linkedin ? `${person.name} on LinkedIn (opens in a new tab)` : undefined}>
+          const href = person.linkedin ?? `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`${person.name} CHRIST University`)}`;
+          const linkLabel = person.linkedin ? "LinkedIn profile" : "Find on LinkedIn";
+          return <motion.article layout={!reduced} key={person.name} className={styles.person} initial={reduced ? false : { y: 35 }} whileInView={{ y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .55, delay: Math.min(index * .045, .18) }}>
+            <a className={styles.personCard} href={href} data-ui="media" data-ui-tone="dark" target="_blank" rel="noopener noreferrer" aria-label={`${person.name}: ${linkLabel} (opens in a new tab)`}>
               <div className={styles.personArt} aria-hidden="true">{person.portrait && <Portrait key={person.portrait} src={person.portrait} position={person.portraitPosition} />}<div className={styles.glyphTrack}><Initials value={person.initials} /><Initials value={person.initials} echo /></div><div className={styles.waveform}>{Array.from({ length: 13 }, (_, bar) => <i key={bar} style={{ "--bar": bar, "--bar-height": `${12 + ((bar * 7 + index * 3) % 24)}px` } as CSSProperties} />)}</div></div>
-              <div className={styles.identity}><h3>{person.name}</h3><p>{person.role}</p>{person.linkedin && <span className={styles.profile}><span className={styles.profileLabel}>LinkedIn profile</span><span className={styles.profileIcon} aria-hidden="true">{[0, 1].map(arrow => <svg key={arrow} viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}</span></span>}</div>
-            </Profile>
+              <div className={styles.identity}><h3>{person.name}</h3><p>{person.role}</p><span className={styles.profile}><span className={styles.profileLabel}>{linkLabel}</span><span className={styles.profileIcon} aria-hidden="true">{[0, 1].map(arrow => <svg key={arrow} viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}</span></span></div>
+            </a>
           </motion.article>;
         })}
       </motion.div>
-      <p className={styles.source}>CPCG members and campus groups supplied by the organising team. Faculty credits reflect <a href="https://www.hrvista.live/contact" data-ui="text" data-ui-tone="dark" target="_blank" rel="noopener noreferrer">HR VISTA 2.0</a>. LinkedIn links and portraits appear only where matched; other members are shown with initials.</p>
+      <p className={styles.source}>CPCG members and campus groups supplied by the organising team. Faculty credits reflect <a href="https://www.hrvista.live/contact" data-ui="text" data-ui-tone="dark" target="_blank" rel="noopener noreferrer">HR VISTA 2.0</a>. “Find on LinkedIn” opens a name search where a profile is unconfirmed. Portraits appear only where matched; other members are shown with initials.</p>
     </div>
   </section>;
 }

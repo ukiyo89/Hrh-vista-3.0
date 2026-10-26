@@ -35,11 +35,11 @@ const editions = [
   },
   {
     number: "3.0",
-    kicker: "November 2026 · Mumbai · Venue to be announced",
+    kicker: "November 2026 · Venue to be announced",
     title: "A wider horizon.",
     lines: ["A wider", "horizon."],
     nav: "The horizon",
-    copy: "Our most ambitious chapter yet. A new gathering is taking shape in Mumbai for November 2026. The same purpose, imagined at a new scale. Venue to be announced.",
+    copy: "Our most ambitious chapter yet. A new gathering is taking shape for November 2026. The same purpose, imagined at a new scale. Venue to be announced.",
     image: "/media/flickr/editions-4.jpg",
     alt: "The HR VISTA 2.0 community whose story continues into the planned third edition",
     caption: "Our community, looking ahead · Photograph from HR VISTA 2.0",

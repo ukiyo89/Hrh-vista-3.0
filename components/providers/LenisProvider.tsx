@@ -20,8 +20,7 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     let rafId = 0;
     let cancelled = false;
 
-    // Direct flight controls must clear pending smooth-scroll momentum so the
-    // document and the scrubbed globe/map scene settle at the same position.
+    // Direct scene navigation must clear pending smooth-scroll momentum.
     const seek = (event: Event) => {
       const top = (event as CustomEvent<number>).detail;
       if (typeof top !== "number" || !Number.isFinite(top)) return;

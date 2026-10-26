@@ -48,15 +48,15 @@ export function SiteFooter() {
         <nav className={styles.linkColumn} aria-labelledby="footer-explore">
           <h2 id="footer-explore" className={styles.columnHeading}>Explore</h2>
           <a data-ui="text" href="/#lavasa">Lavasa</a>
-          <a data-ui="text" href="/#journey">Journey</a>
-          <a data-ui="text" href="/#mumbai">Mumbai</a>
           <a data-ui="text" href="/#editions">Editions</a>
+          <a data-ui="text" href="/#next-chapter">What’s next</a>
         </nav>
         <nav className={styles.linkColumn} aria-labelledby="footer-discover">
           <h2 id="footer-discover" className={styles.columnHeading}>Discover</h2>
           <a data-ui="text" href="/work">Archive</a>
           <a data-ui="text" href="/voices">Voices 2.0</a>
           <a data-ui="text" href="/#people">Christ staff</a>
+          <a data-ui="text" href="/#cpcg-members">CPCG members</a>
           <a data-ui="text" href="/sponsors">Sponsors</a>
           <a data-ui="text" href="/brochure">Brochure</a>
           <a data-ui="text" href="/brochure/HR-VISTA-3.0.pdf" download>

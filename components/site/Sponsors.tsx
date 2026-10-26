@@ -29,7 +29,7 @@ function BrandStage({ name = "YOUR BRAND", mode = 0, compact = false }: { name?:
 const stairCards = [
   { label: "A SHARED SPOTLIGHT", foot: "THE NEXT CHAPTER, TOGETHER", background: "#c4d7f2", ink: "#172b48" },
   { label: "A NEW CONNECTION", foot: "GOOD COMPANY. GREATER IMPACT.", background: "#152b47", ink: "#dce8f9" },
-  { label: "A BIGGER STAGE", foot: "MUMBAI / NOVEMBER 2026", background: "#d9dfce", ink: "#233a38" },
+  { label: "A BIGGER STAGE", foot: "HR VISTA / NOVEMBER 2026", background: "#d9dfce", ink: "#233a38" },
   { label: "A WORLD OF POSSIBILITY", foot: "PEOPLE MEET POSSIBILITY", background: "#2d51ca", ink: "#e5eeff" },
   { label: "A LASTING IMPRESSION", foot: "LET’S MAKE WHAT’S NEXT", background: "#eae6db", ink: "#293c51" },
 ];
@@ -119,7 +119,7 @@ export function Sponsors() {
         <div className={styles.heroCopy}><h1 id="sponsor-title">Amplify<br />what’s <em>next.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Extraordinary conversations deserve extraordinary company. Make room for your brand in the future of work.</p><ActionLink className={styles.cta} href="#brand-preview" direction="down">Put your brand in the picture</ActionLink></div>
         <BrandStage name={name} mode={mode} />
       </div>
-      <div className={styles.heroFoot}><span>MUMBAI · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={paused} onClick={() => setPaused(!paused)} disabled={!!reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span data-ui-glyph aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button></div>
+      <div className={styles.heroFoot}><span>HR VISTA 3.0 · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={paused} onClick={() => setPaused(!paused)} disabled={!!reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span data-ui-glyph aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button></div>
     </section>
     <div className={styles.ribbon} aria-hidden="true"><div>{Array.from({ length: 4 }, (_, i) => <span key={i}>PEOPLE MEET POSSIBILITY <i>✳</i> BETTER, TOGETHER <i>✳</i></span>)}</div></div>
     <SponsorStaircase name={name} paused={paused} />

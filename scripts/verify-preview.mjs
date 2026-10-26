@@ -11,6 +11,11 @@ for (const route of ["/", "/work", "/voices", "/brochure?page=11", "/sponsors"])
   const html = await response.text();
   assert.match(html, /HR VISTA/, `${route} must contain the site`);
   assert.doesNotMatch(html, /BKC|Jio Grounds|Bandra Kurla/i, `${route} must not advertise an unconfirmed exact venue`);
+  if (route === "/") {
+    assert.doesNotMatch(html, /Mumbai|data-flight-|id="mumbai"|id="journey"/i, "Homepage must not advertise the cancelled Mumbai journey");
+    assert.match(html, /id="lavasa"/, "Lavasa origin must remain");
+    assert.match(html, /id="next-chapter"/, "Next chapter links must retain a destination");
+  }
   for (const match of html.matchAll(/<script[^>]+src="([^\"]+)"/g)) scripts.add(match[1]);
   console.log(`PASS ${route}`);
 }

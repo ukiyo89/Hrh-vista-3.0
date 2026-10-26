@@ -35,11 +35,8 @@ import styles from "./Hero.module.css";
  *     through the same overdamped spring (stiffness 100, damping 30) so the wall
  *     lags the hand slightly and settles without wobble. Released off-phase, the
  *     drum eases to the nearest framing for a consistent resting composition.
- *   · Idle: one framing every `DWELL_MS`, on the same spring. The reference is
- *     inert unless dragged and leans on its panels being video for life; ours are
- *     stills, so the drum steps — but only between framings, never resting
- *     between two (see DWELL_MS for why that matters).
- *   · A slow photographic push-in sits beneath the drag and scroll movement.
+ *   · The wall stays still until dragged or moved with the arrow keys.
+ *   · A brief photographic settle sits beneath the drag and scroll movement.
  *
  * SAFETY
  *   `prefers-reduced-motion` gets the drum frozen at its opening angle, which is
@@ -91,14 +88,6 @@ const SENSITIVITY = 0.5;
 /** Spring constants — the reference's `{ stiffness: 100, damping: 30 }`, mass 1. */
 const SPRING_K = 100;
 const SPRING_C = 30;
-/**
- * Hold on one framing before stepping to the next, and the drum's rest phase.
- *
- * Rest on a multiple of `STEP` so a photograph is centred after each turn.
- */
-const DWELL_MS = 4600;
-/** Quiet period after a drag before the stepping resumes. */
-const RESUME_MS = 6000;
 /** Longest step the integrator will take, so a stalled tab cannot explode it. */
 const MAX_DT = 1 / 30;
 
@@ -115,6 +104,7 @@ const inOpeningArc = (k: number) => {
 };
 
 export function Hero() {
+  const heroRef = useRef<HTMLElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const drumRef = useRef<HTMLDivElement | null>(null);
   const panelRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -137,9 +127,10 @@ export function Hero() {
 
   useEffect(() => {
     const stage = stageRef.current;
+    const hero = heroRef.current;
     const drum = drumRef.current;
     const viewport = drum?.parentElement;
-    if (!stage || !drum || !viewport) return;
+    if (!hero || !stage || !drum || !viewport) return;
 
     let angle = START; // rendered angle
     let target = START; // spring's target
@@ -147,11 +138,9 @@ export function Hero() {
     let raf = 0;
     let last = 0;
     let visible = true;
-    let hover = false;
     let dragging = false;
     let startX = 0;
     let startAngle = 0;
-    let resumeAt = 0;
     let culledMask = -1;
     let radius = 0;
     let perspective = 0;
@@ -212,6 +201,19 @@ export function Hero() {
 
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let reduced = preference.matches;
+    const wake = () => {
+      if (!raf && visible && !document.hidden && !reduced) raf = requestAnimationFrame(frame);
+    };
+    const syncActivity = () => {
+      const active = visible && !document.hidden;
+      if (heroRef.current) heroRef.current.dataset.active = String(active);
+      if (active) wake();
+      else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      }
+    };
     const updatePreference = () => {
       reduced = preference.matches;
       stage.dataset.static = String(reduced);
@@ -223,31 +225,23 @@ export function Hero() {
         stage.classList.remove(styles["is-dragging"]!);
         draw();
       }
-      resumeAt = performance.now() + DWELL_MS;
+      if (reduced) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+        last = 0;
+      } else wake();
     };
-    updatePreference();
-    preference.addEventListener("change", updatePreference);
 
     const frame = (now: number) => {
-      raf = requestAnimationFrame(frame);
+      raf = 0;
       if (!last) last = now;
       const dt = Math.min((now - last) / 1000, MAX_DT);
       last = now;
-      if (!visible || reduced) return;
+      if (!visible || reduced || document.hidden) { last = 0; return; }
       const intro = document.documentElement.dataset.intro;
       if (intro === "loading" || intro === "opening") {
-        resumeAt = now + DWELL_MS;
+        last = 0;
         return;
-      }
-
-      // Advance one framing at a time. `target` only ever holds multiples of
-      // STEP, so the drum is never parked between two framings. The first
-      // frame only arms the timer — the opening pose gets a full dwell.
-      if (resumeAt === 0) {
-        resumeAt = now + DWELL_MS;
-      } else if (!dragging && !hover && now >= resumeAt) {
-        target -= STEP;
-        resumeAt = now + DWELL_MS;
       }
 
       // Overdamped spring (ζ = 1.5) — the reference's useSpring(100, 30).
@@ -260,20 +254,29 @@ export function Hero() {
         vel = 0;
       }
       draw();
+      // Sleep completely once the wall settles; input wakes the spring.
+      if (angle === target && vel === 0) {
+        last = 0;
+      } else raf = requestAnimationFrame(frame);
     };
 
-    const io = new IntersectionObserver(([e]) => { visible = !!e?.isIntersecting; }, { threshold: 0 });
-    io.observe(drum);
-
-    const onEnter = () => { hover = true; };
-    const onLeave = () => { hover = false; };
+    updatePreference();
+    preference.addEventListener("change", updatePreference);
+    const io = new IntersectionObserver(([e]) => {
+      visible = !!e?.isIntersecting;
+      syncActivity();
+    }, { threshold: 0 });
+    io.observe(stage);
+    document.addEventListener("visibilitychange", syncActivity);
 
     const onDown = (e: PointerEvent) => {
       if (reduced || !e.isPrimary) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
       dragging = true;
       startX = e.clientX;
-      startAngle = target;
+      startAngle = angle;
+      vel = 0;
+      wake();
       stage.classList.add(styles["is-dragging"]!);
       try {
         stage.setPointerCapture?.(e.pointerId);
@@ -288,6 +291,7 @@ export function Hero() {
       // Written straight to the spring's target in the handler, never gated on
       // rAF: a throttled tab must still track the hand.
       target = startAngle - (e.clientX - startX) * SENSITIVITY;
+      wake();
     };
 
     const onUp = (e?: PointerEvent) => {
@@ -296,42 +300,41 @@ export function Hero() {
       stage.classList.remove(styles["is-dragging"]!);
       // Let go anywhere and the drum eases to the nearest centred photograph.
       target = Math.round(target / STEP) * STEP;
-      resumeAt = performance.now() + RESUME_MS;
       try {
         if (e?.pointerId !== undefined) stage.releasePointerCapture?.(e.pointerId);
       } catch {
         /* already released */
       }
-      hover = stage.matches(":hover");
+      wake();
     };
 
+    const step = (direction: number) => {
+      target = Math.round(target / STEP) * STEP + direction * STEP;
+      if (reduced) { angle = target; draw(); }
+      wake();
+    };
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       e.preventDefault();
       // Nudge the TARGET, so the arrow keys ride the same spring as the drag
       // instead of snapping the drum to a fixed angle.
-      target += e.key === "ArrowRight" ? -STEP : STEP;
-      if (reduced) { angle = target; draw(); }
-      resumeAt = performance.now() + RESUME_MS;
+      step(e.key === "ArrowRight" ? -1 : 1);
     };
 
-    stage.addEventListener("pointerenter", onEnter);
-    stage.addEventListener("pointerleave", onLeave);
     stage.addEventListener("pointerdown", onDown);
     stage.addEventListener("pointermove", onMove);
     stage.addEventListener("pointerup", onUp);
     stage.addEventListener("pointercancel", onUp);
     stage.addEventListener("keydown", onKey);
 
-    raf = requestAnimationFrame(frame);
+    wake();
 
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
       resizeObserver.disconnect();
       preference.removeEventListener("change", updatePreference);
-      stage.removeEventListener("pointerenter", onEnter);
-      stage.removeEventListener("pointerleave", onLeave);
+      document.removeEventListener("visibilitychange", syncActivity);
       stage.removeEventListener("pointerdown", onDown);
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerup", onUp);
@@ -342,7 +345,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className={styles.hero} aria-labelledby="hero-title" data-hero>
+    <section ref={heroRef} className={styles.hero} aria-labelledby="hero-title" data-hero>
       {/* The retro perspective floor. The reference draws this as a 3016×1075
           PNG bleeding 120px past each edge at 32% opacity; ours is the same
           plate. It sits behind the drum so the drum's base cuts into it. */}
@@ -357,7 +360,7 @@ export function Hero() {
         data-hero-drag
         role="group"
         tabIndex={0}
-        aria-label="HR VISTA 3.0 — two editions of the conclave, on a drum. Drag to turn it."
+        aria-label="HR VISTA photo wall. Drag or use the left and right arrow keys to turn it."
       >
         {/* The 300×420 window the drum is projected through. Its size and the
             radius are set per breakpoint in Hero.module.css. */}
@@ -412,10 +415,7 @@ export function Hero() {
         </h1>
       </div>
 
-      <div className={styles.cue} aria-hidden>
-        <span>DRAG THE WALL</span>
-        <span className={styles["cue-line"]} />
-      </div>
+      <a className={styles.storyLink} href="#countdown">Explore the story <span aria-hidden="true">↓</span></a>
     </section>
   );
 }

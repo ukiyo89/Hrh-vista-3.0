@@ -277,7 +277,7 @@ export default function JourneyGlobe({
   return (
     <div ref={shell} className={styles.shell} data-globe-interactive data-discovering={revealing}>
       <div ref={host} className="journey-globe" aria-hidden="true" />
-      <div className={styles.dragSurface} data-ui="media" data-ui-tone="dark" tabIndex={0} role="group" aria-label="Interactive earth. Drag or use arrow keys to spin. Shake back and forth to find a surprise, or press Space. Home resets the globe."
+      <div className={styles.dragSurface} tabIndex={0} role="group" aria-label="Interactive earth. Drag or use arrow keys to spin. Shake back and forth to find a surprise, or press Space. Home resets the globe."
         onKeyDown={(event) => {
           if (!["ArrowLeft", "ArrowRight", "Home", " ", "Enter"].includes(event.key)) return;
           event.preventDefault();

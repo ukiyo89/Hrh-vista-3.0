@@ -54,7 +54,7 @@
   z-index: -1;
   background: var(--action-fill);
   clip-path: circle(0% at calc(100% - 27px) 50%);
-  transition: clip-path 300ms var(--ui-ease);
+  transition: clip-path 220ms var(--ui-ease);
 }
 
 .label { min-width: 0; }
@@ -76,7 +76,7 @@
   inset: 25%;
   width: 50%;
   height: 50%;
-  transition: transform 260ms var(--ui-ease);
+  transition: transform 200ms var(--ui-ease);
 }
 .icon svg:last-child { transform: translate(-160%,160%); }
 .icon[data-direction="down"] { rotate: 135deg; }

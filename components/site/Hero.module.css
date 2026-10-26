@@ -142,9 +142,13 @@
      push-in gives each frame the drift a locked-off shot has, which is the part
      of "video" the eye actually reads. Deliberately tiny — the panel is clipped
      hard, so this is a breath, not a zoom. */
-  animation: hero-push 30s ease-in-out infinite alternate;
-  animation-delay: calc(var(--d, 0s) - 15s);
+  animation: hero-push 4.2s ease-out both;
   will-change: transform;
+}
+
+.hero[data-active="false"] .breathe img {
+  animation-play-state: paused;
+  will-change: auto;
 }
 
 @keyframes hero-push {
@@ -152,7 +156,7 @@
     transform: scale(1.02);
   }
   to {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 }
 
@@ -196,23 +200,21 @@
   color: var(--paper);
 }
 
-.titleLine { display:inline-block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; vertical-align:bottom; }
+.titleLine { display:inline-block; max-width:100%; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; vertical-align:bottom; text-wrap:balance; }
 .titleLine > span { display:block; }
 :global(html[data-intro="loading"]) .viewport { transform:translateY(28px); }
-:global(html[data-intro="loading"]) :is(.caption,.cue) { opacity:0; }
+:global(html[data-intro="loading"]) .caption { opacity:0; }
 :global(html[data-intro="loading"]) .titleLine > span { transform:translateY(115%); }
-:global(html[data-intro="loading"]) :is(.breathe,.breathe img,.cue-line),
-:global(html[data-intro="opening"]) :is(.breathe,.breathe img,.cue-line) { animation-play-state:paused; }
+:global(html[data-intro="loading"]) :is(.breathe,.breathe img),
+:global(html[data-intro="opening"]) :is(.breathe,.breathe img) { animation-play-state:paused; }
 :global(html[data-intro="opening"]) .viewport { animation:wallEnter 1s cubic-bezier(.16,1,.3,1) both; }
 :global(html[data-intro="opening"]) .caption { animation:hero-fade .65s ease-out .26s both; }
 :global(html[data-intro="opening"]) .titleLine > span { animation:lineEnter .82s cubic-bezier(.16,1,.3,1) .32s both; }
 :global(html[data-intro="opening"]) .titleLine:last-child > span { animation-delay:.43s; }
-:global(html[data-intro="opening"]) .cue { animation:cueEnter .6s ease-out .66s both; }
 /* Opacity and scale on the perspective window can flatten the nested 3D
    drum. The shutters provide the reveal; the wall only settles vertically. */
 @keyframes wallEnter { from { transform:translateY(28px); } to { transform:translateY(0); } }
 @keyframes lineEnter { from { transform:translateY(115%); } to { transform:translateY(0); } }
-@keyframes cueEnter { from { opacity:0; } to { opacity:.62; } }
 
 @keyframes hero-fade {
   from {
@@ -223,52 +225,14 @@
   }
 }
 
-/* ---------- 4. Drag cue ---------- */
-.cue {
-  position: absolute;
-  right: clamp(1rem, 3vw, 3rem);
-  bottom: clamp(0.75rem, 2.5svh, 1.75rem);
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.6rem;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--mist-200);
-  opacity: 0.62;
-  pointer-events: none;
-}
-
-.cue-line {
-  width: 34px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--mist-400));
-  animation: cue-slide 2.1s var(--ease-expo) infinite;
-}
-.storyLink { position:absolute; z-index:6; left:clamp(1.5rem,3vw,3rem); bottom:clamp(.75rem,2.5svh,1.75rem); display:flex; align-items:center; gap:32px; min-height:44px; font-size:12px; color:#cbdaf0; border-bottom:1px solid #8fa9cc55; }
+/* ---------- 4. Continue into the story ---------- */
+.storyLink { position:absolute; z-index:6; left:var(--section-padding-x); bottom:clamp(1rem,2.5svh,1.75rem); display:flex; align-items:center; gap:32px; min-height:44px; font-size:13px; color:#dae6fa; border-bottom:1px solid #8fa9cc55; text-decoration:none; transition:color 180ms ease,border-color 180ms ease; }
 .storyLink > span { font-size:19px; transition:transform .2s ease-out; }
-.storyLink:hover > span { transform:translateY(4px); }
+.storyLink:hover { color:#fff; border-color:#bed5ff; }
+.storyLink:hover > span { transform:translateY(3px); }
 .storyLink:focus-visible { outline:2px solid #a9c7fa; outline-offset:6px; }
 :global(html[data-intro="loading"]) .storyLink { opacity:0; }
 :global(html[data-intro="opening"]) .storyLink { animation:hero-fade .6s ease-out .66s both; }
-
-@keyframes cue-slide {
-  0% {
-    transform: scaleX(0.2);
-    transform-origin: right;
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(1);
-    transform-origin: right;
-    opacity: 0;
-  }
-}
 
 /* ---------- 5. Breakpoints ---------- */
 /* Same three geometries the reference uses, read from its own markup:
@@ -324,7 +288,11 @@
 @media (max-width: 480px) {
   .caption { max-width:280px; margin-inline:auto; font-size:9px; line-height:1.8; letter-spacing:.04em; }
   .title { font-size:clamp(1.45rem,7.3vw,2rem); }
-  .storyLink { font-size:11px; left:7vw; gap:24px; }
+  .storyLink { font-size:11px; gap:12px; }
+}
+
+@media (max-width: 360px) {
+  .storyLink { gap:8px; }
 }
 
 /* ---------- 6. Reduced motion ---------- */
@@ -342,7 +310,6 @@
   .caption,
   .title,
   .viewport,
-  .cue,
   .storyLink {
     animation: none !important;
     opacity: 1 !important;
@@ -350,13 +317,9 @@
 
   .viewport { transform:none !important; }
 
-  .cue-line {
-    animation: none;
-    opacity: 0.7;
-  }
   .titleLine > span { animation:none !important; transform:none !important; }
   .storyLink > span { transition:none; }
+  .storyLink:hover > span { transform:none; }
 }
 
-.cue { font-size:11px; letter-spacing:.08em; }
-@media(max-width:480px) { .caption { max-width:310px; font-size:11px; letter-spacing:0; } .cue { font-size:10px; } }
+@media(max-width:480px) { .caption { max-width:310px; font-size:11px; letter-spacing:0; } }

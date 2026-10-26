@@ -54,7 +54,7 @@ export function ArchivePerspective({ wide = false, teaserReveal = false, images 
     const rect = event.currentTarget.getBoundingClientRect();
     const x = grab.current ? Math.max(-30, Math.min(30, (event.clientX - grab.current.x) * .15)) : ((event.clientX - rect.left) / rect.width - .5) * 20;
     event.currentTarget.style.setProperty("--crop-x", `${x}px`);
-    event.currentTarget.style.setProperty("--crop-y", `${((event.clientY - rect.top) / rect.height - .5) * 12}px`);
+    event.currentTarget.style.setProperty("--crop-y", event.pointerType === "mouse" ? `${((event.clientY - rect.top) / rect.height - .5) * 12}px` : "0px");
   };
   const up = (event: PointerEvent<HTMLDivElement>) => {
     const start = grab.current;
@@ -73,7 +73,12 @@ export function ArchivePerspective({ wide = false, teaserReveal = false, images 
       <div className={styles.shutters} aria-hidden="true">{[0, 1, 2].map(index => <i key={index} data-archive-shutter />)}</div>
       <span className={styles.srOnly} id={hintId}>Drag, swipe, or use the left and right arrow keys to explore the photographs.</span>
     </div>
-    <div className={styles.perspectiveControls}><span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {images.length}: {images[active].alt}</span><div><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(-1)} aria-label="Previous archive photograph"><span data-ui-glyph aria-hidden="true">←</span></button><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(1)} aria-label="Next archive photograph"><span data-ui-glyph aria-hidden="true">→</span></button></div></div>
+    <div className={styles.perspectiveControls}>
+      <span className={styles.srOnly} aria-live="polite" aria-atomic="true">Photograph {active + 1} of {images.length}: {images[active].alt}</span>
+      <span className={styles.photoIndex} aria-hidden="true"><b>{String(active + 1).padStart(2, "0")}</b><span>/</span>{String(images.length).padStart(2, "0")}</span>
+      <span className={styles.photoProgress} aria-hidden="true"><span style={{ transform: `scaleX(${(active + 1) / images.length})` }} /></span>
+      <div className={styles.photoButtons}><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(-1)} aria-label="Previous archive photograph"><span data-ui-glyph aria-hidden="true">←</span></button><button type="button" data-ui="icon" data-ui-tone={wide ? "dark" : undefined} onClick={() => change(1)} aria-label="Next archive photograph"><span data-ui-glyph aria-hidden="true">→</span></button></div>
+    </div>
   </div>;
 }
 

@@ -20,6 +20,7 @@ export function SiteHeader() {
   const home = pathname === "/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
@@ -28,10 +29,10 @@ export function SiteHeader() {
   useEffect(() => {
     let frame = 0;
     const onScroll = () => {
-      setScrolled(window.scrollY > 24);
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
+        setScrolled(window.scrollY > 24);
         const distance = document.documentElement.scrollHeight - window.innerHeight;
         if (progressRef.current) progressRef.current.style.transform = `scaleX(${distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0})`;
       });
@@ -48,19 +49,23 @@ export function SiteHeader() {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const background = Array.from(document.querySelectorAll<HTMLElement>("main, footer"));
+    const previousInert = background.map((element) => element.inert);
+    background.forEach((element) => { element.inert = true; });
     const panel = panelRef.current;
     panel?.querySelector<HTMLAnchorElement>("a")?.focus();
     const keydown = (event: KeyboardEvent) => {
       if (event.key === "Escape") { event.preventDefault(); setOpen(false); }
-      if (event.key !== "Tab" || !panel) return;
-      const links = Array.from(panel.querySelectorAll<HTMLElement>("a, button"));
+      if (event.key !== "Tab") return;
+      const links = Array.from(headerRef.current?.querySelectorAll<HTMLElement>("a[href], button") ?? [])
+        .filter((element) => element.tabIndex >= 0 && !element.closest("[inert]") && element.getClientRects().length > 0);
       const first = links[0];
       const last = links.at(-1);
       if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault(); toggleRef.current?.focus();
+        event.preventDefault(); last?.focus();
       } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault(); toggleRef.current?.focus();
-      } else if (document.activeElement === toggleRef.current) {
+        event.preventDefault(); first?.focus();
+      } else if (!links.some((element) => element === document.activeElement)) {
         event.preventDefault(); (event.shiftKey ? last : first)?.focus();
       }
     };
@@ -70,6 +75,7 @@ export function SiteHeader() {
     document.addEventListener("keydown", keydown);
     return () => {
       document.body.style.overflow = previousOverflow;
+      background.forEach((element, index) => { element.inert = previousInert[index]; });
       document.removeEventListener("keydown", keydown);
       media.removeEventListener("change", resize);
       toggleRef.current?.focus();
@@ -77,10 +83,10 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className={[styles.header, home ? styles.home : styles.paper, scrolled ? styles.scrolled : ""].join(" ")}>
-      <a href="#main-content" className={styles.skip}>Skip to content</a>
+    <header ref={headerRef} role={open ? "dialog" : undefined} aria-modal={open || undefined} aria-label={open ? "Site navigation" : undefined} data-lenis-prevent={open ? "" : undefined} className={[styles.header, home ? styles.home : styles.paper, scrolled ? styles.scrolled : ""].join(" ")}>
+      <a href="#main-content" className={styles.skip} inert={open}>Skip to content</a>
       <div className={styles.bar}>
-        <Link href={home ? "#top" : "/"} className={styles.wordmark} aria-label="HR VISTA 3.0 home">
+        <Link href={home ? "#top" : "/"} className={styles.wordmark} aria-label="HR VISTA 3.0 home" onClick={() => setOpen(false)}>
           <img className={styles.logo} src="/media/raw/logo_hr_vista.png" alt="" width={34} height={34} />
           <span>HR VISTA <span className={styles.version}>3.0</span></span>
         </Link>
@@ -96,13 +102,15 @@ export function SiteHeader() {
         </div>
       </div>
       <div className={styles.readingProgress} aria-hidden="true"><span ref={progressRef} /></div>
-      {open && <div ref={panelRef} className={styles.panel} id="mobile-navigation" data-lenis-prevent>
+      {open && <>
+      <button type="button" className={styles.backdrop} aria-label="Close navigation" tabIndex={-1} onClick={() => setOpen(false)} />
+      <div ref={panelRef} className={styles.panel} id="mobile-navigation" data-lenis-prevent>
         <nav aria-label="Mobile">
-          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} data-ui="row" data-ui-tone="dark" onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span data-ui-glyph aria-hidden="true">↗</span></Link>)}
+          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} data-ui="row" data-ui-tone="dark" aria-current={pathname === link.href ? "page" : undefined} style={{ animationDelay: `${index * 24}ms` }} onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span data-ui-glyph aria-hidden="true">↗</span></Link>)}
           <ActionLink href="/brochure" className={styles.mobileJoin} onClick={() => setOpen(false)}>Explore the brochure</ActionLink>
         </nav>
         <p>21–22 November 2026 · Venue to be announced</p>
-      </div>}
+      </div></>}
     </header>
   );
 }

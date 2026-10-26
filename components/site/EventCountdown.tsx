@@ -60,7 +60,7 @@ export function EventCountdown() {
     </div>
     <div className={styles.clock} role="timer" aria-live="off" aria-label={phase === "live" ? "HR VISTA 3.0 event dates are here" : phase === "ended" ? "HR VISTA 3.0 countdown has ended" : remaining ? `${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds until 21 November 2026, India Standard Time` : "Countdown to 21 November 2026, India Standard Time"}>
       {units.map((unit) => <div key={unit} className={styles.cell} data-clock-cell aria-hidden="true">
-        <span className={styles.value}><span key={remaining?.[unit] ?? "pending"} className={unit === "seconds" ? styles.second : undefined}>{remaining ? String(remaining[unit]).padStart(2, "0") : "––"}</span></span>
+        <span className={styles.value}><span className={styles.digits}>{(remaining ? String(remaining[unit]).padStart(2, "0") : "––").split("").map((digit, index) => <span key={`${index}-${digit}`} className={styles.digit}>{digit}</span>)}</span></span>
         <span className={styles.unit}>{unit}</span>
       </div>)}
     </div>

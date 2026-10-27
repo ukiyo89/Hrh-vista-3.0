@@ -332,12 +332,13 @@
       }
     ],
     "status": "user-provided",
-    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face. Exact LinkedIn URL later explicitly confirmed by the organiser.",
     "portrait": "/media/cpcg/aaron-benoy.png",
     "portraitSource": "Organiser attachment b24e5b8c-f8be-4b43-b5b3-92801450d477, 27 October 2026",
     "width": 200,
     "height": 200,
-    "sha256": "f85fe345233a2098d0f0a766c1f10395eba7a10b7931f706881dceef250333f2"
+    "sha256": "f85fe345233a2098d0f0a766c1f10395eba7a10b7931f706881dceef250333f2",
+    "linkedin": "https://www.linkedin.com/in/aaron-benoy-03151b298/"
   },
   {
     "name": "Adone Babu",
@@ -401,11 +402,12 @@
       }
     ],
     "status": "user-provided",
-    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face. Exact profile URL was later explicitly confirmed by the organiser.",
     "portrait": "/media/cpcg/indrajeet.png",
     "portraitSource": "Organiser attachment 1f1d3b35-1c8c-4fc0-a4f6-a41e36ee0539, 27 October 2026",
     "width": 200,
     "height": 200,
-    "sha256": "72cc428f03ebbfff5638c432dae1c64f3df8cd30ea3d9be64257d2c107df5d0c"
+    "sha256": "72cc428f03ebbfff5638c432dae1c64f3df8cd30ea3d9be64257d2c107df5d0c",
+    "linkedin": "https://www.linkedin.com/in/indrajeet-singh-279047327/"
   }
 ]

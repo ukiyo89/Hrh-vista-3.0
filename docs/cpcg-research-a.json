@@ -253,8 +253,8 @@
   },
   {
     "name": "Hanishma K",
-    "linkedin": "https://in.linkedin.com/in/hanishma-k-62192a350",
-    "status": "candidate",
+    "linkedin": "https://www.linkedin.com/in/hanishma-k-62192a350/",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/hanishma-k-62192a350",
@@ -263,9 +263,13 @@
       {
         "url": "https://in.linkedin.com/in/tavishee-singh-8067182a8",
         "finding": "Lavasa peer post thanks teammate Hanishma K."
+      },
+      {
+        "url": "https://www.linkedin.com/in/hanishma-k-62192a350/",
+        "finding": "Organiser explicitly identified this URL as the member's profile in the current message."
       }
     ],
-    "note": "Organiser confirmed the full display name Hanishma K and supplied a portrait on 27 October 2026. The supplied image is used directly; profile URL remains unconfirmed and is not inferred from the face."
+    "note": "Exact LinkedIn profile URL explicitly supplied and confirmed by the organiser on 27 October 2026. Portrait supplied separately by the organiser."
   },
   {
     "name": "Shambhavi Shesh",

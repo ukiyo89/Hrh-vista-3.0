@@ -128,12 +128,13 @@
       }
     ],
     "status": "user-provided",
-    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face. Exact profile URL was later explicitly confirmed by the organiser.",
     "portrait": "/media/cpcg/hanishma-k.png",
     "portraitSource": "Organiser attachment a79073ed-caec-40da-8b38-2c29d92341a0, 27 October 2026",
     "width": 200,
     "height": 200,
-    "sha256": "f76d19e559e18dd91942ee07ab175b9879e63c47f7c04b37badd57588ce83bfa"
+    "sha256": "f76d19e559e18dd91942ee07ab175b9879e63c47f7c04b37badd57588ce83bfa",
+    "linkedin": "https://www.linkedin.com/in/hanishma-k-62192a350/"
   },
   {
     "name": "Mrinalini Sharma",

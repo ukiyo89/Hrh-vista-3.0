@@ -66,7 +66,7 @@ export function People() {
         window.dispatchEvent(new CustomEvent("hr-vista:seek", { detail: top }));
       }}>
         <summary className={`${actionStyles.action} ${styles.rosterToggle}`} aria-controls="all-cpcg-members">
-          <span className={styles.rosterStack} aria-hidden="true"><i>SW</i><i>AM</i><i>RR</i></span>
+          <span className={styles.rosterStack} aria-hidden="true"><i><img src="/media/cpcg/sabhya-walani.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/cpcg/aditi-mishra.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/people/arnav-sharma.webp" alt="" width={400} height={400} loading="lazy" decoding="async" /></i></span>
           <span className={styles.rosterLabel}><span className={styles.closedLabel}>Meet all members</span><span className={styles.openLabel}>Close member list</span></span>
           <span className={styles.rosterCount}>{cpcgMembers.length}</span>
           <span className={`${actionStyles.icon} ${styles.rosterIcon}`} aria-hidden="true">{[0, 1].map(icon => <svg key={icon} viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>)}</span>
@@ -80,7 +80,6 @@ export function People() {
           <motion.div layout={!reduced} className={styles.grid}>{shown.map((person, index) => <PersonCard key={person.name} person={person} index={index} reduced={reduced} />)}</motion.div>
         </div>
       </details>
-      <p className={styles.source}>Committee roles follow the supplied CPCG core list. Faculty credits reflect <a href="https://www.hrvista.live/contact" data-ui="text" data-ui-tone="dark" target="_blank" rel="noopener noreferrer">HR VISTA 2.0</a>. “Find on LinkedIn” opens a name search where a profile is unconfirmed. Portraits appear only where matched; other members are shown with initials.</p>
     </div>
   </section>;
 }

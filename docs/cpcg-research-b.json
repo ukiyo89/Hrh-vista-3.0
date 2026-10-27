@@ -1,7 +1,7 @@
 [
   {
     "name": "Aaron Benoy",
-    "status": "candidate",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/aaron-benoy-147232372",
@@ -10,9 +10,14 @@
       {
         "url": "https://www.linkedin.com/posts/aaron-benoy-03151b298_aaron-benoy-has-successfully-completed-the-activity-7477973215508729857-O3v6",
         "summary": "Independent public search finds a different exact-name author, aaron-benoy-03151b298. Own 2026 posts describe cybersecurity certificates; public author link confirms second profile identifier but no campus."
+      },
+      {
+        "url": "https://www.linkedin.com/in/aaron-benoy-03151b298/",
+        "finding": "Organiser explicitly confirmed this exact profile URL in response to the clarification question."
       }
     ],
-    "note": "Two distinct exact-name candidates exist. One lists CHRIST Bangalore BCom/ACCA; another posts cybersecurity certificates. Native and Exa searches found no current campus, CPCG or peer detail that selects the organiser member. Organiser grouping is not disqualifying; identity ambiguity is the reason no link is selected."
+    "note": "Exact LinkedIn URL explicitly supplied and confirmed by the organiser on 27 October 2026; ambiguity between two earlier candidates is resolved. Portrait supplied separately by the organiser.",
+    "linkedin": "https://www.linkedin.com/in/aaron-benoy-03151b298/"
   },
   {
     "name": "Adone Babu",
@@ -60,14 +65,19 @@
   },
   {
     "name": "Indrajeet",
-    "status": "unresolved",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://www.linkedin.com/posts/joy-george--hr_the-war-for-talent-is-over-but-the-real-activity-7301446568413380608-fpaz",
         "summary": "HR Vista 2025 post has commenter Indrajeet Kurakuri; insufficient to connect first-name-only roster."
+      },
+      {
+        "url": "https://www.linkedin.com/in/indrajeet-singh-279047327/",
+        "finding": "Organiser explicitly identified this URL as the member's profile in the current message."
       }
     ],
-    "note": "First name alone is ambiguous. Other indexed Lavasa-related content mentions Indrajeet Singh; no unique roster match. No surname added or link/photo selected."
+    "note": "Exact LinkedIn profile URL explicitly supplied and confirmed by the organiser on 27 October 2026. Portrait supplied separately by the organiser.",
+    "linkedin": "https://www.linkedin.com/in/indrajeet-singh-279047327/"
   },
   {
     "name": "Rishika Ranjan",

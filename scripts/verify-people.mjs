@@ -37,6 +37,7 @@ assert.deepEqual(portraits.map(person => person.name).sort(), cpcgMembers.map(pe
 for (const [index, member] of cpcgMembers.entries()) {
   assert.match(member.initials, /^[A-Z]{1,2}$/);
   const finding = research[index];
+  const evidence = portraits.find(person => person.name === member.name);
   if (member.name === "Arnav Sharma") {
     const existing = existingPortraits.find(person => person.name === member.name);
     assert.equal(member.linkedin, existing.profileUrl, "Retain the previously sourced website credit");
@@ -45,14 +46,13 @@ for (const [index, member] of cpcgMembers.entries()) {
     assert.equal(member.linkedin, finding.linkedin, `${member.name}: link must match the documented profile`);
   } else {
     assert.equal(member.linkedin, undefined, `${member.name}: ambiguous profiles stay unlinked`);
-    assert.equal(member.portrait, undefined, `${member.name}: ambiguous photos stay unset`);
+    if (evidence.status !== "user-provided") assert.equal(member.portrait, undefined, `${member.name}: ambiguous photos stay unset`);
   }
   if (member.linkedin) assert.match(member.linkedin, /^https:\/\/(www|in)\.linkedin\.com\/in\/[^/?#]+\/?$/);
   if (member.portrait) {
-    const evidence = portraits.find(person => person.name === member.name);
-    assert.ok(["verified", "retained"].includes(evidence.status), `${member.name}: portrait must have source evidence`);
+    assert.ok(["verified", "retained", "user-provided"].includes(evidence.status), `${member.name}: portrait must have source evidence`);
     assert.equal(member.portrait, evidence.portrait);
-    assert.equal(new URL(member.linkedin).pathname.replace(/\/$/, ""), new URL(evidence.linkedin).pathname.replace(/\/$/, ""), `${member.name}: image and profile must match`);
+    if (evidence.status !== "user-provided") assert.equal(new URL(member.linkedin).pathname.replace(/\/$/, ""), new URL(evidence.linkedin).pathname.replace(/\/$/, ""), `${member.name}: image and profile must match`);
     assert.match(member.portrait, /^\/media\/[a-z0-9/-]+\.(webp|jpg|png)$/);
     const bytes = await readFile(new URL(`../public${member.portrait}`, import.meta.url));
     assert.ok(bytes.length > 1000, `${member.name}: portrait must be a real local image`);

@@ -112,7 +112,7 @@
     "sha256": "f99a10123a6a35b4619fcbe2a98b3095349eb833fb6ec924b74a60cb45348cfa"
   },
   {
-    "name": "Hanishma",
+    "name": "Hanishma K",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/hanishma-k-62192a350",
@@ -121,10 +121,19 @@
       {
         "url": "https://in.linkedin.com/in/tavishee-singh-8067182a8",
         "finding": "Lavasa peer post thanks teammate Hanishma K."
+      },
+      {
+        "source": "Organiser message, 27 October 2026",
+        "finding": "Attachment explicitly identified as Hanishma K; order preserved from the supplied three-image message."
       }
     ],
-    "status": "unresolved",
-    "note": "First name alone does not establish which profile belongs to the roster member. No portrait selected."
+    "status": "user-provided",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "portrait": "/media/cpcg/hanishma-k.png",
+    "portraitSource": "Organiser attachment a79073ed-caec-40da-8b38-2c29d92341a0, 27 October 2026",
+    "width": 200,
+    "height": 200,
+    "sha256": "f76d19e559e18dd91942ee07ab175b9879e63c47f7c04b37badd57588ce83bfa"
   },
   {
     "name": "Mrinalini Sharma",

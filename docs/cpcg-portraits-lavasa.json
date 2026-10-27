@@ -325,10 +325,19 @@
       {
         "url": "https://www.linkedin.com/posts/aaron-benoy-03151b298_aaron-benoy-has-successfully-completed-the-activity-7477973215508729857-O3v6",
         "finding": "Independent public search finds a different exact-name author, aaron-benoy-03151b298. Own 2026 posts describe cybersecurity certificates; public author link confirms second profile identifier but no campus."
+      },
+      {
+        "source": "Organiser message, 27 October 2026",
+        "finding": "Attachment explicitly identified as Aaron Benoy; order preserved from the supplied three-image message."
       }
     ],
-    "status": "unresolved",
-    "note": "Insufficient evidence to link a profile uniquely to the roster member."
+    "status": "user-provided",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "portrait": "/media/cpcg/aaron-benoy.png",
+    "portraitSource": "Organiser attachment b24e5b8c-f8be-4b43-b5b3-92801450d477, 27 October 2026",
+    "width": 200,
+    "height": 200,
+    "sha256": "f85fe345233a2098d0f0a766c1f10395eba7a10b7931f706881dceef250333f2"
   },
   {
     "name": "Adone Babu",
@@ -385,9 +394,18 @@
       {
         "url": "https://www.linkedin.com/posts/joy-george--hr_the-war-for-talent-is-over-but-the-real-activity-7301446568413380608-fpaz",
         "finding": "HR Vista 2025 post has commenter Indrajeet Kurakuri; insufficient to connect first-name-only roster."
+      },
+      {
+        "source": "Organiser message, 27 October 2026",
+        "finding": "Attachment explicitly identified as Indrajeet; order preserved from the supplied three-image message."
       }
     ],
-    "status": "unresolved",
-    "note": "Insufficient evidence to link a profile uniquely to the roster member."
+    "status": "user-provided",
+    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face.",
+    "portrait": "/media/cpcg/indrajeet.png",
+    "portraitSource": "Organiser attachment 1f1d3b35-1c8c-4fc0-a4f6-a41e36ee0539, 27 October 2026",
+    "width": 200,
+    "height": 200,
+    "sha256": "72cc428f03ebbfff5638c432dae1c64f3df8cd30ea3d9be64257d2c107df5d0c"
   }
 ]

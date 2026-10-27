@@ -24,7 +24,7 @@
 .waveform { position:absolute; bottom:17px; left:18px; right:18px; display:flex; height:32px; align-items:center; justify-content:space-between; }
 .waveform > i { width:2px; height:var(--bar-height); background:currentColor; opacity:.45; scale:1 .65; }
 .identity { position:relative; display:flex; flex-direction:column; justify-content:center; padding:28px 24px 24px; min-width:0; }
-.identity h3 { font:400 clamp(21px,2vw,31px)/1.12 var(--font-display),sans-serif; letter-spacing:-.035em; overflow-wrap:anywhere; }
+.identity h4 { font:400 clamp(21px,2vw,31px)/1.12 var(--font-display),sans-serif; letter-spacing:-.035em; overflow-wrap:anywhere; }
 .identity p { font-size:13px; line-height:1.7; color:#b5c4da; margin:13px 0 24px; max-width:28ch; }
 .profile { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:auto; font-size:12px; color:#bdd0f3; }
 .profileLabel { position:relative; padding-block:5px; }
@@ -54,7 +54,44 @@
 .person > a:active .profileIcon { background:#c4d8f5; color:#112942; border-color:#c4d8f5; }
 .source { margin-top:28px; color:#b5c4da; max-width:760px; font-size:12px; line-height:1.8; }
 .toolbarMeta { display:flex; align-items:center; gap:24px; }
-@media(max-width:1100px) { .personCard { grid-template-columns:31% minmax(0,1fr); min-height:224px; } .identity { padding:22px 18px 18px; } .identity h3 { font-size:25px; } .glyphTrack > .initialLetters { font-size:72px; } .glyphTrack > .initialEcho { font-size:95px; } }
-@media(max-width:760px) { .directory { padding:64px 7vw 48px; } .directoryHeading { flex-direction:column; align-items:flex-start; gap:28px; margin-bottom:32px; } .directoryHeading h2 { font-size:48px; } .toolbar { flex-wrap:wrap; gap:8px; padding:22px 0; } .filters { width:100%; gap:7px; } .toolbarMeta { width:100%; justify-content:space-between; gap:16px; } .count { font-size:12px; } .grid { grid-template-columns:1fr; gap:12px; } .personCard { grid-template-columns:31% minmax(0,1fr); min-height:210px; } .identity { padding:22px 22px 18px; } .identity h3 { font-size:clamp(23px,4.8vw,30px); } .glyphTrack > .initialLetters { font-size:clamp(65px,13vw,104px); } .glyphTrack > .initialEcho { font-size:clamp(84px,17vw,126px); } }
-@media(max-width:420px) { .personCard { grid-template-columns:30% minmax(0,1fr); min-height:214px; } .identity { padding:20px 16px 17px; } .identity h3 { font-size:23px; } .identity p { font-size:13px; } .glyphTrack > .initialLetters { font-size:62px; } .waveform { left:12px; right:12px; } .waveform > i { width:1px; } }
+.groupHeading { display:flex; align-items:baseline; justify-content:space-between; gap:20px; margin:48px 0 20px; padding-top:20px; border-top:1px solid #7793be3d; }
+.groupHeading h3 { font:400 20px/1.3 var(--font-display),sans-serif; letter-spacing:-.02em; color:#d3e1f5; }
+.groupHeading > span { font-size:12px; color:#adc0dc; }
+.roster { margin-top:48px; scroll-margin-top:96px; }
+.roster > .rosterToggle { --action-icon-size:56px; display:flex; width:100%; min-height:112px; gap:24px; padding:20px 24px; list-style:none; transition:width 420ms var(--ui-ease),min-height 420ms var(--ui-ease),padding 420ms var(--ui-ease),color 180ms ease,border-color 180ms ease,scale 150ms var(--ui-ease); }
+.rosterToggle::-webkit-details-marker { display:none; }
+.rosterToggle::marker { content:""; }
+.rosterStack { position:relative; display:block; flex:0 0 120px; height:64px; }
+.rosterStack i { position:absolute; top:4px; display:grid; place-items:center; width:48px; height:58px; border:1px solid #6c83a66e; border-radius:6px; background:#b6cae8; color:#183760; box-shadow:0 4px 12px #0b24431a; font:400 18px/1 var(--font-display),sans-serif; font-style:normal; transition:transform 220ms var(--ui-ease); }
+.rosterStack i:first-child { left:4px; transform:rotate(-14deg); background:#233f75; color:#e9f1ff; }
+.rosterStack i:nth-child(2) { left:32px; transform:rotate(-2deg); background:#d8dfcc; color:#283e37; }
+.rosterStack i:last-child { left:60px; transform:rotate(12deg); }
+.rosterLabel { min-width:0; font:400 clamp(24px,2.4vw,36px)/1.08 var(--font-display),sans-serif; letter-spacing:-.04em; }
+.rosterCount { margin-left:auto; font:400 56px/1 var(--font-display),sans-serif; letter-spacing:-.06em; opacity:.5; }
+.rosterIcon { transition:rotate 220ms var(--ui-ease),background-color 180ms ease,color 180ms ease; }
+.openLabel { display:none; }
+.roster[open] .closedLabel { display:none; }
+.roster[open] .openLabel { display:inline; }
+.roster[open] .rosterIcon { rotate:45deg; }
+.roster[open] > .rosterToggle { position:sticky; top:96px; z-index:5; width:72px; min-height:72px; margin-left:auto; gap:0; padding:7px; justify-content:center; }
+.roster[open] :is(.rosterStack,.rosterCount) { display:none; }
+.roster[open] .rosterLabel { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+.rosterToggle:focus-visible .rosterStack i:first-child, .roster[open] .rosterStack i:first-child { transform:translateX(-4px) rotate(-20deg); }
+.rosterToggle:focus-visible .rosterStack i:last-child, .roster[open] .rosterStack i:last-child { transform:translateX(4px) rotate(18deg); }
+.allMembers { padding-top:48px; }
+.roster[open] .allMembers { animation:members-in 360ms var(--ui-ease) both; }
+.allMembersTitle { margin-bottom:24px; font:400 clamp(32px,3.6vw,52px)/1.08 var(--font-display),sans-serif; letter-spacing:-.04em; }
+@keyframes members-in { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+/* shortcut: older browsers retain the native disclosure; use measured height if legacy animation is required. */
+@supports (interpolate-size:allow-keywords) {
+  .roster { interpolate-size:allow-keywords; }
+  .roster::details-content { block-size:0; opacity:0; overflow:clip; overflow-clip-margin:6px; transition:block-size 640ms var(--ui-ease),opacity 280ms ease,content-visibility 640ms allow-discrete; }
+  .roster[open]::details-content { block-size:auto; opacity:1; }
+}
+@media(hover:hover) and (pointer:fine) { .rosterToggle:hover .rosterStack i:first-child { transform:translateX(-4px) rotate(-20deg); } .rosterToggle:hover .rosterStack i:last-child { transform:translateX(4px) rotate(18deg); } }
+@media(max-width:760px) { .groupHeading { margin-top:36px; } .roster > .rosterToggle { --action-icon-size:44px; min-height:100px; gap:12px; padding:18px 16px; } .roster[open] > .rosterToggle { top:80px; width:60px; min-height:60px; gap:0; padding:7px; } .rosterStack { flex-basis:64px; height:50px; } .rosterStack i { width:34px; height:44px; font-size:14px; } .rosterStack i:first-child { left:0; } .rosterStack i:nth-child(2) { left:14px; } .rosterStack i:last-child { left:28px; } .rosterLabel { flex:1; font-size:clamp(20px,5.5vw,28px); } .rosterCount { display:none; } .allMembers { padding-top:32px; } }
+@media(max-width:1100px) { .personCard { grid-template-columns:31% minmax(0,1fr); min-height:224px; } .identity { padding:22px 18px 18px; } .identity h4 { font-size:25px; } .glyphTrack > .initialLetters { font-size:72px; } .glyphTrack > .initialEcho { font-size:95px; } }
+@media(max-width:760px) { .directory { padding:64px 7vw 48px; } .directoryHeading { flex-direction:column; align-items:flex-start; gap:28px; margin-bottom:32px; } .directoryHeading h2 { font-size:48px; } .toolbar { flex-wrap:wrap; gap:8px; padding:22px 0; } .filters { width:100%; gap:7px; } .toolbarMeta { width:100%; justify-content:space-between; gap:16px; } .count { font-size:12px; } .grid { grid-template-columns:1fr; gap:12px; } .personCard { grid-template-columns:31% minmax(0,1fr); min-height:210px; } .identity { padding:22px 22px 18px; } .identity h4 { font-size:clamp(23px,4.8vw,30px); } .glyphTrack > .initialLetters { font-size:clamp(65px,13vw,104px); } .glyphTrack > .initialEcho { font-size:clamp(84px,17vw,126px); } }
+@media(max-width:420px) { .personCard { grid-template-columns:30% minmax(0,1fr); min-height:214px; } .identity { padding:20px 16px 17px; } .identity h4 { font-size:23px; } .identity p { font-size:13px; } .glyphTrack > .initialLetters { font-size:62px; } .waveform { left:12px; right:12px; } .waveform > i { width:1px; } }
 @media(prefers-reduced-motion:reduce) { .section *, .section *::before, .section *::after { animation:none !important; transition:none !important; } .grid > article { transform:none !important; translate:none !important; } .person > a :is(.portrait,.glyphTrack) { transform:none !important; } .person > a .profileIcon svg:first-child { transform:none !important; } .person > a .profileIcon svg:last-child { display:none; } .waveform > i { scale:1 .65; } }
+@media(prefers-reduced-motion:reduce) { .roster::details-content { transition:none !important; } }

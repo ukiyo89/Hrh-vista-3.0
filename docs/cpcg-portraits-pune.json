@@ -1,0 +1,267 @@
+[
+  {
+    "name": "Eligius Tiago Gracias",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/in/eligius-tiago-gracias-78676a2b9/",
+        "finding": "Signed-in LinkedIn profile displays exact full name and BSc Economics and Statistics student at CHRIST University Pune Lavasa; no retrievable profile photo."
+      }
+    ],
+    "status": "unavailable",
+    "note": "Signed-in LinkedIn search and profile show exact full name and CHRIST University Pune Lavasa; profile photo viewer did not expose a portrait. No photo saved.",
+    "linkedin": "https://www.linkedin.com/in/eligius-tiago-gracias-78676a2b9/"
+  },
+  {
+    "name": "Arnav Sharma",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/in/arnav-sharmaaa/",
+        "finding": "Existing lib/data/people.ts names this profile as website owner credit; public/media/people/sources.json records 400x400 portrait retrieved 2026-10-09, sha256 6670be5f8f9af0dda7b1aa24cb3a541e169fe8a94581b64097c5f3ffb5ff7e99."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/arnav-sharmaaa/",
+    "portrait": "/media/people/arnav-sharma.webp",
+    "portraitSource": "output/sources/people/sources.json",
+    "status": "retained",
+    "note": "Retained the existing 400x400 WebP used by the roster. Original source log records signed-in LinkedIn profile image retrieved 2026-10-09, original JPEG SHA-256 00887e5f684bd417a9e2a7c8f5c0e94c0b1508a1b314b395bcdfdc131895231c. No new LinkedIn verification performed.",
+    "width": 400,
+    "height": 400,
+    "sha256": "6670be5f8f9af0dda7b1aa24cb3a541e169fe8a94581b64097c5f3ffb5ff7e99"
+  },
+  {
+    "name": "Sushil Kumar Soni",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/sushilkumarsoni",
+        "finding": "Exact full name; about explicitly MSc Data Science student at CHRIST Lavasa; education 2026-2028."
+      },
+      {
+        "url": "https://www.linkedin.com/in/sushilkumarsoni/",
+        "finding": "Profile displays exact name and CHRIST Pune-Lavasa; its Profile photo viewer provided the recorded portrait source."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/sushilkumarsoni/",
+    "status": "verified",
+    "note": "Signed-in Chrome Beta profile matches exact full name and CHRIST Pune-Lavasa; profile photo viewer image retrieved 27 October 2026. Public search found no usable, directly linked author portrait. Identity matched by exact full name and campus. Direct public profile returned HTTP 999; no portrait selected.",
+    "portrait": "/media/cpcg/sushil-kumar-soni.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D5603AQENPxyoAG1BRQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718908349269?e=1794441600&v=beta&t=0uUTSmbMUq-mIYYphgT-mUXUqvVYamOp1GeNjBRpkX0",
+    "width": 400,
+    "height": 400,
+    "sha256": "55717c88534424e0719d8a19aae600db291bd8dca80265450f485adb2eb8d93d"
+  },
+  {
+    "name": "Anushree B Nair",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/anushree-b-nair-852791344",
+        "finding": "Public Exa search returns exact full-name LinkedIn profile: prior CHRIST College Mysuru experience and education explicitly CHRIST University, Pune-Lavasa."
+      },
+      {
+        "url": "https://christmysuru.in/wp-content/uploads/2025/10/Commerce-Chronicles-October-2025_compressed.pdf",
+        "finding": "CHRIST College Mysuru newsletter credits exact name as student editor, but does not establish Lavasa identity."
+      },
+      {
+        "url": "https://www.linkedin.com/in/anushree-b-nair-852791344/",
+        "finding": "Profile displays exact name and CHRIST Pune-Lavasa; its Profile photo viewer provided the recorded portrait source."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/anushree-b-nair-852791344/",
+    "status": "verified",
+    "note": "Signed-in Chrome Beta profile matches exact full name and CHRIST Pune-Lavasa; profile photo viewer image retrieved 27 October 2026. Public search found no usable, directly linked author portrait. Second independent search index resolved actual profile URL and explicit current Lavasa education; prior Mysuru newsletter exact-name credit corroborates the profile history.",
+    "portrait": "/media/cpcg/anushree-b-nair.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQFPse5oJCdr3g/profile-displayphoto-shrink_200_200/B4DZQl2vasHcAY-/0/1735801895029?e=1794441600&v=beta&t=mk1LB--8enfz1TQXGGkcdIsj8oKQ9la8RV26Gjk94oM",
+    "width": 96,
+    "height": 96,
+    "sha256": "1b6dce2b45181c199c9127c75fb7008b61446652c72e5542fafeef437a64bd6b"
+  },
+  {
+    "name": "Manne Mokshitha",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/search/results/all/?keywords=Manne%20Mokshitha",
+        "finding": "Signed-in search results did not establish a unique exact-name current Lavasa CPCG identity; similarly named or unrelated results were excluded."
+      }
+    ],
+    "status": "unresolved",
+    "note": "Native and Exa public searches covered Manne Mokshitha, Mokshitha Manne, Mokshita Manne and Manne Mokshita with CHRIST and Lavasa. Results included different surnames and institutions, with no matching member. No URL selected."
+  },
+  {
+    "name": "Suhana Pandey",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/search/results/all/?keywords=Suhana%20Pandey",
+        "finding": "Signed-in search results did not establish a unique exact-name current Lavasa CPCG identity; similarly named or unrelated results were excluded."
+      }
+    ],
+    "status": "unresolved",
+    "note": "Native and Exa public searches covered exact name, CHRIST, Pune, Lavasa and student context. Profiles found at St Xavier's Kolkata, Dayalbagh, University of Mumbai, LPU and other institutions; none establishes the supplied member. Similarly spelled Suhani Pandey attended a separate Christ College Pune and was not selected."
+  },
+  {
+    "name": "Harshit Mehra",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/search/results/all/?keywords=Harshit%20Mehra",
+        "finding": "Signed-in search results did not establish a unique exact-name current Lavasa CPCG identity; similarly named or unrelated results were excluded."
+      }
+    ],
+    "status": "unresolved",
+    "note": "Native and Exa public searches covered exact name with CHRIST, Lavasa, Pune, student and CPCG/placement context. Returned VFX, recruitment, technology and other-university profiles; no exact-name current-campus match. Harshit Nehra and Harshit Mehrotra are different names and were not selected."
+  },
+  {
+    "name": "G Sai Shruthi",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/sai-shruthi-823447387",
+        "finding": "Public Exa search returns sai shruthi student profile; education explicitly CHRIST University Pune-Lavasa, BCom Financial Analytics 2026-2030; prior Maharishi Vidya Mandir Senior Secondary School."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/sai-shruthi-823447387/",
+    "status": "unavailable",
+    "note": "Public search found no usable, directly linked author portrait. Contextual match from full given names and exact current campus. LinkedIn display omits supplied initial G, which is not independently confirmed; preserve supplied organiser display name and disclose contextual inference."
+  },
+  {
+    "name": "Kuber Arora",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/kuber-arora",
+        "finding": "Exact name; CHRIST Pune-Lavasa MBA 2025-2027; education activities include MBA Placement Representative."
+      },
+      {
+        "url": "https://in.linkedin.com/in/mrinalini-sharma-3586ab2b1",
+        "finding": "Indexed CPCG Connexions 26 repost names Kuber Arora and Rushda Siddiqui as Event Heads."
+      },
+      {
+        "url": "https://www.linkedin.com/in/kuber-arora/",
+        "finding": "Profile displays exact name and CHRIST Pune-Lavasa; its Profile photo viewer provided the recorded portrait source."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/kuber-arora/",
+    "status": "verified",
+    "note": "Signed-in Chrome Beta profile matches exact full name and CHRIST Pune-Lavasa; profile photo viewer image retrieved 27 October 2026. Public search found no usable, directly linked author portrait. Identity corroborated by placement role and CPCG organizing committee. Profile names Lavasa while user groups under City Pune Campus; preserve user grouping. No public retrievable portrait found.",
+    "portrait": "/media/cpcg/kuber-arora.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4E03AQHUk1xWLY1EvA/profile-displayphoto-scale_400_400/B4EaA.njd6G8Ag-/0/1787756956252?e=1794441600&v=beta&t=VFKM1UquLfUlSrvtD2fRgg3XPVytG6it-kgmKov3X80",
+    "width": 400,
+    "height": 400,
+    "sha256": "726dff65e3315688f141983b68a5c0c721f42c22dbbd64202c9e9d577da8f4fe"
+  },
+  {
+    "name": "Aarya Karve",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/posts/aarya-karve-38234522a_i-am-excited-to-share-that-i-have-begun-my-activity-7363904646496579585-OV4T",
+        "finding": "Public first-person post says starting MBA at CHRIST Lavasa; author profile link resolves to aarya-karve-38234522a."
+      },
+      {
+        "url": "https://in.linkedin.com/in/mrinalini-sharma-3586ab2b1",
+        "finding": "Indexed CPCG Connexions 26 repost names Aarya Karve as Logistics POC."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/aarya-karve-38234522a_mediasector-equityresearch-financialanalysis-activity-7429013720099504128-zMia",
+        "finding": "Public author image alt text is \"View profile for Aarya Karve\" and author profile link has the matching profile identifier; image CDN URL recorded as portraitSource."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/aarya-karve-38234522a/",
+    "portrait": "/media/cpcg/aarya-karve.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQGFB8bUMaHXUw/profile-displayphoto-scale_400_400/B4DaAlRH.9J0Ak-/0/1787331642607?e=2147483647&v=beta&t=XdWkDAh2_txmTOTiEzk3YVci7ZO410uQ8h_9mniA_DY",
+    "status": "verified",
+    "note": "Public LinkedIn post author image and author profile identifier match the corroborated profile. Identity corroborated by CPCG role; unrelated aaryakarve COEP profile excluded. Lavasa evidence conflicts with user City Pune heading, so preserve user grouping. Author portrait CDN URL exposed by public post returned 404; no portrait saved.",
+    "width": 400,
+    "height": 400,
+    "sha256": "3d8e3b9c020419ccb94b7d4342f72e65aa721b4f9ad67dda507d545f86b6dc8d"
+  },
+  {
+    "name": "Amal Pillai",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/company/cpcgchristlavasa",
+        "finding": "Official CPCG Lavasa LinkedIn company page employee list directly links Amal V Pillai to amal-v-pillai-931152229."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/amal-v-pillai-931152229_bhutan-learning-activity-7431052770994163712-PNA-",
+        "finding": "Public post confirms author name and same LinkedIn identifier."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/amal-v-pillai-931152229_bhutan-learning-activity-7431052770994163712-PNA-",
+        "finding": "Public author image alt text is \"View profile for Amal V Pillai\" and author profile link has the matching profile identifier; image CDN URL recorded as portraitSource."
+      }
+    ],
+    "linkedin": "https://www.linkedin.com/in/amal-v-pillai-931152229/",
+    "portrait": "/media/cpcg/amal-pillai.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQEF87l8q6HyPA/profile-displayphoto-scale_400_400/B4DaD847VFLEAg-/0/1790949177209?e=2147483647&v=beta&t=wKSa9NLm7QlSiO9hm3--Csn4OtRFr5E0XoYQdzhG4bk",
+    "status": "verified",
+    "note": "Public LinkedIn post author image and author profile identifier match the corroborated profile. Unique full-name CPCG employee match includes middle initial absent in roster; retain supplied Amal Pillai spelling. Company is Lavasa, user heading City Pune; preserve user grouping. No retrievable portrait found.",
+    "width": 400,
+    "height": 400,
+    "sha256": "c339b54e2eb29d460e44bf7ab8ba4201ea09c948b80a2bf65389a86780bff5b4"
+  },
+  {
+    "name": "Ankita",
+    "evidence": [],
+    "status": "unresolved",
+    "note": "Roster supplies first name only; no independently confirmed surname or unique identity. Candidate context is not enough to assign a portrait. First name alone ambiguous. Search returned other campuses and similarly spelled names, with no unique current City Pune CPCG roster match. No surname added or link/photo used."
+  },
+  {
+    "name": "Samaira",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/samaira-sharma-640538258",
+        "finding": "Samaira Sharma profile lists Pune City and CHRIST Pune-Lavasa education 2025-2027."
+      },
+      {
+        "url": "https://in.linkedin.com/in/saswataghosh47",
+        "finding": "Indexed Workvolution organizing-team activity names Samaira Sharma among CHRIST participants."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/samaira-sharma-640538258_hr-vista-20-a-platform-that-truly-brought-activity-7405845228747784192--O6d",
+        "finding": "Own post describes HR Vista 2.0 organising registration committee and CPCG Lavasa involvement."
+      },
+      {
+        "url": "https://www.linkedin.com/posts/samaira-sharma-640538258_christuniversity-cpcg-placementtraining-activity-7489689540769689600-cC1T",
+        "finding": "Own post describes CPCG placement training explicitly at PUNE CITY CAMPUS."
+      },
+      {
+        "url": "https://www.linkedin.com/in/samaira-sharma-640538258/",
+        "finding": "Signed-in profile displays Samaira Sharma; its Profile photo viewer provided the recorded image source."
+      }
+    ],
+    "status": "verified",
+    "note": "Portrait verified against selected LinkedIn profile, while roster identity is contextual. Own HR Vista 2.0 registration and CPCG Pune City posts support the contextual roster match; surname was not supplied by organiser.",
+    "linkedin": "https://www.linkedin.com/in/samaira-sharma-640538258/",
+    "portrait": "/media/cpcg/samaira.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQFDKgMkj_vkMQ/profile-displayphoto-scale_400_400/B4DaCLmSs6HwAg-/0/1789048469653?e=1794441600&v=beta&t=1YSwSLEQelvAABi1ZSgbTBS58v66NB8drdBWDUXZNuU",
+    "width": 400,
+    "height": 400,
+    "sha256": "0217fb240492b0fd9a51e66e270922dd8b187f8583e0da28253932dd0a4c2fc5"
+  },
+  {
+    "name": "Shachi",
+    "evidence": [
+      {
+        "url": "https://in.linkedin.com/in/shachi-tiwari-12999b214",
+        "finding": "Shachi Tiwari lists CPCG experience at Christ University Lavasa, Pune and MSc Data Science."
+      },
+      {
+        "url": "https://in.linkedin.com/company/cpcgchristlavasa",
+        "finding": "Official CPCG Lavasa employee list directly links Shachi Tiwari profile."
+      },
+      {
+        "url": "https://www.linkedin.com/in/shachi-tiwari-12999b214/",
+        "finding": "Signed-in profile displays Shachi Tiwari; its Profile photo viewer provided the recorded image source."
+      }
+    ],
+    "status": "verified",
+    "note": "Portrait verified against selected LinkedIn profile, while roster identity is contextual. Official CPCG employee list and profile affiliation support the contextual roster match; surname was not supplied by organiser.",
+    "linkedin": "https://www.linkedin.com/in/shachi-tiwari-12999b214/",
+    "portrait": "/media/cpcg/shachi.jpg",
+    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQHin3nFYpPpgg/profile-displayphoto-scale_400_400/B4DZ61Aoo2HcAg-/0/1781153307217?e=1794441600&v=beta&t=SB0eMLUsOMy1DCW1Ns2nZp63yYawZTc2IbVcEYC6p4w",
+    "width": 400,
+    "height": 400,
+    "sha256": "76662f8a45bf91efaff4a42dc9f99ed20d92001f1d172880a014e4c91d56521f"
+  },
+  {
+    "name": "Rohit",
+    "evidence": [],
+    "status": "unresolved",
+    "note": "Roster supplies first name only; no independently confirmed surname or unique identity. Candidate context is not enough to assign a portrait. First name alone ambiguous. Searches returned external trainers and unrelated professionals; no unique City Pune CPCG student match. No surname added or link/photo selected."
+  }
+]

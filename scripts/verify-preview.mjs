@@ -17,7 +17,12 @@ for (const route of ["/", "/work", "/voices", "/brochure?page=11", "/sponsors"])
     assert.match(html, /id="next-chapter"/, "Next chapter links must retain a destination");
     const directory = html.match(/<section id="people"[\s\S]*?<\/section>/)?.[0] ?? "";
     const cards = [...directory.matchAll(/<article\b[\s\S]*?<\/article>/g)];
-    assert.equal(cards.length, 51, "All 47 members and four faculty must have cards");
+    assert.equal(cards.length, 60, "13 preview cards and 47 full-roster cards must be available");
+    const preview = directory.split("<details")[0];
+    assert.equal([...preview.matchAll(/<article\b/g)].length, 13, "Only faculty and nine senior leaders are shown first");
+    assert.match(directory, /<details id="cpcg-members" class="[^"]+">/, "Full roster must start closed");
+    assert.match(directory, /<summary[^>]+aria-controls="all-cpcg-members"/);
+    assert.match(directory, /Meet all members/);
     for (const [card] of cards) {
       const href = card.match(/<a\b[^>]*href="([^"]+)"/)?.[1];
       assert.ok(href, "Every person must have a LinkedIn action");
@@ -26,7 +31,7 @@ for (const route of ["/", "/work", "/voices", "/brochure?page=11", "/sponsors"])
       if (url.pathname.startsWith("/in/")) assert.match(card, />LinkedIn profile</);
       else {
         assert.equal(url.pathname, "/search/results/people/");
-        const name = card.match(/<h3>([^<]+)<\/h3>/)?.[1];
+        const name = card.match(/<h4>([^<]+)<\/h4>/)?.[1];
         assert.equal(url.searchParams.get("keywords"), `${name} CHRIST University`);
         assert.match(card, />Find on LinkedIn</, "Searches must not be presented as confirmed profiles");
       }

@@ -70,22 +70,28 @@
     "note": "First name alone is ambiguous. Other indexed Lavasa-related content mentions Indrajeet Singh; no unique roster match. No surname added or link/photo selected."
   },
   {
-    "name": "rishika",
+    "name": "Rishika Ranjan",
     "linkedin": "https://in.linkedin.com/in/rishika-ranjan-b84934302",
-    "status": "matched-context",
+    "status": "verified",
     "evidence": [
       {
         "url": "https://in.linkedin.com/in/rishika-ranjan-b84934302",
         "summary": "Rishika Ranjan lists CPCG experience at Pune Lavasa and CHRIST Pune-Lavasa law education 2024-2029."
       }
     ],
-    "note": "Contextual inference from supplied first name and matching CPCG Lavasa affiliation. Ranjan was not supplied or explicitly confirmed by organiser; retain supplied display name rishika. Link is a contextual match, not explicit surname confirmation."
+    "note": "Full name confirmed by the organiser-provided CPCG core committee sheet on 27 October 2026, which names Rishika Ranjan Head of Media and Graphics. The matched profile explicitly lists CPCG and CHRIST Lavasa. Photo provenance is tracked separately in cpcg-portraits-core.json."
   },
   {
     "name": "Eligius Tiago Gracias",
-    "status": "unresolved",
-    "evidence": [],
-    "note": "Native and independent Exa public searches covered exact full name, Eligius Tiago, Eligius Gracias, and Tiago Gracias with LinkedIn, CHRIST, Lavasa and CPCG context. No relevant actual profile URL found; unrelated overseas namesakes discarded."
+    "status": "verified",
+    "evidence": [
+      {
+        "url": "https://www.linkedin.com/in/eligius-tiago-gracias-78676a2b9/",
+        "summary": "Signed-in Chrome Beta profile displays exact full name and BSc Economics and Statistics student at CHRIST University Pune Lavasa."
+      }
+    ],
+    "note": "Identity and profile URL established through signed-in Chrome Beta. No retrievable profile portrait was exposed. See cpcg-portraits-pune.json.",
+    "linkedin": "https://www.linkedin.com/in/eligius-tiago-gracias-78676a2b9/"
   },
   {
     "name": "Arnav Sharma",

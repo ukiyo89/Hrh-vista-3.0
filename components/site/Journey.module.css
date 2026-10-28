@@ -9,67 +9,57 @@
   outline: 2px solid #b7d1ff;
   outline-offset: 7px;
 }
-.scene {
-  position: absolute;
-  inset: 0 0 auto;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-  z-index: 0;
-  pointer-events: none;
+.viewport {
+  position: relative;
+  padding: 80px 6vw 64px;
 }
-
 .sceneGrid {
   position: absolute;
   inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at 77% 50%, #18366755, transparent 65%),
+    radial-gradient(ellipse at 77% 35%, #18366755, transparent 65%),
     linear-gradient(#788bab08 1px, transparent 1px),
     linear-gradient(90deg, #788bab08 1px, transparent 1px);
-  background-size:
-    auto,
-    80px 80px,
-    80px 80px;
+  background-size: auto, 80px 80px, 80px 80px;
 }
+.introduction {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.chapterCopy { min-width: 0; max-width: 650px; }
 .earth {
-  position: absolute;
-  width: 67%;
-  height: 100%;
-  right: -4%;
-  top: 0;
+  --globe-controls: 1;
+  position: relative;
+  width: min(100%, 460px);
+  justify-self: center;
+  transform-origin: center;
 }
+.globePlaceholder { aspect-ratio: 1; margin-bottom: 78px; }
 .earth :global(.journey-globe) {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
-.earth :global(canvas) {
-  width: 100%;
-  height: 100%;
-}
-.earth :global(.journey-globe[data-failed="true"] canvas) {
-  visibility: hidden;
-}
+.earth :global(canvas) { display: block; width: 100%; height: 100%; }
+.earth :global(.journey-globe[data-failed="true"] canvas) { visibility: hidden; }
 .journey[data-globe-status="loading"] .earth :global([data-globe-interactive]),
 .journey[data-globe-status="fallback"] .earth :global([data-globe-interactive]) { visibility: hidden; pointer-events: none; }
 .globeFallback {
   position: absolute;
-  width: 61%;
+  width: 84%;
   aspect-ratio: 1;
-  left: 19.5%;
-  top: 50%;
-  transform: translateY(-50%) scale(var(--earth-zoom, 1));
+  left: 8%;
+  top: 0;
+  margin-top: 8%;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 30%,
-    #223e69,
-    #08182e 57%,
-    #030912 80%
-  );
+  background: radial-gradient(circle at 35% 30%, #223e69, #08182e 57%, #030912 80%);
   border: 1px solid #5783b37a;
-  box-shadow:
-    0 0 80px #3c76ff16,
-    inset 0 0 50px #729dde24;
+  box-shadow: 0 0 80px #3c76ff16, inset 0 0 50px #729dde24;
 }
 .globeFallback::after {
   content: "";
@@ -78,31 +68,8 @@
   border-inline: 1px solid #8bafea30;
   border-radius: 50%;
 }
-.sceneShade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    #050b14 4%,
-    #050b14dd 25%,
-    transparent 65%
-  );
-}
-.travelChapter {
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-  min-height: 110svh;
-  display: flex;
-  align-items: center;
-  padding: 110px 6vw;
-  scroll-margin-top: 65px;
-}
-.chapterCopy {
-  pointer-events: auto;
-  max-width: 650px;
-  width: 48%;
-}
+.journey[data-globe-status="ready"] .globeFallback { visibility: hidden; }
+.journey { scroll-margin-top: 65px; }
 .anchorAlias { position: absolute; top: 0; left: 0; scroll-margin-top: 65px; }
 .eyebrow {
   font-family: var(--font-body), sans-serif;
@@ -114,51 +81,114 @@
   gap: 25px;
   color: #adc2df;
   text-transform: uppercase;
-  margin: 0 0 34px;
+  margin: 0 0 24px;
 }
 .chapterCopy h2,
 .finale h2 {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(56px, 6.5vw, 106px);
   font-weight: 400;
   letter-spacing: -0.045em;
   line-height: 0.98;
   margin: 0 0 30px;
 }
-.chapterCopy h2 em,
-.finale h2 em {
-  font: inherit;
-  color: #a6c5ff;
+.chapterCopy h2 {
+  font-size: clamp(52px, 7.6vw, 112px);
+  font-weight: 600;
+  line-height: .98;
+  letter-spacing: -.06em;
+  background: #a6c5ff url("/media/flickr/story-4.jpg") center / cover;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
+.chapterCopy h2 span { display: block; }
+.chapterCopy h2 em,
+.finale h2 em { font: inherit; color: #a6c5ff; }
+.chapterCopy h2 em { display: inline-block; }
 .body {
   font-size: clamp(14px, 1.15vw, 17px);
   line-height: 1.85;
   color: #adb9ca;
-  max-width: 390px;
-  margin: 0 0 24px;
+  max-width: 340px;
+  margin: 0;
 }
-.lavasaPhoto {
-  width: min(330px, 82%);
-  margin: 32px 0 0;
+.photoPlacement {
+  position: relative;
+  width: min(100%, 1024px);
+  margin: 48px auto 0;
 }
-.lavasaPhoto img {
+.lavasaPhoto { width: 100%; margin: 0; transform-origin: 0 0; }
+.photoMask { position: relative; overflow: hidden; aspect-ratio: 16 / 9; }
+.photoMask img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 2.25;
+  height: 100%;
   object-fit: cover;
-  filter: saturate(0.72);
-  border-radius: 2px;
 }
-.lavasaPhoto figcaption {
+.journey[data-journey-mode] .photoMask img { will-change: clip-path, opacity; }
+.maskedLandscape { display: none; width: 100%; height: 100%; }
+.maskedLandscape[data-mask-failed] [data-lavasa-image] { mask: none; }
+.maskType { font-family: var(--font-display), sans-serif; font-size: 200px; font-weight: 600; letter-spacing: -.06em; }
+.welcomeNote {
+  position: absolute;
+  inset: 0;
   display: flex;
+  align-items: flex-end;
+  padding: clamp(16px, 3vw, 40px);
+  background: linear-gradient(transparent 38%, #050b14b8);
+  pointer-events: none;
+}
+.welcomeNote p { margin: 0; color: #f5f4ef; font-family: var(--font-display), sans-serif; font-size: clamp(20px, 3.2vw, 44px); line-height: 1.1; letter-spacing: -.035em; }
+.welcomeNote span { color: #d5e4ff; }
+.photoMeta {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #b5c0cf;
+  gap: 8px 24px;
+  margin-top: 16px;
+}
+.photoMeta:focus-within { opacity: 1 !important; transform: none !important; }
+.locationCaption { font-size: 12px; line-height: 1.5; color: #b5c0cf; }
+.editionsLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 44px;
+  border-bottom: 1px solid #6a7e9b65;
+  font-size: 14px;
+  text-decoration: none;
+  color: #d6e4ff;
+}
+.editionsLink span { font-size: 19px; transition: transform .2s; }
+.editionsLink:hover span { transform: translateY(3px); }
+@media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+  .journey[data-journey-mode="cinematic"] { height: 220svh; }
+  .journey[data-journey-mode="cinematic"] .viewport {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding: 80px 6vw 32px;
+    display: grid;
+    align-items: center;
+  }
+  .journey[data-journey-mode="cinematic"] .introduction { grid-template-columns: 1fr 1fr; gap: 3vw; width: 100%; }
+  .journey[data-journey-mode="cinematic"] .earth { width: min(100%, 62svh); }
+  .journey[data-journey-mode="cinematic"] .chapterCopy h2 { aspect-ratio: 16 / 9; background: none; }
+  .journey[data-journey-mode="cinematic"] .photoPlacement {
+    position: absolute;
+    width: min(88vw, 1024px, calc((100svh - 200px) * 16 / 9));
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    pointer-events: none;
+  }
+  .journey[data-journey-mode="cinematic"] .lavasaPhoto { will-change: transform; }
+  .journey[data-journey-mode="cinematic"] .photoMask > img { display: none; }
+  .journey[data-journey-mode="cinematic"] .maskedLandscape { display: block; position: absolute; inset: 0; }
+  .photoMeta { pointer-events: auto; }
 }
 .textLink {
   display: inline-flex;
@@ -233,29 +263,16 @@
   color: #b7c8e1;
   flex-wrap: wrap;
 }
-@media (min-width: 1700px) {
-  .chapterCopy { margin-left: max(0px, calc((100vw - 1700px) / 2)); }
-}
-@media (max-width: 1023px) {
-  .chapterCopy { width: 53%; }
-  .chapterCopy h2 { font-size: 65px; }
-}
 @media (max-width: 700px) {
-  .travelChapter { min-height: 115svh; align-items: flex-end; padding: 65svh 7vw 65px; }
-  .chapterCopy { width: 100%; max-width: 480px; }
-  .chapterCopy h2 { font-size: clamp(48px, 12vw, 74px); max-width: 95%; }
-  .eyebrow { margin-bottom: 22px; font-size: 12px; }
-  .body { font-size: 14px; max-width: 330px; }
-  .earth { width: 100%; right: 0; top: 65px; height: 49svh; }
-  .sceneShade { background: linear-gradient(0deg, #050b14 8%, #050b14bb 30%, transparent 60%); }
-  .lavasaPhoto { width: 200px; margin-top: 25px; }
-  .lavasaPhoto figcaption { font-size: 12px; }
+  .viewport { padding: 80px 7vw 56px; }
+  .chapterCopy h2 { font-size: clamp(48px, 14vw, 90px); }
+  .eyebrow { margin-bottom: 20px; }
+  .body { max-width: 330px; }
   .finale { padding: 100px 7vw 0; }
   .finale h2 { font-size: 49px; }
   .finaleActions { gap: 25px; margin-bottom: 75px; }
   .finaleMeta { justify-content: center; font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .chapterCopy h2, .lavasaPhoto { opacity: 1 !important; transform: none !important; }
   .journey *, .finale * { animation: none !important; transition: none !important; }
 }

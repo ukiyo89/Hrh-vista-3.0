@@ -32,12 +32,14 @@ export default function JourneyGlobe({
   const [paused, setPaused] = useState(false);
   const pauseRef = useRef(false);
   const reducedRef = useRef(false);
+  const invalidate = useRef(() => {});
   const revealAt = useRef(-10000);
   const revealTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const reset = () => {
     spin.current.velocity = 0;
     spin.current.target = Math.round(spin.current.angle / (Math.PI * 2)) * Math.PI * 2;
     if (reducedRef.current) spin.current.angle = spin.current.target;
+    invalidate.current();
   };
   const discover = () => {
     const now = performance.now();
@@ -49,11 +51,12 @@ export default function JourneyGlobe({
     setRevealing(true);
     if (revealTimer.current) clearTimeout(revealTimer.current);
     revealTimer.current = setTimeout(() => setRevealing(false), reducedRef.current ? 5000 : 3800);
+    invalidate.current();
   };
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => { reducedRef.current = preference.matches; };
+    const update = () => { reducedRef.current = preference.matches; invalidate.current(); };
     update();
     preference.addEventListener("change", update);
     return () => {
@@ -79,6 +82,7 @@ export default function JourneyGlobe({
     let visible = false;
     let contextLost = false;
     let geographyReady = false;
+    let frame = 0;
     const abort = new AbortController();
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 30);
@@ -165,6 +169,7 @@ export default function JourneyGlobe({
           if (texture) texture.needsUpdate = true;
           geographyReady = true;
           onAvailabilityChange(!contextLost);
+          invalidate.current();
         })
         .catch(() => {
           if (!disposed) onAvailabilityChange(false);
@@ -180,6 +185,7 @@ export default function JourneyGlobe({
       renderer.setSize(w, h);
       camera.aspect = w / Math.max(h, 1);
       camera.updateProjectionMatrix();
+      invalidate.current();
     };
     const observer = new ResizeObserver(resize);
     observer.observe(element);
@@ -187,7 +193,8 @@ export default function JourneyGlobe({
     const onLoss = (event: Event) => {
       event.preventDefault();
       contextLost = true;
-      renderer.setAnimationLoop(null);
+      cancelAnimationFrame(frame);
+      frame = 0;
       element.dataset.failed = "true";
       onAvailabilityChange(false);
     };
@@ -195,20 +202,23 @@ export default function JourneyGlobe({
     renderer.domElement.addEventListener("webglcontextlost", onLoss);
     renderer.domElement.addEventListener("webglcontextrestored", onRestore);
     let lastTime = 0;
+    const canRender = () => visible && !document.hidden && !disposed && !contextLost && geographyReady && motion.current.visible;
     const render = (time: number) => {
-      if (!visible || document.hidden || disposed || contextLost) return;
-      if (!motion.current.visible && !reducedRef.current) return;
-      const dt = Math.min((time - lastTime) / 16.67 || 1, 3);
+      frame = 0;
+      if (!canRender()) return;
+      const dt = time - lastTime > 100 ? 1 : Math.min((time - lastTime) / 16.67 || 1, 3);
       lastTime = time;
       const state = spin.current;
       if (!state.dragging && !pauseRef.current) {
         state.target += state.velocity * dt;
         state.velocity *= Math.pow(0.94, dt);
+        if (Math.abs(state.velocity) < .0001) state.velocity = 0;
       }
       state.angle += (state.target - state.angle) * (reducedRef.current ? 1 : 1 - Math.pow(0.86, dt));
+      if (Math.abs(state.target - state.angle) < .0001) state.angle = state.target;
       globe.rotation.y = state.angle;
       const elapsed = time - revealAt.current;
-      globe.rotation.z = reducedRef.current ? 0 : Math.sin(elapsed / 43) * Math.exp(-elapsed / 220) * .055;
+      globe.rotation.z = reducedRef.current || elapsed >= 1200 ? 0 : Math.sin(elapsed / 43) * Math.exp(-elapsed / 220) * .055;
       // Fit the whole sphere, including tall tablet canvases.
       const horizontalHalfFov = Math.atan(
         Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect,
@@ -225,24 +235,41 @@ export default function JourneyGlobe({
       camera.updateMatrixWorld();
       globe.updateMatrixWorld();
       renderer.render(scene, camera);
+      if (state.angle !== state.target || (!state.dragging && !pauseRef.current && state.velocity !== 0) || (!reducedRef.current && elapsed < 1200)) invalidate.current();
     };
-    const updateLoop = () =>
-      renderer.setAnimationLoop(visible && !document.hidden && !contextLost ? render : null);
+    invalidate.current = () => {
+      if (!frame && canRender()) frame = requestAnimationFrame(render);
+    };
+    const updateLoop = () => {
+      if (!canRender()) { cancelAnimationFrame(frame); frame = 0; }
+      else invalidate.current();
+    };
     const intersection = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       updateLoop();
     });
     intersection.observe(element);
     document.addEventListener("visibilitychange", updateLoop);
+    window.addEventListener("resize", updateLoop);
+    const earthElement = shell.current?.closest("[data-earth]");
+    const chapter = earthElement?.closest("#lavasa");
+    earthElement?.addEventListener("hr-vista:globe-update", updateLoop);
+    chapter?.addEventListener("pointermove", updateLoop);
+    chapter?.addEventListener("pointerleave", updateLoop);
     return () => {
       disposed = true;
       abort.abort();
       observer.disconnect();
       intersection.disconnect();
       document.removeEventListener("visibilitychange", updateLoop);
+      window.removeEventListener("resize", updateLoop);
+      earthElement?.removeEventListener("hr-vista:globe-update", updateLoop);
+      chapter?.removeEventListener("pointermove", updateLoop);
+      chapter?.removeEventListener("pointerleave", updateLoop);
       renderer.domElement.removeEventListener("webglcontextlost", onLoss);
       renderer.domElement.removeEventListener("webglcontextrestored", onRestore);
-      renderer.setAnimationLoop(null);
+      cancelAnimationFrame(frame);
+      invalidate.current = () => {};
       renderer.dispose();
       renderer.domElement.remove();
       [
@@ -260,6 +287,7 @@ export default function JourneyGlobe({
   }, [motion, onAvailabilityChange]);
   return (
     <div ref={shell} className={styles.shell} data-globe-interactive data-discovering={revealing}>
+      <div className={styles.viewport}>
       <div ref={host} className="journey-globe" aria-hidden="true" />
       <div className={styles.dragSurface} tabIndex={0} role="group" aria-label="Interactive earth. Drag or use arrow keys to spin. Shake back and forth to find a surprise, or press Space. Home resets the globe."
         onKeyDown={(event) => {
@@ -269,6 +297,7 @@ export default function JourneyGlobe({
           spin.current.velocity = 0;
           if (event.key === "Home") reset();
           else spin.current.target += event.key === "ArrowRight" ? Math.PI / 6 : -Math.PI / 6;
+          invalidate.current();
         }}
         onPointerDown={(event) => {
           if (event.button !== 0 || !event.isPrimary) return;
@@ -299,11 +328,13 @@ export default function JourneyGlobe({
           state.target += delta;
           state.velocity = reducedRef.current || pauseRef.current ? 0 : THREE.MathUtils.clamp(delta * 16.67 / elapsed, -.12, .12);
           state.x = event.clientX; state.time = event.timeStamp;
+          invalidate.current();
         }}
         onPointerUp={(event) => {
           spin.current.dragging = false;
           if (event.timeStamp - spin.current.time > 100) spin.current.velocity = 0;
           if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+          invalidate.current();
         }}
         onPointerCancel={() => { spin.current.dragging = false; spin.current.velocity = 0; }}
         onLostPointerCapture={() => { spin.current.dragging = false; }}>
@@ -320,12 +351,13 @@ export default function JourneyGlobe({
           </div>)}
         </div>}
       </div>
+      </div>
       <div className={styles.controls}>
         <p>Drag to explore</p>
         <div className={styles.buttons}>
           <button type="button" data-ui="control" data-ui-tone="dark" onClick={discover} aria-label="Shake the globe to reveal the Easter egg">Give it a shake <span data-ui-glyph aria-hidden="true">↔</span></button>
           <button type="button" data-ui="control" data-ui-tone="dark" onClick={reset} aria-label="Reset globe rotation">Reset <span data-ui-glyph aria-hidden="true">↺</span></button>
-          <button type="button" data-ui="icon" data-ui-tone="dark" aria-pressed={paused} aria-label={paused ? "Enable globe momentum" : "Pause globe momentum"} onClick={() => { pauseRef.current = !paused; spin.current.velocity = 0; setPaused(!paused); }}><span data-ui-glyph aria-hidden="true">{paused ? "▶" : "Ⅱ"}</span></button>
+          <button type="button" data-ui="icon" data-ui-tone="dark" aria-pressed={paused} aria-label={paused ? "Enable globe momentum" : "Pause globe momentum"} onClick={() => { pauseRef.current = !paused; spin.current.velocity = 0; setPaused(!paused); invalidate.current(); }}><span data-ui-glyph aria-hidden="true">{paused ? "▶" : "Ⅱ"}</span></button>
         </div>
         <span className={styles.srOnly} role="status">{revealing ? "You found the Easter egg: HR VISTA and CHRIST University. Two identities, one world." : discovery ? "Easter egg discovered. Shake the globe to see it again." : ""}</span>
       </div>

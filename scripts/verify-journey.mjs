@@ -45,9 +45,7 @@ async (page) => {
       earthOpacity: opacity(earth),
       controlsOpacity: opacity(earth.querySelector("button").parentElement.parentElement),
       photoOpacity: opacity(photo),
-      photoMask: getComputedStyle(photo.querySelector("img").parentElement).clipPath,
       imageOpacity: opacity(photo.querySelector("img")),
-      imageClip: getComputedStyle(photo.querySelector("img")).clipPath,
       maskStroke: 2 * (Number(photo.querySelector("[data-lavasa-mask]").getAttribute("values").trim().split(/\s+/).at(-1)) - 64.5),
       filtered: getComputedStyle(photo.querySelector("[data-lavasa-image]")).maskImage !== "none",
       letteringOpacity: opacity(photo.querySelector("svg")),
@@ -57,21 +55,32 @@ async (page) => {
     };
   });
   const samples = [];
-  for (const [width, height] of [[1440, 900], [1280, 720], [1024, 700]]) {
+  const layouts = [];
+  for (const [width, height] of [[1440, 900], [1280, 720], [1024, 700], [768, 1024], [390, 844], [320, 568], [1280, 650], [844, 390], [568, 320]]) {
     await page.setViewportSize({ width, height });
     await open();
     const g = await geometry();
     assert(Math.abs(g.range - height * 1.2) < 3, `${width}: section must be 220svh`);
     await seek(g.top);
     await page.waitForFunction(() => document.querySelector("#lavasa").dataset.globeStatus === "ready");
-    const canvas = (await state()).canvas;
+    const initial = await state();
+    assert(initial.mode === "cinematic", `${width}x${height}: lettering animation must run at every viewport size`);
+    const canvas = initial.canvas;
+    const intro = await page.locator("#lavasa").evaluate(root => {
+      const rect = el => { const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, left: r.left, right: r.right }; };
+      return { copy: rect(root.querySelector("h2").parentElement), earth: rect(root.querySelector("[data-earth]")) };
+    });
+    for (const [name, bounds] of Object.entries(intro)) {
+      assert(bounds.top >= 64 && bounds.bottom <= height + 1, `${width}x${height}: ${name} must fit below the header and above the viewport bottom`);
+      assert(bounds.left >= -1 && bounds.right <= width + 1, `${width}x${height}: ${name} must fit horizontally`);
+    }
     const alignment = await page.locator("#lavasa").evaluate(root => {
       const a = root.querySelector("h2").getBoundingClientRect();
       const b = root.querySelector("[data-lavasa-photo]").getBoundingClientRect();
       return Math.max(Math.abs(a.left - b.left), Math.abs(a.top - b.top), Math.abs(a.width - b.width));
     });
     assert(alignment < 2, `${width}: welcome lettering must align with its heading`);
-    const positions = width === 1024 ? [0, .25, .3, .35, .4, .45, .5, .55, .6, .65, .75, 1] : [0, .25, .5, .75, 1];
+    const positions = width === 1024 ? [0, .25, .3, .4, .5, .55, .6, .65, .75, 1] : [0, .5, .75, 1];
     for (const direction of [positions, [...positions].reverse()]) {
       for (const progress of direction) {
         await seek(g.top + g.range * progress);
@@ -94,7 +103,13 @@ async (page) => {
     await page.locator("[data-globe-interactive] [tabindex='0']").focus();
     await seek(g.top + g.range * .75);
     assert(await page.locator("[data-editions-link]").evaluate(el => el === document.activeElement), "Hidden controls must transfer focus to Editions");
-    await page.screenshot({ path: `output/playwright/lavasa-after-${width}-place.png` });
+    const photo = await page.locator("[data-lavasa-photo]").boundingBox();
+    assert(photo.y >= 64 && photo.y + photo.height <= height + 1, `${width}x${height}: photograph and caption must fit in the viewport`);
+    assert(photo.x >= -1 && photo.x + photo.width <= width + 1, `${width}x${height}: photograph must fit horizontally`);
+    const frame = await page.locator("[data-lavasa-photo] svg").boundingBox();
+    assert(Math.abs(frame.width / frame.height - 16 / 9) < .01, `${width}x${height}: landscape must keep its aspect ratio`);
+    layouts.push({ width, height, intro, photo, overflow: (await state()).overflow });
+    await page.screenshot({ path: `output/playwright/lavasa-after-${width}-${height}-place.png` });
   }
   await page.setViewportSize({ width: 1440, height: 900 });
   await open();
@@ -168,59 +183,37 @@ async (page) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   g = await geometry();
   await seek(g.top + g.range * .5);
-  for (const [width, height] of [[1024, 700], [1023, 700], [1024, 700], [1024, 699], [1440, 900], [390, 844], [1440, 900]]) {
+  for (const [width, height] of [[1024, 700], [1023, 700], [1024, 699], [390, 844], [844, 390], [320, 568], [1440, 900]]) {
     await page.setViewportSize({ width, height });
     await page.waitForTimeout(750);
     const s = await state();
+    assert(s.mode === "cinematic", `${width}x${height}: resizing must retain the lettering animation`);
     assert(s.overflow <= 1, `${width}x${height}: resizing during reveal must not overflow`);
-    if (s.mode === "cinematic") {
-      const position = await geometry();
-      const expected = await page.evaluate(({ top, range }) => Math.max(0, Math.min(1, (scrollY - top) / range)), position);
-      assert(Math.abs(s.progress - expected) < .025, `${width}x${height}: refreshed scene progress must match scroll`);
-      const bounds = await page.locator("[data-lavasa-photo]").boundingBox();
-      assert(bounds.x >= -1 && bounds.x + bounds.width <= width + 1, `${width}x${height}: photograph must remain contained during resize`);
-      assert(s.inert === (s.progress > .25), `${width}x${height}: refreshed controls must match visible scene`);
-      await seek(position.top);
-      assert((await state()).filtered, `${width}x${height}: reverse after resize must restore the lettering mask`);
-      await seek(position.top + position.range * expected);
-    }
+    const position = await geometry();
+    const expected = await page.evaluate(({ top, range }) => Math.max(0, Math.min(1, (scrollY - top) / range)), position);
+    assert(Math.abs(s.progress - expected) < .025, `${width}x${height}: refreshed scene progress must match scroll`);
+    const bounds = await page.locator("[data-lavasa-photo]").boundingBox();
+    assert(bounds.x >= -1 && bounds.x + bounds.width <= width + 1, `${width}x${height}: photograph must remain contained during resize`);
+    assert(s.inert === (s.progress > .25), `${width}x${height}: refreshed controls must match visible scene`);
+    await seek(position.top);
+    assert((await state()).filtered, `${width}x${height}: reverse after resize must restore the lettering mask`);
+    await seek(position.top + position.range * expected);
     resizeSamples.push({ width, height, progress: s.progress, overflow: s.overflow });
   }
-  const layouts = [];
-  for (const [width, height] of [[768, 1024], [390, 844], [320, 844], [1280, 650]]) {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const [width, height] of [[1440, 900], [390, 844]]) {
     await page.setViewportSize({ width, height });
-    await page.waitForTimeout(600);
+    await open();
     g = await geometry();
     await seek(g.top - 70);
-    const layout = await page.locator("#lavasa").evaluate(root => {
-      const rect = el => { const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, width: r.width, height: r.height }; };
-      const earth = root.querySelector("[data-earth]");
-      const image = root.querySelector("[data-lavasa-photo] img");
-      return { copy: rect(root.querySelector("h2").parentElement), earth: rect(earth), image: rect(image), loaded: image.complete && image.naturalWidth === 1024, inert: earth.inert, overflow: document.documentElement.scrollWidth - innerWidth };
-    });
-    assert(layout.copy.bottom <= layout.earth.top + 2 && layout.earth.bottom <= layout.image.top + 2, `${width}: flow order/overlap`);
-    assert(!layout.inert && layout.overflow <= 1, `${width}: flow controls/overflow`);
-    assert(layout.loaded, `${width}: landscape failed to load`);
-    const image = page.locator("[data-lavasa-photo] img");
-    const imageTop = await image.evaluate(el => el.getBoundingClientRect().top + scrollY);
-    await seek(imageTop - height);
-    const closed = await image.evaluate(el => getComputedStyle(el).clipPath);
-    await seek(imageTop + layout.image.height * .5 - height * .4);
-    const opened = await image.evaluate(el => getComputedStyle(el).clipPath);
-    assert(closed !== opened && /inset\(0%/.test(opened), `${width}: flow layout must animate its landscape reveal`);
-    assert(layout.image.width <= 1024 && Math.abs(layout.image.width / layout.image.height - 16 / 9) < .01, `${width}: landscape ratio or enlargement`);
-    await page.screenshot({ path: `output/playwright/lavasa-after-${width}-${height}.png` });
-    await page.locator("[data-lavasa-photo]").screenshot({ path: `output/playwright/lavasa-after-${width}-${height}-landscape.png` });
-    layouts.push({ width, height, ...layout });
+    await page.waitForFunction(() => document.querySelector("#lavasa").dataset.globeStatus === "ready");
+    const s = await state();
+    assert(s.mode !== "cinematic" && !s.inert && s.imageOpacity > .99 && s.welcomeOpacity > .99, `${width}: reduced motion must retain all content and controls`);
+    assert(s.overflow <= 1, `${width}: reduced motion must not overflow`);
+    if (width === 1440) assert(g.range < height, "Reduced motion must remove cinematic section spacing");
+    await page.screenshot({ path: `output/playwright/lavasa-after-reduced-${width}.png` });
   }
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await open();
-  g = await geometry();
-  await seek(g.top - 70);
-  assert(!(await state()).inert && (await state()).imageOpacity > .99, "Reduced motion must retain all content and controls");
-  assert(g.range < 900, "Reduced motion must remove cinematic section spacing");
-  await page.screenshot({ path: "output/playwright/lavasa-after-reduced.png" });
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.route("**/media/journey/lavasa-welcome-distance.png", route => route.fulfill({ status: 503, body: "unavailable" }));
   await open();

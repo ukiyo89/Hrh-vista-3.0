@@ -125,7 +125,6 @@
   height: 100%;
   object-fit: cover;
 }
-.journey[data-journey-mode] .photoMask img { will-change: clip-path, opacity; }
 .maskedLandscape { display: none; width: 100%; height: 100%; }
 .maskedLandscape[data-mask-failed] [data-lavasa-image] { mask: none; }
 .maskType { font-family: var(--font-display), sans-serif; font-size: 200px; font-weight: 600; letter-spacing: -.06em; }
@@ -163,7 +162,7 @@
 }
 .editionsLink span { font-size: 19px; transition: transform .2s; }
 .editionsLink:hover span { transform: translateY(3px); }
-@media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) {
   .journey[data-journey-mode="cinematic"] { height: 220svh; }
   .journey[data-journey-mode="cinematic"] .viewport {
     position: sticky;
@@ -189,6 +188,31 @@
   .journey[data-journey-mode="cinematic"] .photoMask > img { display: none; }
   .journey[data-journey-mode="cinematic"] .maskedLandscape { display: block; position: absolute; inset: 0; }
   .photoMeta { pointer-events: auto; }
+}
+@media (max-width: 1023px) and (orientation: portrait) and (prefers-reduced-motion: no-preference) {
+  .journey[data-journey-mode="cinematic"] .introduction { grid-template-columns: 1fr; gap: 16px; }
+  .journey[data-journey-mode="cinematic"] .chapterCopy { width: min(100%, 480px); justify-self: center; }
+  .journey[data-journey-mode="cinematic"] .chapterCopy h2 { font-size: clamp(48px, 14vw, 90px); margin-bottom: 12px; }
+  .journey[data-journey-mode="cinematic"] .eyebrow { margin-bottom: 12px; }
+  .journey[data-journey-mode="cinematic"] .body { line-height: 1.5; }
+  .journey[data-journey-mode="cinematic"] .earth {
+    width: min(100%, 460px);
+    --globe-diameter: min(100%, 32svh, max(96px, calc(100svh - 480px)));
+  }
+  .journey[data-journey-mode="cinematic"] .globePlaceholder { width: var(--globe-diameter); margin-inline: auto; }
+  .journey[data-journey-mode="cinematic"] .globeFallback { width: var(--globe-diameter); left: 50%; transform: translateX(-50%); margin-top: 0; }
+}
+@media (max-height: 699px) and (orientation: landscape) and (prefers-reduced-motion: no-preference) {
+  .journey[data-journey-mode="cinematic"] .photoPlacement { top: calc(50% + 24px); }
+  .journey[data-journey-mode="cinematic"] .earth {
+    width: min(100%, 460px);
+    --globe-diameter: min(100%, max(80px, calc(100svh - 240px)));
+  }
+  .journey[data-journey-mode="cinematic"] .globePlaceholder { width: var(--globe-diameter); margin-inline: auto; }
+  .journey[data-journey-mode="cinematic"] .globeFallback { width: var(--globe-diameter); left: 50%; transform: translateX(-50%); margin-top: 0; }
+  .journey[data-journey-mode="cinematic"] .chapterCopy h2 { width: min(100%, calc((100svh - 200px) * 16 / 9)); font-size: clamp(28px, 10svh, 90px); margin-bottom: 12px; }
+  .journey[data-journey-mode="cinematic"] .eyebrow { margin-bottom: 12px; }
+  .journey[data-journey-mode="cinematic"] .body { line-height: 1.5; }
 }
 .textLink {
   display: inline-flex;

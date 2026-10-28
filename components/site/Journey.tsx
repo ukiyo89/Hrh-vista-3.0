@@ -74,15 +74,12 @@ export function Journey() {
     gsap.registerPlugin(ScrollTrigger);
     let disposed = false;
     const media = gsap.matchMedia();
-    media.add({ desktop: "(min-width: 1024px) and (min-height: 700px)", motion: "(prefers-reduced-motion: no-preference)" }, (context) => {
-      if (!context.conditions?.motion) return;
-      const cinematic = context.conditions.desktop;
-      element.dataset.journeyMode = cinematic ? "cinematic" : "flow";
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      element.dataset.journeyMode = "cinematic";
       const copy = element.querySelector(`.${styles.chapterCopy}`);
       const title = element.querySelector("h2")!;
       const photograph = element.querySelector<HTMLElement>("[data-lavasa-photo]")!;
       const placement = photograph.parentElement!;
-      const image = photograph.querySelector("img");
       const maskedImage = photograph.querySelector("[data-lavasa-image]");
       const mask = photograph.querySelector("[data-lavasa-mask]");
       const welcome = element.querySelector(`.${styles.welcomeNote}`);
@@ -101,14 +98,14 @@ export function Journey() {
         if (element.dataset.journeyScene !== phase) element.dataset.journeyScene = phase;
         // The mask is fully opaque after .57; stop filtering until reverse scroll needs it.
         const photoMask = progress >= .57 ? "none" : "url(#lavasa-welcome-mask)";
-        if (cinematic && maskedImage?.getAttribute("mask") !== photoMask) maskedImage?.setAttribute("mask", photoMask);
-        const visible = !cinematic || progress < .5;
+        if (maskedImage?.getAttribute("mask") !== photoMask) maskedImage?.setAttribute("mask", photoMask);
+        const visible = progress < .5;
         if (motionState.current.visible !== visible) {
           motionState.current.visible = visible;
           earth.current?.dispatchEvent(new Event("hr-vista:globe-update"));
         }
-        controlsVisible.current = !cinematic || progress <= .25;
-        const copyHidden = cinematic && progress >= .42;
+        controlsVisible.current = progress <= .25;
+        const copyHidden = progress >= .42;
         if (copy?.getAttribute("aria-hidden") !== String(copyHidden)) copy?.setAttribute("aria-hidden", String(copyHidden));
         if (photoMeta.current) {
           const hidden = progress < .45 && !photoMeta.current.contains(document.activeElement);
@@ -121,7 +118,7 @@ export function Journey() {
         defaults: { ease: "none" },
         onUpdate() { syncScene(this.progress()); },
       });
-      if (cinematic) timeline
+      timeline
         .fromTo(photograph, {
           x: () => titlePosition().x,
           y: () => titlePosition().y,
@@ -132,20 +129,14 @@ export function Journey() {
         .to(earth.current, { autoAlpha: 0, scale: .84, y: 24, duration: .25 }, .25)
         .fromTo(mask, { attr: { values: MASK_MATRIX + 64.5 } }, {
           attr: { values: MASK_MATRIX + 364.5 }, duration: .4, ease: "power2.in",
-        }, .25);
-      else timeline
-        .fromTo(image, { clipPath: "inset(40% 40% 40% 40%)" }, {
-          clipPath: "inset(0% 0% 0% 0%)", duration: .4,
         }, .25)
-        .fromTo(image, { opacity: 0 }, { opacity: 1, duration: .1 }, .25);
-      timeline
         .fromTo(welcome, { opacity: 0 }, { opacity: 1, duration: .15 }, .5)
         .fromTo(photoMeta.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .2 }, .45)
         .to({}, { duration: .35 }, .65);
       ScrollTrigger.create({
-        trigger: cinematic ? element : photograph,
-        start: cinematic ? "top top" : "top 92%",
-        end: cinematic ? "bottom bottom" : "center 45%",
+        trigger: element,
+        start: "top top",
+        end: "bottom bottom",
         animation: timeline,
         scrub: true,
         invalidateOnRefresh: true,
@@ -167,8 +158,10 @@ export function Journey() {
         syncControls();
       };
     }, element);
+    const observer = new ResizeObserver(() => ScrollTrigger.refresh());
+    observer.observe(element.querySelector(`.${styles.introduction}`)!);
     void document.fonts.ready.then(() => { if (!disposed) ScrollTrigger.refresh(); });
-    return () => { disposed = true; media.revert(); };
+    return () => { disposed = true; observer.disconnect(); media.revert(); };
   }, [syncControls]);
 
   return (

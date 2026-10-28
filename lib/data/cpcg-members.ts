@@ -1,49 +1,53 @@
 import type { Person } from "./people";
 
 // Names and campus grouping supplied by the organiser on 27 October 2026.
-// LinkedIn and portraits are added only after checking matching profile evidence.
-export const cpcgMembers: Person[] = [
+// Core team order and Kuber's mentor role supplied on 28 October 2026.
+export const committeeHeads: Person[] = [
   { name: "Sabhya Walani", role: "President", group: "CPCG · Lavasa", initials: "SW", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/sabhya-walani-80954330b", portrait: "/media/cpcg/sabhya-walani.jpg" },
-  { name: "Aditi Mishra", role: "Vice President", group: "CPCG · Lavasa", initials: "AM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/aditi-mishra-341920386", portrait: "/media/cpcg/aditi-mishra.jpg" },
+  { name: "Aditi Mishra", role: "Vice President", group: "CPCG · Lavasa", initials: "AM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: null, portrait: "/media/cpcg/aditi-mishra.png" },
   { name: "Aayush Agarwal", role: "Official Mentor", group: "CPCG · Lavasa", initials: "AA", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/1aayush-agarwal", portrait: "/media/cpcg/aayush-agarwal.jpg" },
+  { name: "Kuber Arora", role: "Mentor", group: "CPCG · Pune City", initials: "KA", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/kuber-arora/", portrait: "/media/cpcg/kuber-arora.jpg" },
+  { name: "Vashitav Bali", role: "Head of Research and Development", group: "CPCG · Lavasa", initials: "VB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/vashitav-bali-a0337728a", portrait: "/media/cpcg/vashitav-bali.png" },
+  { name: "Ameya M Laad", role: "Sub-head of Research and Development", group: "CPCG · Lavasa", initials: "AM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/ameyalaad29", portrait: "/media/cpcg/ameya-m-laad.jpg" },
   { name: "Raksha Rajesh Rao", role: "Head of Social Media", group: "CPCG · Lavasa", initials: "RR", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/raksha-rajesh-rao-a75171321", portrait: "/media/cpcg/raksha-rajesh-rao.jpg" },
+  { name: "Hanishma K", role: "Sub-head of Social Media", group: "CPCG · Lavasa", initials: "HK", source: "Organiser-supplied CPCG roster, 27 October 2026", portrait: "/media/cpcg/hanishma-k.png", linkedin: "https://www.linkedin.com/in/hanishma-k-62192a350/" },
   { name: "Mrinalini Sharma", role: "Head of Treasury and Finance", group: "CPCG · Lavasa", initials: "MS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/mrinalini-sharma-3586ab2b1", portrait: "/media/cpcg/mrinalini-sharma.jpg" },
+  { name: "Tanishq Kalra", role: "Sub-head of Treasury and Finance", group: "CPCG · Lavasa", initials: "TK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/tanishq-kalra-00295b380", portrait: "/media/cpcg/tanishq-kalra.jpg" },
   { name: "Vivaan Sud", role: "Head of Event Conceptualization", group: "CPCG · Lavasa", initials: "VS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/vivaan-sud-14969431b", portrait: "/media/cpcg/vivaan-sud.jpg" },
+  { name: "Harsh Maheswari", role: "Sub-head of Event Conceptualization", group: "CPCG · Lavasa", initials: "HM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/harsh-maheswari-a9b147311/", portrait: "/media/cpcg/harsh-maheswari.png" },
   { name: "Jose Jasmine Fernandez", role: "Head of Documentation & Registration", group: "CPCG · Lavasa", initials: "JJ", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/jasmine-jose-fernandez", portrait: "/media/cpcg/jose-jasmine-fernandez.jpg" },
-  { name: "Vashitav Bali", role: "Head of Research and Development", group: "CPCG · Lavasa", initials: "VB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/vashitav-bali-a0337728a", portrait: "/media/cpcg/vashitav-bali.jpg" },
+  { name: "Prasanna Lakshmi K", role: "Sub-head of Documentation & Registration", group: "CPCG · Lavasa", initials: "PL", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/prasanna-lakshmi-510029291/", portrait: "/media/cpcg/prasanna-lakshmi-k.jpg" },
+  { name: "Rishika Ranjan", role: "Head of Media and Graphics", group: "CPCG · Lavasa", initials: "RR", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/rishika-ranjan-b84934302", portrait: "/media/cpcg/rishika-ranjan.jpg" },
   { name: "Arva Dumbre", role: "SC Representative", group: "CPCG · Lavasa", initials: "AD", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/arva-dumbre-88a534380", portrait: "/media/cpcg/arva-dumbre.jpg" },
+];
+
+export const cpcgMembers: Person[] = [
+  ...committeeHeads,
   { name: "Yuvaraj A K", role: "CPCG member", group: "CPCG · Lavasa", initials: "YA", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/yuvaraj-a-k-598413320", portrait: "/media/cpcg/yuvaraj-a-k.jpg" },
   { name: "Himali M Suresh", role: "CPCG member", group: "CPCG · Lavasa", initials: "HM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/hellohimali", portrait: "/media/cpcg/himali-m-suresh.jpg" },
   { name: "Laxika Bisht", role: "CPCG member", group: "CPCG · Lavasa", initials: "LB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/laxika-bisht", portrait: "/media/cpcg/laxika-bisht.jpg" },
   { name: "Ankita Panda", role: "CPCG member", group: "CPCG · Lavasa", initials: "AP", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/ankita-panda-1805202411062009122007", portrait: "/media/cpcg/ankita-panda.jpg" },
   { name: "Shourya Chhabra", role: "CPCG member", group: "CPCG · Lavasa", initials: "SC", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/shourya-chhabra-op", portrait: "/media/cpcg/shourya-chhabra.jpg" },
   { name: "Saketh Madisetty", role: "CPCG member", group: "CPCG · Lavasa", initials: "SM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/saketh-madisetty-b4461a380", portrait: "/media/cpcg/saketh-madisetty.jpg" },
-  { name: "Hanishma K", role: "Sub-head of Social Media", group: "CPCG · Lavasa", initials: "HK", source: "Organiser-supplied CPCG roster, 27 October 2026", portrait: "/media/cpcg/hanishma-k.png", linkedin: "https://www.linkedin.com/in/hanishma-k-62192a350/" },
   { name: "Shambhavi Shesh", role: "CPCG member", group: "CPCG · Lavasa", initials: "SS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/shambhavi-shesh", portrait: "/media/cpcg/shambhavi-shesh.jpg" },
   { name: "Harmandeep Kaur Bhogal", role: "CPCG member", group: "CPCG · Lavasa", initials: "HK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/harmandeepkaurbhogal", portrait: "/media/cpcg/harmandeep-kaur-bhogal.jpg" },
   { name: "Sparsh Parashar", role: "CPCG member", group: "CPCG · Lavasa", initials: "SP", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/sparsh-parashar", portrait: "/media/cpcg/sparsh-parashar.jpg" },
-  { name: "Ameya M Laad", role: "Sub-head of Research and Development", group: "CPCG · Lavasa", initials: "AM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/ameyalaad29", portrait: "/media/cpcg/ameya-m-laad.jpg" },
   { name: "Avika Bansal", role: "CPCG member", group: "CPCG · Lavasa", initials: "AB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/avika-bansal-8458ba36b", portrait: "/media/cpcg/avika-bansal.jpg" },
   { name: "Hafsa Khamkar", role: "CPCG member", group: "CPCG · Lavasa", initials: "HK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/hafsa-khamkar-348641359", portrait: "/media/cpcg/hafsa-khamkar.jpg" },
-  { name: "Tanishq Kalra", role: "Sub-head of Treasury and Finance", group: "CPCG · Lavasa", initials: "TK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/tanishq-kalra-00295b380", portrait: "/media/cpcg/tanishq-kalra.jpg" },
   { name: "Siya Sobti", role: "CPCG member", group: "CPCG · Lavasa", initials: "SS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/siya-sobti-270275332", portrait: "/media/cpcg/siya-sobti.jpg" },
   { name: "Aaron Benoy", role: "CPCG member", group: "CPCG · Lavasa", initials: "AB", source: "Organiser-supplied CPCG roster, 27 October 2026", portrait: "/media/cpcg/aaron-benoy.png", linkedin: "https://www.linkedin.com/in/aaron-benoy-03151b298/" },
   { name: "Adone Babu", role: "CPCG member", group: "CPCG · Lavasa", initials: "AB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/adone-babu-a165183a4/" },
-  { name: "Harsh Maheswari", role: "Sub-head of Event Conceptualization", group: "CPCG · Lavasa", initials: "HM", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/harsh-maheswari-a9b147311/", portrait: "/media/cpcg/harsh-maheswari.jpg" },
   { name: "Prateek Niranjan", role: "CPCG member", group: "CPCG · Lavasa", initials: "PN", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/prateek-niranjan-2673312b8/", portrait: "/media/cpcg/prateek-niranjan.jpg" },
   { name: "Indrajeet", role: "CPCG member", group: "CPCG · Lavasa", initials: "I", source: "Organiser-supplied CPCG roster, 27 October 2026", portrait: "/media/cpcg/indrajeet.png", linkedin: "https://www.linkedin.com/in/indrajeet-singh-279047327/" },
-  { name: "Rishika Ranjan", role: "Head of Media and Graphics", group: "CPCG · Lavasa", initials: "RR", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/rishika-ranjan-b84934302", portrait: "/media/cpcg/rishika-ranjan.jpg" },
   { name: "Eligius Tiago Gracias", role: "CPCG member", group: "CPCG · Lavasa", initials: "ET", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/eligius-tiago-gracias-78676a2b9/" },
   { name: "Arnav Sharma", role: "CPCG member · Website development & maintenance", group: "CPCG · Lavasa", initials: "AS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/arnav-sharmaaa/", portrait: "/media/people/arnav-sharma.webp" },
   { name: "Sushil Kumar Soni", role: "CPCG member", group: "CPCG · Lavasa", initials: "SK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/sushilkumarsoni/", portrait: "/media/cpcg/sushil-kumar-soni.jpg" },
-  { name: "Prasanna Lakshmi K", role: "Sub-head of Documentation & Registration", group: "CPCG · Lavasa", initials: "PL", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/prasanna-lakshmi-510029291/", portrait: "/media/cpcg/prasanna-lakshmi-k.jpg" },
   { name: "Anushree B Nair", role: "CPCG member", group: "CPCG · Lavasa", initials: "AB", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/anushree-b-nair-852791344/", portrait: "/media/cpcg/anushree-b-nair.jpg" },
   { name: "Manne Mokshitha", role: "CPCG member", group: "CPCG · Lavasa", initials: "MM", source: "Organiser-supplied CPCG roster, 27 October 2026" },
   { name: "Suhana Pandey", role: "CPCG member", group: "CPCG · Lavasa", initials: "SP", source: "Organiser-supplied CPCG roster, 27 October 2026" },
   { name: "Harshit Mehra", role: "CPCG member", group: "CPCG · Lavasa", initials: "HM", source: "Organiser-supplied CPCG roster, 27 October 2026" },
   { name: "G Sai Shruthi", role: "CPCG member", group: "CPCG · Lavasa", initials: "GS", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/sai-shruthi-823447387/" },
   { name: "Sanskar Garg", role: "Sub-head of Media and Graphics", group: "CPCG · Lavasa", initials: "SG", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/sanskar-garg-71530a382/", portrait: "/media/cpcg/sanskar-garg.jpg" },
-  { name: "Kuber Arora", role: "CPCG member", group: "CPCG · Pune City", initials: "KA", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/kuber-arora/", portrait: "/media/cpcg/kuber-arora.jpg" },
   { name: "Aarya Karve", role: "CPCG member", group: "CPCG · Pune City", initials: "AK", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/aarya-karve-38234522a/", portrait: "/media/cpcg/aarya-karve.jpg" },
   { name: "Amal Pillai", role: "CPCG member", group: "CPCG · Pune City", initials: "AP", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://www.linkedin.com/in/amal-v-pillai-931152229/", portrait: "/media/cpcg/amal-pillai.jpg" },
   { name: "Ankita", role: "CPCG member", group: "CPCG · Pune City", initials: "A", source: "Organiser-supplied CPCG roster, 27 October 2026" },
@@ -51,7 +55,3 @@ export const cpcgMembers: Person[] = [
   { name: "Shachi", role: "CPCG member", group: "CPCG · Pune City", initials: "S", source: "Organiser-supplied CPCG roster, 27 October 2026", linkedin: "https://in.linkedin.com/in/shachi-tiwari-12999b214", portrait: "/media/cpcg/shachi.jpg" },
   { name: "Rohit", role: "CPCG member", group: "CPCG · Pune City", initials: "R", source: "Organiser-supplied CPCG roster, 27 October 2026" },
 ];
-
-export const committeeHeads = cpcgMembers.filter(member =>
-  ["President", "Vice President", "Official Mentor"].includes(member.role) || member.role.startsWith("Head of "),
-);

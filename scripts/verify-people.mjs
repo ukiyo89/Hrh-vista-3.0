@@ -13,20 +13,26 @@ const { people } = await import(`data:text/javascript;base64,${Buffer.from(peopl
 const research = (await Promise.all(["a", "b"].map(async batch =>
   JSON.parse(await readFile(new URL(`../docs/cpcg-research-${batch}.json`, import.meta.url), "utf8"))
 ))).flat();
+const coreOrder = ["Sabhya Walani", "Aditi Mishra", "Aayush Agarwal", "Kuber Arora", "Vashitav Bali", "Ameya M Laad", "Raksha Rajesh Rao", "Hanishma K", "Mrinalini Sharma", "Tanishq Kalra", "Vivaan Sud", "Harsh Maheswari", "Jose Jasmine Fernandez", "Prasanna Lakshmi K", "Rishika Ranjan", "Arva Dumbre"];
 
 assert.equal(cpcgMembers.length, 47);
 assert.equal(new Set(cpcgMembers.map(member => member.name)).size, 47, "No duplicate members");
-assert.deepEqual(cpcgMembers.map(member => member.name), research.map(member => member.name), "Keep every supplied name and its order");
+assert.deepEqual(cpcgMembers.map(member => member.name).sort(), research.map(member => member.name).sort(), "Keep every supplied member");
+assert.deepEqual(cpcgMembers.slice(0, coreOrder.length), committeeHeads, "The full roster starts with the same ordered core team");
+assert.deepEqual(cpcgMembers.slice(coreOrder.length).map(member => member.name), research.filter(member => !coreOrder.includes(member.name)).map(member => member.name), "Keep the remaining members in their original relative order");
 assert.equal(cpcgMembers.filter(member => member.group === "CPCG · Lavasa").length, 40);
 assert.equal(cpcgMembers.filter(member => member.group === "CPCG · Pune City").length, 7);
 assert.equal(people.length, 51, "Only the new roster and faculty remain");
 assert.equal(people.filter(person => person.group === "Faculty & leadership").length, 4);
 assert.deepEqual(people.slice(4), cpcgMembers);
-assert.deepEqual(committeeHeads.map(person => person.name), ["Sabhya Walani", "Aditi Mishra", "Aayush Agarwal", "Raksha Rajesh Rao", "Mrinalini Sharma", "Vivaan Sud", "Jose Jasmine Fernandez", "Vashitav Bali", "Rishika Ranjan"], "Preview includes senior leaders and heads, with subheads in the full list");
+assert.deepEqual(committeeHeads.map(person => person.name), coreOrder, "Preview follows the organiser's sixteen-member core-team order");
 assert.equal(cpcgMembers.filter(person => person.role.startsWith("Sub-head of ")).length, 6);
 assert.equal(cpcgMembers.find(person => person.name === "Arva Dumbre").role, "SC Representative");
+assert.equal(cpcgMembers.find(person => person.name === "Kuber Arora").role, "Mentor");
 const profilePaths = cpcgMembers.filter(member => member.linkedin).map(member => new URL(member.linkedin).pathname.replace(/\/$/, ""));
 assert.equal(new Set(profilePaths).size, profilePaths.length, "Different members must not share a guessed profile");
+assert.equal(profilePaths.length, 41);
+assert.equal(cpcgMembers.filter(member => member.linkedin === undefined).length, 5, "Retain five unresolved LinkedIn searches");
 
 const existingPortraits = JSON.parse(await readFile(new URL("../public/media/people/sources.json", import.meta.url), "utf8"));
 const portraits = (await Promise.all(["core", "lavasa", "pune"].map(async batch =>
@@ -34,11 +40,14 @@ const portraits = (await Promise.all(["core", "lavasa", "pune"].map(async batch 
 ))).flat();
 assert.equal(portraits.length, 47);
 assert.deepEqual(portraits.map(person => person.name).sort(), cpcgMembers.map(person => person.name).sort(), "Every member has a portrait outcome");
-for (const [index, member] of cpcgMembers.entries()) {
+for (const member of cpcgMembers) {
   assert.match(member.initials, /^[A-Z]{1,2}$/);
-  const finding = research[index];
+  const finding = research.find(person => person.name === member.name);
   const evidence = portraits.find(person => person.name === member.name);
-  if (member.name === "Arnav Sharma") {
+  if (member.name === "Aditi Mishra") {
+    assert.equal(member.linkedin, null, "Aditi has no LinkedIn action, including a search fallback");
+    assert.equal(evidence.linkedin, null, "The organiser's no-LinkedIn correction supersedes the old research");
+  } else if (member.name === "Arnav Sharma") {
     const existing = existingPortraits.find(person => person.name === member.name);
     assert.equal(member.linkedin, existing.profileUrl, "Retain the previously sourced website credit");
     assert.equal(member.portrait, existing.portrait);
@@ -60,4 +69,4 @@ for (const [index, member] of cpcgMembers.entries()) {
     assert.ok(evidence.width > 0 && evidence.height > 0);
   }
 }
-console.log(`PASS 47 CPCG members, four faculty, nine preview leaders, ${cpcgMembers.filter(member => member.linkedin).length} profile links, ${cpcgMembers.filter(member => member.portrait).length} sourced member portraits`);
+console.log(`PASS 47 CPCG members, four faculty, sixteen ordered core members, ${cpcgMembers.filter(member => member.linkedin).length} profile links, ${cpcgMembers.filter(member => member.portrait).length} sourced member portraits`);

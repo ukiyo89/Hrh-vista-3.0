@@ -33,13 +33,14 @@ function Portrait({ src, position }: { src: string; position?: string }) {
 }
 
 function PersonCard({ person, index, reduced }: { person: Person; index: number; reduced: boolean }) {
-  const href = person.linkedin ?? `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`${person.name} CHRIST University`)}`;
+  const href = person.linkedin === null ? undefined : person.linkedin ?? `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`${person.name} CHRIST University`)}`;
+  const Card = href ? "a" : "div";
   const linkLabel = person.linkedin ? "LinkedIn profile" : "Find on LinkedIn";
   return <motion.article layout={!reduced} className={styles.person} data-member-name={person.name} initial={reduced ? false : { y: 24 }} whileInView={{ y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .4, delay: Math.min(index * .035, .14) }}>
-    <a className={styles.personCard} href={href} data-ui="media" data-ui-tone="dark" target="_blank" rel="noopener noreferrer" aria-label={`${person.name}: ${linkLabel} (opens in a new tab)`}>
+    <Card className={styles.personCard} href={href} data-ui={href ? "media" : undefined} data-ui-tone="dark" target={href ? "_blank" : undefined} rel={href ? "noopener noreferrer" : undefined} aria-label={href ? `${person.name}: ${linkLabel} (opens in a new tab)` : undefined}>
       <div className={styles.personArt} aria-hidden="true">{person.portrait && <Portrait key={person.portrait} src={person.portrait} position={person.portraitPosition} />}<div className={styles.glyphTrack}><Initials value={person.initials} /><Initials value={person.initials} echo /></div><div className={styles.waveform}>{Array.from({ length: 13 }, (_, bar) => <i key={bar} style={{ "--bar": bar, "--bar-height": `${12 + ((bar * 7 + index * 3) % 24)}px` } as CSSProperties} />)}</div></div>
-      <div className={styles.identity}><h4>{person.name}</h4><p>{person.role}</p><span className={styles.profile}><span className={styles.profileLabel}>{linkLabel}</span><span className={styles.profileIcon} aria-hidden="true">{[0, 1].map(arrow => <svg key={arrow} viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}</span></span></div>
-    </a>
+      <div className={styles.identity}><h4>{person.name}</h4><p>{person.role}</p>{href && <span className={styles.profile}><span className={styles.profileLabel}>{linkLabel}</span><span className={styles.profileIcon} aria-hidden="true">{[0, 1].map(arrow => <svg key={arrow} viewBox="0 0 24 24" fill="none"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>)}</span></span>}</div>
+    </Card>
   </motion.article>;
 }
 
@@ -66,7 +67,7 @@ export function People() {
         window.dispatchEvent(new CustomEvent("hr-vista:seek", { detail: top }));
       }}>
         <summary className={`${actionStyles.action} ${styles.rosterToggle}`} aria-controls="all-cpcg-members">
-          <span className={styles.rosterStack} aria-hidden="true"><i><img src="/media/cpcg/sabhya-walani.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/cpcg/aditi-mishra.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/people/arnav-sharma.webp" alt="" width={400} height={400} loading="lazy" decoding="async" /></i></span>
+          <span className={styles.rosterStack} aria-hidden="true"><i><img src="/media/cpcg/sabhya-walani.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/cpcg/aditi-mishra.png" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/people/arnav-sharma.webp" alt="" width={400} height={400} loading="lazy" decoding="async" /></i></span>
           <span className={styles.rosterLabel}><span className={styles.closedLabel}>Meet all members</span><span className={styles.openLabel}>Close member list</span></span>
           <span className={styles.rosterCount}>{cpcgMembers.length}</span>
           <span className={`${actionStyles.icon} ${styles.rosterIcon}`} aria-hidden="true">{[0, 1].map(icon => <svg key={icon} viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>)}</span>

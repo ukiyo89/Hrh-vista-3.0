@@ -30,28 +30,20 @@
   },
   {
     "name": "Aditi Mishra",
-    "linkedin": "https://in.linkedin.com/in/aditi-mishra-341920386",
+    "linkedin": null,
     "evidence": [
       {
-        "url": "https://in.linkedin.com/in/aditi-mishra-341920386",
-        "finding": "Exact-name LinkedIn profile lists CHRIST University, Pune - Lavasa education 2025-2030."
-      },
-      {
-        "url": "https://www.linkedin.com/posts/cpcgchristlavasa_hrvista2025-studentcommittee-christuniversitypune-activity-7395016372440940545-ls3q",
-        "finding": "CPCG student committee names Aditi Mishra under Registration."
-      },
-      {
-        "url": "https://in.linkedin.com/in/aditi-mishra-341920386",
-        "finding": "Matching profile name and campus shown in Chrome Beta; profile-photo viewer supplied this image."
+        "source": "Organiser message, 28 October 2026",
+        "finding": "Portrait supplied and assigned to this member in attachment codex-clipboard-7443df52-5f42-4deb-b5aa-e2864fa075ca.png."
       }
     ],
-    "status": "verified",
-    "note": "Signed-in Chrome Beta displayed this exact profile and its profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/aditi-mishra.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQEiVn-3ADqVNg/profile-displayphoto-scale_400_400/B4DZ3kPVSEI4Ag-/0/1777650720782?e=1794441600&v=beta&t=LHAKW4bLV8K5FC0UkCqGuhfqbEwdyWH9JbiUs8s7l3Y",
-    "width": 400,
-    "height": 400,
-    "sha256": "3f2728190d3201748da77b33ea282a8680f576d53a3daf1218207136872c0222"
+    "status": "user-provided",
+    "note": "Organiser-supplied replacement portrait; attachment copied unchanged. Organiser explicitly requested no LinkedIn link or search action.",
+    "portrait": "/media/cpcg/aditi-mishra.png",
+    "portraitSource": "Organiser attachment codex-clipboard-7443df52-5f42-4deb-b5aa-e2864fa075ca.png, 28 October 2026",
+    "width": 524,
+    "height": 695,
+    "sha256": "0bbecff6a6fcc79e326780d5620ec5327a12e04eac406f7963ea72c0f27e5432"
   },
   {
     "name": "Aayush Agarwal",
@@ -208,21 +200,17 @@
     "linkedin": "https://www.linkedin.com/in/harsh-maheswari-a9b147311/",
     "evidence": [
       {
-        "url": "https://in.linkedin.com/in/harsh-maheswari-a9b147311",
-        "finding": "Exact full name and spelling; CHRIST University Pune-Lavasa education 2026-2029."
-      },
-      {
-        "url": "https://www.linkedin.com/in/harsh-maheswari-a9b147311/",
-        "finding": "Matching profile name and campus shown in Chrome Beta; profile-photo viewer supplied this image."
+        "source": "Organiser message, 28 October 2026",
+        "finding": "Portrait supplied and assigned to this member in attachment codex-clipboard-a77a110f-62b8-4dcc-abbd-e2be56c82d54.png."
       }
     ],
-    "status": "verified",
-    "note": "Signed-in Chrome Beta displayed the matching profile and profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/harsh-maheswari.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D03AQFHQnYE0gLnjg/profile-displayphoto-scale_400_400/B4DaE_LUO3KUAg-/0/1792061294222?e=1794441600&v=beta&t=Km32H6gLYHAypzAYodFzv_HPjMKnq5e_ZUIi1D0dAvo",
-    "width": 400,
-    "height": 400,
-    "sha256": "2c6e56a6705b1b9ae4290a5a8deb8ee4162132e4c690c08c81acab606bd94475"
+    "status": "user-provided",
+    "note": "Organiser-supplied replacement portrait; attachment copied unchanged. Existing confirmed LinkedIn profile retained.",
+    "portrait": "/media/cpcg/harsh-maheswari.png",
+    "portraitSource": "Organiser attachment codex-clipboard-a77a110f-62b8-4dcc-abbd-e2be56c82d54.png, 28 October 2026",
+    "width": 357,
+    "height": 477,
+    "sha256": "9a733d5a1ce09347a697839ab5053f4c3a56a966309d6598623d9db6c951d3f3"
   },
   {
     "name": "Jose Jasmine Fernandez",
@@ -283,29 +271,17 @@
     "linkedin": "https://in.linkedin.com/in/vashitav-bali-a0337728a",
     "evidence": [
       {
-        "url": "https://in.linkedin.com/in/vashitav-bali-a0337728a",
-        "finding": "Exact-name LinkedIn profile lists CHRIST Pune-Lavasa 2025-2029."
-      },
-      {
-        "url": "https://in.linkedin.com/in/mrinalini-sharma-3586ab2b1",
-        "finding": "Indexed CPCG Connexions 2026 committee repost identifies Documentation POC Vashitav Bali."
-      },
-      {
-        "url": "https://www.linkedin.com/posts/vashitav-bali-a0337728a_marketing-is-no-longer-just-about-selling-activity-7405643738292723712-bG-Y",
-        "finding": "Public post author image HTML names this person and links to the matching profile; its linked image request returned HTTP 403."
-      },
-      {
-        "url": "https://in.linkedin.com/in/vashitav-bali-a0337728a",
-        "finding": "Matching profile name and campus shown in Chrome Beta; profile-photo viewer supplied this image."
+        "source": "Organiser message, 28 October 2026",
+        "finding": "Portrait supplied and assigned to this member in attachment codex-clipboard-da169520-1e95-4822-ad47-f89dca0739f0.png."
       }
     ],
-    "status": "verified",
-    "note": "Signed-in Chrome Beta displayed the matching profile and profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/vashitav-bali.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D5603AQGtGiK_5UwWmw/profile-displayphoto-scale_400_400/B56Z8oWTUlKEAo-/0/1783088363344?e=1794441600&v=beta&t=vPUGbXzXJGinvfBCu7HAytPkKq4RQGN_BqhPRQHoaGg",
-    "width": 400,
-    "height": 400,
-    "sha256": "ba091e4fadb7ab7ce5f16c0072625276f4f76e2904fbff6ac4695eb587b8ca1d"
+    "status": "user-provided",
+    "note": "Organiser-supplied replacement portrait; attachment copied unchanged. Existing confirmed LinkedIn profile retained.",
+    "portrait": "/media/cpcg/vashitav-bali.png",
+    "portraitSource": "Organiser attachment codex-clipboard-da169520-1e95-4822-ad47-f89dca0739f0.png, 28 October 2026",
+    "width": 338,
+    "height": 552,
+    "sha256": "489d716fa23d9acc02bfa3b54035f207aaa2160d9c4439eeb2050eff69ec73ae"
   },
   {
     "name": "Ameya M Laad",

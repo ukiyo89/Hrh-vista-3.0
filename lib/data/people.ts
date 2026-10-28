@@ -8,7 +8,7 @@ import { cpcgMembers } from "./cpcg-members";
  * Portraits were retrieved from the matching live LinkedIn profiles on
  * 2026-10-09 and stored locally; see public/media/people/sources.json.
  */
-export type Person = { name: string; role: string; group: "Faculty & leadership" | "CPCG · Lavasa" | "CPCG · Pune City"; initials: string; linkedin?: string; source: string; portrait?: string; portraitPosition?: string };
+export type Person = { name: string; role: string; group: "Faculty & leadership" | "CPCG · Lavasa" | "CPCG · Pune City"; initials: string; linkedin?: string | null; source: string; portrait?: string; portraitPosition?: string };
 export const people: Person[] = [
   { name: "Fr. Lijo Thomas", role: "Dean & Director · CHRIST Lavasa", group: "Faculty & leadership", initials: "LT", linkedin: "https://www.linkedin.com/in/lijo-thomas-1b4459218/", source: "https://www.hrvista.live/", portrait: "/media/people/lijo-thomas.webp" },
   { name: "Fr. Justin P Varghese", role: "Academic Coordinator · CHRIST Lavasa", group: "Faculty & leadership", initials: "JV", linkedin: "https://www.linkedin.com/in/justin-p-varghese-2661351a3/", source: "https://www.hrvista.live/", portrait: "/media/people/justin-varghese.webp", portraitPosition: "64% 35%" },

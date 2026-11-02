@@ -388,26 +388,5 @@
     "width": 96,
     "height": 96,
     "sha256": "c0d29c7851920c230fa0304b32c182c5e90e8d3b39c2b3dd025ef67b56034eb9"
-  },
-  {
-    "name": "Indrajeet",
-    "evidence": [
-      {
-        "url": "https://www.linkedin.com/posts/joy-george--hr_the-war-for-talent-is-over-but-the-real-activity-7301446568413380608-fpaz",
-        "finding": "HR Vista 2025 post has commenter Indrajeet Kurakuri; insufficient to connect first-name-only roster."
-      },
-      {
-        "source": "Organiser message, 27 October 2026",
-        "finding": "Attachment explicitly identified as Indrajeet; order preserved from the supplied three-image message."
-      }
-    ],
-    "status": "user-provided",
-    "note": "Image supplied and explicitly assigned to this member by the organiser; copied unchanged. LinkedIn profile URL was not inferred from the face. Exact profile URL was later explicitly confirmed by the organiser.",
-    "portrait": "/media/cpcg/indrajeet.png",
-    "portraitSource": "Organiser attachment 1f1d3b35-1c8c-4fc0-a4f6-a41e36ee0539, 27 October 2026",
-    "width": 200,
-    "height": 200,
-    "sha256": "72cc428f03ebbfff5638c432dae1c64f3df8cd30ea3d9be64257d2c107df5d0c",
-    "linkedin": "https://www.linkedin.com/in/indrajeet-singh-279047327/"
   }
 ]

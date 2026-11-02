@@ -1,6 +1,8 @@
 .journey {
   position: relative;
-  background: #050b14;
+  background:
+    linear-gradient(180deg, rgba(5, 11, 20, 0.34), rgba(5, 11, 20, 0.82)),
+    url("/media/flickr/story-4.jpg") center / cover no-repeat;
   color: #f5f4ef;
   isolation: isolate;
 }

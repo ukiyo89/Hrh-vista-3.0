@@ -64,22 +64,6 @@
     "note": "Second-pass identity match combines exact full name and Pune location with an independently indexed current Lavasa student group project naming him, also shared on his own profile. CPCG membership comes from supplied roster; indexed profile does not independently confirm a CPCG role."
   },
   {
-    "name": "Indrajeet",
-    "status": "verified",
-    "evidence": [
-      {
-        "url": "https://www.linkedin.com/posts/joy-george--hr_the-war-for-talent-is-over-but-the-real-activity-7301446568413380608-fpaz",
-        "summary": "HR Vista 2025 post has commenter Indrajeet Kurakuri; insufficient to connect first-name-only roster."
-      },
-      {
-        "url": "https://www.linkedin.com/in/indrajeet-singh-279047327/",
-        "finding": "Organiser explicitly identified this URL as the member's profile in the current message."
-      }
-    ],
-    "note": "Exact LinkedIn profile URL explicitly supplied and confirmed by the organiser on 27 October 2026. Portrait supplied separately by the organiser.",
-    "linkedin": "https://www.linkedin.com/in/indrajeet-singh-279047327/"
-  },
-  {
     "name": "Rishika Ranjan",
     "linkedin": "https://in.linkedin.com/in/rishika-ranjan-b84934302",
     "status": "verified",

@@ -55,7 +55,7 @@ const TILES: Tile[] = [
   },
   {
     src: "/media/flickr/story-4.jpg",
-    alt: "HR VISTA audience",
+    alt: "Lavasa lake and the surrounding Sahyadri hills",
     index: "03",
     title: "50+",
     caption: "Leading organisations",

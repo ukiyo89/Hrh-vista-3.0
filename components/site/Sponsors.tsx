@@ -39,7 +39,8 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   const timeline = useRef<gsap.core.Timeline | null>(null);
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
-  const brand = name.trim() || "YOUR BRAND";
+  const brand = name.trim() || "CHRIST (DEEMED TO BE UNIVERSITY), PUNE LAVASA CAMPUS (CPCG)";
+  const isDefaultBrand = !name.trim();
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
@@ -90,10 +91,10 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
         {stairCards.map((card, i) => <article key={card.label} className={styles.stairCard} data-sponsor-step={i} style={{ "--step": i, "--card-bg": card.background, "--card-ink": card.ink } as CSSProperties}>
           <div className={styles.stairCardTop}><span>{card.label}</span><span>0{i + 1}</span></div>
           <div className={styles.stairIdentity}>
-            {i === 0 ? <><span className={styles.collabName}>HR VISTA <i>×</i></span><strong data-long={brand.length > 15}>{brand}</strong></> :
+            {i === 0 ? <><span className={styles.collabName}>HR VISTA <i>×</i></span><strong data-long={brand.length > 15} data-cpcg={isDefaultBrand || undefined}>{brand}</strong></> :
               i === 1 ? <><span className={styles.cardAsterisk} aria-hidden="true">✳</span><strong>Your next<br />connection.</strong></> :
               i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>A new dimension for your brand.</span></> :
-              i === 3 ? <strong>People.<br />Possibility.</strong> : <><span className={styles.collabName}>THE NEXT CHAPTER</span><strong data-long={brand.length > 15}>{brand}<i className={styles.cardArrow}>↗</i></strong></>}
+              i === 3 ? <strong>People.<br />Possibility.</strong> : <><span className={styles.collabName}>THE NEXT CHAPTER</span><strong data-long={brand.length > 15} data-cpcg={isDefaultBrand || undefined}>{brand}<i className={styles.cardArrow}>↗</i></strong></>}
           </div>
           <div className={styles.stairCardFoot}><span>{card.foot}</span><span>↗</span></div>
         </article>)}

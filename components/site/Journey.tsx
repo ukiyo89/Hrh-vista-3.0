@@ -1,138 +1,133 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { JourneyMotion } from "./JourneyGlobe";
 import { content } from "@/lib/data/content";
-import { useReducedMotionPreference } from "@/lib/useReducedMotionPreference";
 import { ActionLink } from "./ActionLink";
 import styles from "./Journey.module.css";
 
-const Globe = dynamic(() => import("./JourneyGlobe"), {
-  ssr: false,
-  loading: () => <div className={styles.globePlaceholder} aria-hidden="true" />,
-});
 const PDF = "/brochure/HR-VISTA-3.0.pdf";
-// shortcut: the distance mask matches this lettering, regenerate it when the text or font changes.
-const MASK_MATRIX = "0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 -510 -2 0 0 ";
+const EARTH_IMAGE = { width: 1367, height: 768 };
+const LAVASA_POINT = { x: 594, y: 510 };
+
+const lavasaPhotos = [
+  { src: "/media/Lavasa/pic2.jpg", alt: "Aerial view of Lavasa lake and the surrounding green hills", width: 1170, height: 768 },
+  { src: "/media/Lavasa/pic1.jpg", alt: "Waterfront buildings and the lake at Lavasa", width: 1200, height: 675 },
+  { src: "/media/Lavasa/pic3.jpg", alt: "Lavasa waterfront and hillside buildings", width: 810, height: 540 },
+];
 
 export function Journey() {
   const root = useRef<HTMLDivElement>(null);
-  const earth = useRef<HTMLDivElement>(null);
-  const photoMeta = useRef<HTMLElement>(null);
-  const editionsLink = useRef<HTMLAnchorElement>(null);
-  const availability = useRef<boolean | null>(null);
-  const controlsVisible = useRef(true);
-  const [globeAvailable, setGlobeAvailable] = useState<boolean | null>(null);
-  const [maskStatus, setMaskStatus] = useState("loading");
-  const motionState = useRef<JourneyMotion>({ x: 0, y: 0, visible: true });
-  const reduced = useReducedMotionPreference();
-  const [near, setNear] = useState(false);
-  const syncControls = useCallback(() => {
-    const element = earth.current;
-    if (!element) return;
-    const interactive = controlsVisible.current && availability.current === true;
-    if (!interactive && element.contains(document.activeElement)) {
-      if (photoMeta.current) {
-        photoMeta.current.inert = false;
-        photoMeta.current.removeAttribute("aria-hidden");
-      }
-      editionsLink.current?.focus({ preventScroll: true });
-    }
-    if (element.inert === interactive) element.inert = !interactive;
-    if (element.getAttribute("aria-hidden") !== String(!interactive)) element.setAttribute("aria-hidden", String(!interactive));
-  }, []);
-  const onGlobeAvailability = useCallback((available: boolean) => {
-    availability.current = available;
-    setGlobeAvailable(available);
-    syncControls();
-  }, [syncControls]);
-
-  useEffect(() => {
-    const maskImage = new Image();
-    maskImage.onload = () => setMaskStatus("ready");
-    maskImage.onerror = () => setMaskStatus("failed");
-    maskImage.src = "/media/journey/lavasa-welcome-distance.png";
-    return () => { maskImage.onload = null; maskImage.onerror = null; };
-  }, []);
-
-  useEffect(() => {
-    const element = root.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
-    }, { rootMargin: "600px" });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const element = root.current;
     if (!element) return;
     gsap.registerPlugin(ScrollTrigger);
-    let disposed = false;
+    const viewport = element.querySelector<HTMLElement>(`.${styles.viewport}`)!;
+    const measure = () => {
+      const width = viewport.clientWidth;
+      const height = viewport.clientHeight;
+      const fit = Math.max(width / EARTH_IMAGE.width, height / EARTH_IMAGE.height);
+      const imageWidth = EARTH_IMAGE.width * fit;
+      const imageHeight = EARTH_IMAGE.height * fit;
+      const left = (width - imageWidth) / 2;
+      const top = (height - imageHeight) / 2;
+      const pinX = left + LAVASA_POINT.x * fit;
+      const pinY = top + LAVASA_POINT.y * fit;
+      viewport.style.setProperty("--pin-x", `${pinX}px`);
+      viewport.style.setProperty("--pin-y", `${pinY}px`);
+      return { width, height, fit, left, top, pinX, pinY };
+    };
+    let layout = measure();
+    const resizeObserver = new ResizeObserver(() => {
+      layout = measure();
+      ScrollTrigger.refresh();
+    });
+    resizeObserver.observe(viewport);
     const media = gsap.matchMedia();
     media.add("(prefers-reduced-motion: no-preference)", () => {
       element.dataset.journeyMode = "cinematic";
-      const copy = element.querySelector(`.${styles.chapterCopy}`);
-      const title = element.querySelector("h2")!;
-      const photograph = element.querySelector<HTMLElement>("[data-lavasa-photo]")!;
-      const placement = photograph.parentElement!;
-      const maskedImage = photograph.querySelector("[data-lavasa-image]");
-      const mask = photograph.querySelector("[data-lavasa-mask]");
-      const welcome = element.querySelector(`.${styles.welcomeNote}`);
-      const titlePosition = () => {
-        const heading = title.getBoundingClientRect();
-        const frame = placement.getBoundingClientRect();
-        return {
-          scale: heading.width / placement.offsetWidth,
-          x: heading.left - frame.left,
-          y: heading.top - frame.top,
-        };
-      };
+      const artwork = element.querySelector<HTMLElement>("[data-earth-artwork]")!;
+      const marker = element.querySelector<HTMLElement>("[data-lavasa-marker]")!;
+      const region = element.querySelector<SVGPathElement>("[data-maharashtra]")!;
+      const welcome = element.querySelector<HTMLElement>("[data-welcome-copy]")!;
+      const explore = element.querySelector<HTMLElement>("[data-explore-link]")!;
+      const cards = Array.from(element.querySelectorAll<HTMLElement>("[data-lavasa-card]"));
+      const initial = measure();
+      gsap.set(artwork, {
+        width: EARTH_IMAGE.width,
+        height: EARTH_IMAGE.height,
+        x: initial.left,
+        y: initial.top,
+        scale: initial.fit,
+        transformOrigin: "0 0",
+      });
+      gsap.set(marker, {
+        left: initial.pinX,
+        top: initial.pinY,
+        xPercent: -50,
+        yPercent: -50,
+      });
+      gsap.set(welcome, { autoAlpha: 0, y: 24 });
+      gsap.set(explore, { autoAlpha: 0, y: 16 });
+      gsap.set(region, { autoAlpha: 0 });
+      gsap.set(marker, { autoAlpha: 0, scale: 0.5 });
+      cards.forEach((card, index) => {
+        const offset = (index - 1) * Math.min(viewport.clientWidth * 0.24, 310);
+        const rotation = (index - 1) * 9;
+        gsap.set(card, {
+          xPercent: -50,
+          x: offset,
+          y: 120,
+          rotation,
+          scale: index === 1 ? 0.92 : 0.82,
+          autoAlpha: 0,
+          transformOrigin: "50% 100%",
+        });
+      });
+
       const syncScene = (progress: number) => {
         element.dataset.journeyProgress = progress.toFixed(3);
-        const phase = progress <= .25 ? "intro" : progress < .65 ? "transition" : "place";
+        const phase = progress < 0.36 ? "orbit" : progress < 0.68 ? "arrival" : "lavasa";
         if (element.dataset.journeyScene !== phase) element.dataset.journeyScene = phase;
-        // The mask is fully opaque after .57; stop filtering until reverse scroll needs it.
-        const photoMask = progress >= .57 ? "none" : "url(#lavasa-welcome-mask)";
-        if (maskedImage?.getAttribute("mask") !== photoMask) maskedImage?.setAttribute("mask", photoMask);
-        const visible = progress < .5;
-        if (motionState.current.visible !== visible) {
-          motionState.current.visible = visible;
-          earth.current?.dispatchEvent(new Event("hr-vista:globe-update"));
-        }
-        controlsVisible.current = progress <= .25;
-        const copyHidden = progress >= .42;
-        if (copy?.getAttribute("aria-hidden") !== String(copyHidden)) copy?.setAttribute("aria-hidden", String(copyHidden));
-        if (photoMeta.current) {
-          const hidden = progress < .45 && !photoMeta.current.contains(document.activeElement);
-          if (photoMeta.current.inert !== hidden) photoMeta.current.inert = hidden;
-          if (photoMeta.current.getAttribute("aria-hidden") !== String(hidden)) photoMeta.current.setAttribute("aria-hidden", String(hidden));
-        }
-        syncControls();
       };
       const timeline = gsap.timeline({
         defaults: { ease: "none" },
         onUpdate() { syncScene(this.progress()); },
       });
       timeline
-        .fromTo(photograph, {
-          x: () => titlePosition().x,
-          y: () => titlePosition().y,
-          scale: () => titlePosition().scale,
-        }, { x: 0, y: 0, scale: 1, duration: .4 }, .25)
-        .to(copy, { autoAlpha: 0, duration: .16 }, .25)
-        .to(earth.current, { "--globe-controls": 0, duration: .16 }, .25)
-        .to(earth.current, { autoAlpha: 0, scale: .84, y: 24, duration: .25 }, .25)
-        .fromTo(mask, { attr: { values: MASK_MATRIX + 64.5 } }, {
-          attr: { values: MASK_MATRIX + 364.5 }, duration: .4, ease: "power2.in",
-        }, .25)
-        .fromTo(welcome, { opacity: 0 }, { opacity: 1, duration: .15 }, .5)
-        .fromTo(photoMeta.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .2 }, .45)
-        .to({}, { duration: .35 }, .65);
+        .to(artwork, {
+          scale: () => layout.fit * 3.2,
+          x: () => viewport.clientWidth / 2 - LAVASA_POINT.x * layout.fit * 3.2,
+          y: () => viewport.clientHeight * 0.48 - LAVASA_POINT.y * layout.fit * 3.2,
+          duration: 0.72,
+          ease: "power2.inOut",
+        }, 0)
+        .to(region, { autoAlpha: 1, duration: 0.2 }, 0.29)
+        .to(marker, {
+          left: () => viewport.clientWidth / 2,
+          top: () => viewport.clientHeight * 0.48,
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.18,
+          ease: "back.out(1.5)",
+        }, 0.34)
+        .to(welcome, { autoAlpha: 1, y: 0, duration: 0.22, ease: "power2.out" }, 0.43)
+        .to(explore, { autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.55);
+      cards.forEach((card, index) => {
+        timeline.to(card, {
+          x: () => (index - 1) * Math.min(viewport.clientWidth * 0.24, 310),
+          y: 0,
+          rotation: (index - 1) * 9,
+          scale: index === 1 ? 1 : 0.88,
+          autoAlpha: 1,
+          duration: 0.28,
+          ease: "power2.out",
+        }, 0.56 + index * 0.065);
+      });
+      timeline.to({}, { duration: 0.12 }, 0.88);
+
       ScrollTrigger.create({
         trigger: element,
         start: "top top",
@@ -140,29 +135,32 @@ export function Journey() {
         animation: timeline,
         scrub: true,
         invalidateOnRefresh: true,
-        onRefresh: self => { timeline.progress(self.progress); syncScene(timeline.progress()); },
+        onRefresh: (self) => {
+          layout = measure();
+          gsap.set(artwork, {
+            width: EARTH_IMAGE.width,
+            height: EARTH_IMAGE.height,
+            x: layout.left,
+            y: layout.top,
+            scale: layout.fit,
+          });
+          gsap.set(marker, { left: layout.pinX, top: layout.pinY });
+          timeline.invalidate();
+          timeline.progress(self.progress);
+          syncScene(self.progress);
+        },
       });
       return () => {
-        motionState.current.visible = true;
-        earth.current?.dispatchEvent(new Event("hr-vista:globe-update"));
-        controlsVisible.current = true;
         element.dataset.journeyProgress = "0";
-        element.dataset.journeyScene = "flow";
+        element.dataset.journeyScene = "orbit";
         delete element.dataset.journeyMode;
-        maskedImage?.setAttribute("mask", "url(#lavasa-welcome-mask)");
-        copy?.removeAttribute("aria-hidden");
-        if (photoMeta.current) {
-          photoMeta.current.inert = false;
-          photoMeta.current.removeAttribute("aria-hidden");
-        }
-        syncControls();
       };
     }, element);
-    const observer = new ResizeObserver(() => ScrollTrigger.refresh());
-    observer.observe(element.querySelector(`.${styles.introduction}`)!);
-    void document.fonts.ready.then(() => { if (!disposed) ScrollTrigger.refresh(); });
-    return () => { disposed = true; observer.disconnect(); media.revert(); };
-  }, [syncControls]);
+    return () => {
+      resizeObserver.disconnect();
+      media.revert();
+    };
+  }, []);
 
   return (
     <div
@@ -171,76 +169,55 @@ export function Journey() {
       id="lavasa"
       role="region"
       aria-labelledby="lavasa-title"
-      data-journey-scene="flow"
+      data-journey-scene="orbit"
       data-journey-progress="0"
-      data-globe-status={globeAvailable === null ? "loading" : globeAvailable ? "ready" : "fallback"}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse" || reduced) return;
-        const r = e.currentTarget.getBoundingClientRect();
-        motionState.current.x = (e.clientX - r.left) / r.width - 0.5;
-        motionState.current.y = e.clientY / window.innerHeight - 0.5;
-      }}
-      onPointerLeave={() => {
-        motionState.current.x = 0;
-        motionState.current.y = 0;
-      }}
     >
       <div className={styles.viewport}>
-        <div className={styles.sceneGrid} aria-hidden="true" />
-        <div className={styles.introduction}>
-          <div className={styles.chapterCopy}>
-            <p className={styles.eyebrow}>Lavasa, Pune</p>
-            <h2 id="lavasa-title" aria-label="Welcome to Lavasa">
-              <span>Welcome</span>
-              <span>to Lavasa.</span>
-            </h2>
-            <p className={styles.body}>
-              A campus. A community. A conversation that kept growing.
-            </p>
-          </div>
-          <div ref={earth} className={styles.earth} data-earth inert aria-hidden="true">
-            <div className={styles.globeFallback} aria-hidden="true" />
-            {near ? <Globe motion={motionState} onAvailabilityChange={onGlobeAvailability} /> : <div className={styles.globePlaceholder} />}
-          </div>
-        </div>
-        <div className={styles.photoPlacement}>
-        <figure className={styles.lavasaPhoto} data-lavasa-photo>
-          <div className={styles.photoMask}>
-            <img
-              src="/media/flickr/story-4.jpg"
-              alt="Lavasa lake and the surrounding Sahyadri hills"
-              width={1024}
-              height={576}
-              loading="lazy"
-              decoding="async"
+        <div className={styles.spaceGlow} aria-hidden="true" />
+        <div className={styles.earthArtwork} data-earth-artwork aria-hidden="true">
+          <img
+            className={styles.earthImage}
+            src="/media/journey/earth-at-night.png"
+            alt=""
+            width={EARTH_IMAGE.width}
+            height={EARTH_IMAGE.height}
+            fetchPriority="high"
+            decoding="async"
+          />
+          <svg
+            className={styles.regionMap}
+            viewBox={`0 0 ${EARTH_IMAGE.width} ${EARTH_IMAGE.height}`}
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+          >
+            <path
+              d="M518 451 540 441 558 446 575 438 594 450 616 447 632 459 653 465 672 481 665 497 670 510 656 524 651 542 635 550 630 568 615 574 601 560 584 556 574 537 557 527 550 510 536 499 532 482 520 470Z"
+              data-maharashtra
+              vectorEffect="non-scaling-stroke"
             />
-            <svg className={styles.maskedLandscape} viewBox="0 0 1024 576" role="img" aria-label="Lavasa lake and the surrounding Sahyadri hills" data-mask-failed={maskStatus === "failed" ? "true" : undefined}>
-              <defs>
-                <filter id="lavasa-letter-expansion" filterUnits="userSpaceOnUse" x="0" y="0" width="1024" height="576" colorInterpolationFilters="sRGB">
-                  <feColorMatrix type="matrix" values={MASK_MATRIX + 64.5} data-lavasa-mask />
-                </filter>
-                <mask id="lavasa-welcome-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="1024" height="576" style={{ maskType: "alpha" }}>
-                  <g fill="white" className={styles.maskType} visibility={maskStatus === "ready" ? "hidden" : undefined}>
-                    <text x="32" y="242" textLength="960" lengthAdjust="spacingAndGlyphs" data-lavasa-mask-text>Welcome</text>
-                    <text x="32" y="458" textLength="960" lengthAdjust="spacingAndGlyphs" data-lavasa-mask-text>to Lavasa.</text>
-                  </g>
-                  <image href="/media/journey/lavasa-welcome-distance.png" width="1024" height="576" filter="url(#lavasa-letter-expansion)" />
-                </mask>
-              </defs>
-              <image href="/media/flickr/story-4.jpg" width="1024" height="576" mask="url(#lavasa-welcome-mask)" data-lavasa-image />
-            </svg>
-            <div className={styles.welcomeNote}>
-              <p>A warm welcome<br /><span>to our HR community.</span></p>
-            </div>
-          </div>
-          <figcaption className={styles.photoMeta} ref={photoMeta}>
-            <span className={styles.locationCaption}>Lavasa, in the Sahyadri hills</span>
-            <a ref={editionsLink} className={styles.editionsLink} href="#editions" data-editions-link data-ui="text" data-ui-tone="dark">
-              Explore our editions <span aria-hidden="true">↓</span>
-            </a>
-          </figcaption>
-        </figure>
+          </svg>
         </div>
+        <div className={styles.lavasaMarker} data-lavasa-marker aria-hidden="true">
+          <span className={styles.markerPulse} />
+          <span className={styles.markerDot} />
+          <span className={styles.markerLabel}>Lavasa, Pune</span>
+        </div>
+        <header className={styles.welcomeCopy} data-welcome-copy>
+          <p className={styles.eyebrow}>HR VISTA 3.0 <span>·</span> SAHYADRI, INDIA</p>
+          <h2 id="lavasa-title">Welcome to <em>Lavasa.</em></h2>
+          <p className={styles.body}>A campus. A community. A conversation that kept growing.</p>
+        </header>
+        <a className={styles.editionsLink} href="#editions" data-explore-link data-ui="text" data-ui-tone="dark">
+          Explore our editions <span aria-hidden="true">↓</span>
+        </a>
+        <div className={styles.photoArc} role="group" aria-label="Lavasa photo gallery">
+          {lavasaPhotos.map((photo) => (
+            <figure className={styles.photoCard} data-lavasa-card key={photo.src}>
+              <img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} decoding="async" />
+            </figure>
+          ))}
+        </div>
+        <p className={styles.scrollCue} aria-hidden="true">Scroll to explore <span>↓</span></p>
       </div>
     </div>
   );

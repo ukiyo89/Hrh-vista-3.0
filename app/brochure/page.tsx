@@ -7,7 +7,7 @@ import styles from "@/components/site/BrochureReader.module.css";
 
 export const metadata: Metadata = {
   title: "Brochure — HR VISTA 3.0",
-  description: "Read the complete 12-page HR VISTA 3.0 brochure: the theme, expected delegate profile and experience for 21–22 November 2026. Venue to be announced.",
+  description: "Read the complete 12-page HR VISTA 3.0 brochure: the theme, expected delegate profile and experience for 21–22 November 2026.",
 };
 
 export default async function BrochurePage({ searchParams }: { searchParams: Promise<{ page?: string | string[] }> }) {

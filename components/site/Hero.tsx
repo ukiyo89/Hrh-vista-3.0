@@ -407,7 +407,7 @@ export function Hero() {
 
       {/* Copy — the reference's eyebrow over a two-line display headline. */}
       <div className={styles.copy} data-hero-copy>
-        <p className={styles.caption}>HR VISTA 3.0 · 21–22 NOVEMBER 2026</p>
+        <p className={styles.caption}>HR VISTA 3.0 : WHEN MACHINES THINK · 21–22 NOVEMBER 2026</p>
         <h1 id="hero-title" className={styles.title}>
           <span className={styles.titleLine}><span>The Future of Work.</span></span>
           <br />

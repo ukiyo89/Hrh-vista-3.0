@@ -138,6 +138,6 @@ export function Voices() {
       </section>}
     </section>
 
-    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026 · Venue to be announced</p><ActionLink href="/#next-chapter" variant="light">See what’s taking shape</ActionLink></div></section>
+    <section className={styles.continue} data-voice-continue aria-labelledby="continue-title"><h2 id="continue-title"><span data-continue-word>The next</span><span data-continue-word><em>conversation.</em></span></h2><div className={styles.continueFoot}><p>HR VISTA 3.0<br />November 2026</p><ActionLink href="/#next-chapter" variant="light">See what’s taking shape</ActionLink></div></section>
   </main>;
 }

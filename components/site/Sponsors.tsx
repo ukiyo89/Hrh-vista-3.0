@@ -27,11 +27,11 @@ function BrandStage({ name = "YOUR BRAND", mode = 0, compact = false }: { name?:
 }
 
 const stairCards = [
-  { label: "A SHARED SPOTLIGHT", foot: "THE NEXT CHAPTER, TOGETHER", background: "#c4d7f2", ink: "#172b48" },
-  { label: "A NEW CONNECTION", foot: "GOOD COMPANY. GREATER IMPACT.", background: "#152b47", ink: "#dce8f9" },
-  { label: "A BIGGER STAGE", foot: "HR VISTA / NOVEMBER 2026", background: "#d9dfce", ink: "#233a38" },
-  { label: "A WORLD OF POSSIBILITY", foot: "PEOPLE MEET POSSIBILITY", background: "#2d51ca", ink: "#e5eeff" },
-  { label: "A LASTING IMPRESSION", foot: "LET’S MAKE WHAT’S NEXT", background: "#eae6db", ink: "#293c51" },
+  { label: "COMMUNITY PARTNER", foot: "BEING NETWORKS · 60,000+ HR MEMBERS", background: "#c4d7f2", ink: "#172b48" },
+  { label: "HOST & ORGANISER", foot: "CENTRE FOR PLACEMENT & CAREER GUIDANCE", background: "#152b47", ink: "#dce8f9" },
+  { label: "OFFICIAL 3.0 THEME", foot: "HR VISTA 3.0 · 21–22 NOVEMBER 2026", background: "#d9dfce", ink: "#233a38" },
+  { label: "AWARDS FELICITATION", foot: "30 UNDER 30 · 22 NOVEMBER · LAVASA", background: "#2d51ca", ink: "#e5eeff" },
+  { label: "THE LAVASA EXPERIENCE", foot: "KEYNOTES · THE 2030 CHALLENGE · GALA DINNER", background: "#eae6db", ink: "#293c51" },
 ];
 
 function SponsorStaircase({ name = "", paused = false, home = false }: { name?: string; paused?: boolean; home?: boolean }) {
@@ -39,7 +39,7 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   const timeline = useRef<gsap.core.Timeline | null>(null);
   const pausedRef = useRef(paused);
   pausedRef.current = paused;
-  const brand = name.trim() || "CHRIST (DEEMED TO BE UNIVERSITY), PUNE LAVASA CAMPUS (CPCG)";
+  const brand = name.trim() || "BeingHR (Being Networks)";
   const isDefaultBrand = !name.trim();
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -81,24 +81,24 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   }, [paused]);
   return <section ref={root} id={home ? "sponsors" : "sponsor-staircase"} className={styles.staircase} aria-labelledby={home ? "sponsor-teaser-title" : "staircase-title"}>
     <div className={styles.stairHeading}>
-      <div><p className={styles.eyebrow}>06 / A SHARED SPOTLIGHT</p><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>Good company.<br /><em>Greater impact.</em></h2></div>
-      <div className={styles.stairHeadingAside}><p>The right names.<br />The right conversations.<br />A bigger world of possibilities.</p><span className={styles.stairScroll}>SCROLL TO FIND YOUR PLACE <i>↓</i></span></div>
+      <div><p className={styles.eyebrow}>06 / PARTNERS &amp; ECOSYSTEM</p><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>BeingHR ×<br /><em>CHRIST Lavasa.</em></h2></div>
+      <div className={styles.stairHeadingAside}><p>Being Networks &amp; BeingHR.<br />CPCG, CHRIST Pune Lavasa.<br />One shared HR ecosystem.</p><span className={styles.stairScroll}>SCROLL TO EXPLORE THE PARTNERSHIP <i>↓</i></span></div>
     </div>
     <div className={styles.stairRun} data-stair-run>
       <div className={styles.stairScene}>
-        <div className={styles.stairSceneTop}><span>HR VISTA × WHAT’S NEXT</span><span>05 POSSIBILITIES / ONE COMMUNITY</span></div>
+        <div className={styles.stairSceneTop}><span>HR VISTA 3.0 × BEINGHR</span><span>05 PILLARS / LAVASA · NOV 2026</span></div>
         <div className={styles.stairGuide} aria-hidden="true" />
         {stairCards.map((card, i) => <article key={card.label} className={styles.stairCard} data-sponsor-step={i} style={{ "--step": i, "--card-bg": card.background, "--card-ink": card.ink } as CSSProperties}>
           <div className={styles.stairCardTop}><span>{card.label}</span><span>0{i + 1}</span></div>
           <div className={styles.stairIdentity}>
             {i === 0 ? <><span className={styles.collabName}>HR VISTA <i>×</i></span><strong data-long={brand.length > 15} data-cpcg={isDefaultBrand || undefined}>{brand}</strong></> :
-              i === 1 ? <><span className={styles.cardAsterisk} aria-hidden="true">✳</span><strong>Your next<br />connection.</strong></> :
-              i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>A new dimension for your brand.</span></> :
-              i === 3 ? <strong>People.<br />Possibility.</strong> : <><span className={styles.collabName}>THE NEXT CHAPTER</span><strong data-long={brand.length > 15} data-cpcg={isDefaultBrand || undefined}>{brand}<i className={styles.cardArrow}>↗</i></strong></>}
+              i === 1 ? <><span className={styles.collabName}>HOST CAMPUS</span><strong data-long>CHRIST Lavasa · CPCG</strong></> :
+              i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>When Machines Think · Human Potential &amp; AI.</span></> :
+              i === 3 ? <><strong>30 Under 30<br />Awards.</strong><span className={styles.cardSub}>HR Leadership Excellence Felicitation · 22 Nov 2026</span></> : <><span className={styles.collabName}>TWO DAYS IN LAVASA</span><strong data-long>Keynotes, The 2030 Challenge &amp; Gala Dinner<i className={styles.cardArrow}>↗</i></strong></>}
           </div>
           <div className={styles.stairCardFoot}><span>{card.foot}</span><span>↗</span></div>
         </article>)}
-        <div className={styles.stairSceneFoot}><div><p>SHOWCASE CONCEPTS · SPONSORS TO BE ANNOUNCED</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/sponsors" : "#brand-preview"} className={styles.stairLink}>{home ? "Find your place" : "Try your brand"}<span>↗</span></Link></div>
+        <div className={styles.stairSceneFoot}><div><p>COMMUNITY PARTNER: BEINGHR (BEING NETWORKS) · HOST: CHRIST LAVASA CPCG</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/partners" : "#brand-preview"} className={styles.stairLink}>{home ? "Explore partners" : "Try your brand"}<span>↗</span></Link></div>
       </div>
     </div>
   </section>;
@@ -115,32 +115,53 @@ export function Sponsors() {
   const reduced = useReducedMotionPreference();
   return <main id="main-content" className={styles.page} data-paused={paused || !!reduced}>
     <section className={styles.hero} aria-labelledby="sponsor-title">
-      <div className={styles.heroTop}><p className={styles.eyebrow}>HR VISTA 3.0 / PARTNERSHIPS</p><span className={styles.previewTag}>SHOWCASE PREVIEW</span></div>
+      <div className={styles.heroTop}><p className={styles.eyebrow}>HR VISTA 3.0 / PARTNERS &amp; SPONSORS</p><span className={styles.previewTag}>BEINGHR × CHRIST LAVASA</span></div>
       <div className={styles.heroGrid}>
-        <div className={styles.heroCopy}><h1 id="sponsor-title">Amplify<br />what’s <em>next.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Extraordinary conversations deserve extraordinary company. Make room for your brand in the future of work.</p><ActionLink className={styles.cta} href="#brand-preview" direction="down">Put your brand in the picture</ActionLink></div>
-        <BrandStage name={name} mode={mode} />
+        <div className={styles.heroCopy}><h1 id="sponsor-title">Built with<br /><em>leaders.</em><span className={styles.headArrow} aria-hidden="true">↗</span></h1><p>Curated by CHRIST University Lavasa (CPCG) with Community Partner BeingHR and Being Networks—connecting 500+ HR leaders, CHROs and 30 Under 30 changemakers.</p><ActionLink className={styles.cta} href="#partners-confirmed" direction="down">Meet our partners</ActionLink></div>
+        <BrandStage name={name || "BEINGHR × CHRIST"} mode={mode} />
       </div>
-      <div className={styles.heroFoot}><span>HR VISTA 3.0 · 21—22 NOVEMBER 2026</span><p>One community. Many possibilities.</p><button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={paused} onClick={() => setPaused(!paused)} disabled={!!reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span data-ui-glyph aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button></div>
+      <div className={styles.heroFoot}><span>HR VISTA 3.0 · 21—22 NOVEMBER 2026 · LAVASA</span><p>When Machines Think · What Makes Human Potential More Valuable?</p><button type="button" data-ui="control" data-ui-tone="dark" aria-pressed={paused} onClick={() => setPaused(!paused)} disabled={!!reduced}>{reduced ? "Reduced motion" : paused ? "Play motion" : "Pause motion"}<span data-ui-glyph aria-hidden="true">{paused || reduced ? "▶" : "Ⅱ"}</span></button></div>
     </section>
-    <div className={styles.ribbon} aria-hidden="true"><div>{Array.from({ length: 4 }, (_, i) => <span key={i}>PEOPLE MEET POSSIBILITY <i>✳</i> BETTER, TOGETHER <i>✳</i></span>)}</div></div>
+    <div className={styles.ribbon} aria-hidden="true"><div>{Array.from({ length: 4 }, (_, i) => <span key={i}>HR VISTA 3.0 × BEINGHR <i>✳</i> WHEN MACHINES THINK <i>✳</i></span>)}</div></div>
     <SponsorStaircase name={name} paused={paused} />
     <section id="brand-preview" className={styles.preview} aria-labelledby="preview-title">
-      <div className={styles.previewHeading}><div><h2 id="preview-title">Your name.<br /><em>A new dimension.</em></h2></div><p>Explore the visual direction for our sponsor showcase. Try a name and choose a scene.</p></div>
+      <div className={styles.previewHeading}><div><h2 id="preview-title">Your brand.<br /><em>On the 3.0 stage.</em></h2></div><p>Preview how partner organisations appear alongside HR VISTA 3.0 and BeingHR at CHRIST Lavasa.</p></div>
       <div className={styles.previewGrid}>
         <div className={styles.editor}>
-          <label htmlFor="brand-name">YOUR BRAND NAME</label><input id="brand-name" value={name} onChange={event => setName(event.target.value)} maxLength={24} placeholder="Your brand" autoComplete="organization" aria-describedby="brand-help" /><p id="brand-help">A live visual preview. Nothing is submitted or saved.</p>
+          <label htmlFor="brand-name">ORGANISATION / PARTNER NAME</label><input id="brand-name" value={name} onChange={event => setName(event.target.value)} maxLength={24} placeholder="BeingHR" autoComplete="organization" aria-describedby="brand-help" /><p id="brand-help">Interactive visual preview for prospective sponsors and partners.</p>
           <div className={styles.sceneOptions} role="group" aria-label="Choose a sponsor showcase scene">{concepts.map((concept, i) => <button key={concept.name} type="button" data-ui="row" aria-pressed={mode === i} onClick={() => setMode(i)}><span>0{i + 1}</span><strong>{concept.name}</strong><span data-ui-glyph aria-hidden="true">{mode === i ? "↗" : "+"}</span></button>)}</div>
           <div className={styles.sceneDescription} aria-live="polite"><span>{concepts[mode].label}</span><p>{concepts[mode].copy}</p></div>
         </div>
-        <div className={styles.previewCanvas}><BrandStage name={name} mode={mode} /></div>
+        <div className={styles.previewCanvas}><BrandStage name={name || "BEINGHR"} mode={mode} /></div>
       </div>
-      <p className={styles.disclaimer}>These are visual concepts. Sponsorship categories, benefits and availability will be confirmed by the organising team.</p>
+      <p className={styles.disclaimer}>For sponsorship tiers, exhibition booths and branding opportunities at Lavasa, connect directly with the CPCG &amp; Being Networks teams.</p>
     </section>
-    <section className={styles.future} aria-labelledby="future-sponsors-title">
+    <section id="partners-confirmed" className={styles.future} aria-labelledby="future-sponsors-title">
       <motion.div initial={reduced ? false : { y: 35 }} whileInView={{ y: 0 }} viewport={{ once: true }} transition={{ duration: .7 }}>
-        <h2 id="future-sponsors-title">The next names<br />start <em>here.</em></h2><p>Our HR VISTA 3.0 sponsor lineup will be announced here.</p>
-        <div className={styles.emptyLineup} aria-label="No confirmed sponsors announced"><span>SPONSORS</span><span className={styles.emptyDash}>—</span><span>TO BE ANNOUNCED</span></div>
-        <ActionLink className={styles.cta} href="mailto:hrvista.lavasa@christuniversity.in?subject=HR%20VISTA%203.0%20%E2%80%94%20Partnership%20enquiry">Let’s start a conversation</ActionLink><p className={styles.email}>hrvista.lavasa@christuniversity.in</p>
+        <h2 id="future-sponsors-title">Confirmed<br /><em>partners.</em></h2>
+        <p>HR VISTA 3.0 is presented in association with Being Networks and India’s largest HR community.</p>
+        <div className={styles.partnersGrid}>
+          <article className={styles.partnerCard}>
+            <span className={styles.partnerBadge}>Community Partner &amp; Co-Organiser</span>
+            <h3>BeingHR · Being Networks</h3>
+            <p>Connecting 60,000+ HR professionals across 200+ events—powering HR VISTA 3.0 speaker curation, delegates, and the Being Networks Night in Lavasa.</p>
+            <a href="https://www.beingnetworks.com/" target="_blank" rel="noopener noreferrer" data-ui="text" data-ui-tone="dark">Visit beingnetworks.com <span data-ui-glyph aria-hidden="true">↗</span></a>
+          </article>
+          <article className={styles.partnerCard}>
+            <span className={styles.partnerBadge}>Host Institution &amp; Organiser</span>
+            <h3>CHRIST University, Pune Lavasa · CPCG</h3>
+            <p>The Analytical Hub of CHRIST (Deemed to be University), welcoming CHROs, industry leaders and academics for two days of dialogue.</p>
+            <a href="https://www.linkedin.com/company/cpcgchristlavasa/" target="_blank" rel="noopener noreferrer" data-ui="text" data-ui-tone="dark">CPCG on LinkedIn <span data-ui-glyph aria-hidden="true">↗</span></a>
+          </article>
+          <article className={styles.partnerCard}>
+            <span className={styles.partnerBadge}>Awards Stage · 22 Nov 2026</span>
+            <h3>HR Leadership Excellence Awards</h3>
+            <p>Felicitating India’s 30 Under 30 HR changemakers live on the HR VISTA 3.0 stage in Lavasa after independent jury evaluation.</p>
+            <a href="https://www.beingnetworks.com/awards" target="_blank" rel="noopener noreferrer" data-ui="text" data-ui-tone="dark">View 2026 Awards <span data-ui-glyph aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+        <ActionLink className={styles.cta} href="mailto:hrvista.lavasa@christuniversity.in?subject=HR%20VISTA%203.0%20%E2%80%94%20Partnership%20enquiry">Become an HR VISTA 3.0 sponsor</ActionLink>
+        <p className={styles.email}>hrvista.lavasa@christuniversity.in · +91 98922 82705</p>
       </motion.div>
     </section>
   </main>;

@@ -55,6 +55,13 @@
   color: #526073;
 }
 
+.inlinePartnerLink {
+  font-weight: 600;
+  color: #172437;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #365d9570;
+}
+
 .columnHeading {
   margin: 0 0 16px;
   color: #526073;

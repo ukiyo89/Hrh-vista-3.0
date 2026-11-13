@@ -103,10 +103,17 @@
 .future { padding:110px 6vw; text-align:center; background:#091627; }
 .future .eyebrow { color:#a9c4ea; margin-bottom:28px; }
 .future h2 em { font-style:normal; color:#a7c6fd; }
-.future h2 + p { margin:26px auto 0; color:#adbed5; font-size:13px; line-height:1.8; }
+.future h2 + p { margin:26px auto 0; color:#adbed5; font-size:13px; line-height:1.8; max-width:54ch; }
+.partnersGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; max-width:1200px; margin:48px auto; text-align:left; }
+.partnerCard { display:flex; flex-direction:column; padding:28px; border-radius:14px; background:#0e2038; border:1px solid #8da8cd3b; }
+.partnerBadge { font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:#9dbcff; }
+.partnerCard h3 { margin:14px 0 0; font:500 24px/1.18 var(--font-display),sans-serif; letter-spacing:-.025em; color:#f4f7fc; }
+.partnerCard p { margin:12px 0 20px; font-size:13.5px; line-height:1.65; color:#bed0e8; }
+.partnerCard a { margin-top:auto; display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:600; color:#dce9ff; align-self:flex-start; }
 .emptyLineup { display:flex; justify-content:space-between; gap:20px; align-items:center; max-width:680px; margin:45px auto; border-block:1px solid #8da8cd45; padding:20px 0; font-size:9px; letter-spacing:.13em; color:#b9cce7; }
 .emptyDash { font-size:35px; font-weight:300; color:#8caadd; }
 .email { font-size:10px; color:#aabdd8; margin-top:20px; }
+@media(max-width:900px) { .partnersGrid { grid-template-columns:1fr; } }
 .teaser { position:relative; display:grid; grid-template-columns:1.1fr 1fr; align-items:center; gap:3vw; background:#163ebb; color:#f2f3ef; padding:75px 6vw; overflow:clip; }
 .teaser .eyebrow { margin-bottom:30px; color:#c5d7ff; }
 .teaser h2 { font:400 clamp(48px,5.7vw,86px)/.98 var(--font-display),sans-serif; letter-spacing:-.045em; }

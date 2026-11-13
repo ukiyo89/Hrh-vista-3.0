@@ -76,15 +76,62 @@ export interface FooterContent {
   credits: string;
 }
 
+export interface AgendaSession {
+  time: string;
+  title: string;
+}
+
+export interface AgendaDay {
+  dayLabel: string;
+  dateLabel: string;
+  sessions: AgendaSession[];
+}
+
+export interface ConfirmedSpeaker {
+  name: string;
+  designation: string;
+  organisation: string;
+  role: string;
+  topic: string;
+  linkedin?: string;
+}
+
+export interface CentralTheme {
+  title: string;
+  description: string;
+}
+
+export interface Vista30Details {
+  themeTitle: string;
+  themeSubtitle: string;
+  centralQuestion: string;
+  communityPartner: string;
+  communityPartnerUrl: string;
+  eventPageUrl: string;
+  awardsPageUrl: string;
+  contactPhone: string;
+  centralThemes: CentralTheme[];
+  speakers: ConfirmedSpeaker[];
+  agenda: AgendaDay[];
+  awardsHighlight: {
+    badge: string;
+    title: string;
+    date: string;
+    location: string;
+    description: string;
+  };
+  experienceInclusions: string[];
+}
+
 export interface Content {
   hero: {
     headline: string;
     theme: string;
     dates: string;
-    venue: string;
     presenter: string;
     institution: string;
   };
+  vista30: Vista30Details;
   intro: {
     heading: string;
     subheading: string;
@@ -93,7 +140,6 @@ export interface Content {
   };
   atAGlance: {
     stats: StatItem[];
-    locationNote: string;
     dates: string;
   };
   aboutChrist: {
@@ -150,11 +196,122 @@ export interface Content {
 export const content: Content = {
   hero: {
     headline: "THE FUTURE OF WORK. THE PEOPLE WHO SHAPE IT.",
-    theme: "The Future of Work — The People Who Shape It",
+    theme: "When Machines Think — The Evolution of Human Potential, Professional Value and the Future of Work",
     dates: "21–22 November 2026",
-    venue: "Venue to be announced",
-    presenter: "Presented by the Centre for Placement and Career Guidance",
+    presenter: "Presented by the Centre for Placement and Career Guidance · With Community Partner BeingHR",
     institution: "CHRIST (Deemed to be University), Pune Lavasa Campus",
+  },
+
+  // Grounded details fetched from https://www.beingnetworks.com/e/hrvista3 and /awards
+  vista30: {
+    themeTitle: "WHEN MACHINES THINK",
+    themeSubtitle: "The Evolution of Human Potential, Professional Value and the Future of Work",
+    centralQuestion: "What Makes Human Potential More Valuable?",
+    communityPartner: "BeingHR · Being Networks",
+    communityPartnerUrl: "https://www.beingnetworks.com/",
+    eventPageUrl: "https://www.beingnetworks.com/e/hrvista3",
+    awardsPageUrl: "https://www.beingnetworks.com/awards",
+    contactPhone: "+91 98922 82705",
+    centralThemes: [
+      {
+        title: "Human Potential & Professional Value",
+        description: "Recognising the capabilities—judgment, creativity and empathy—that make people indispensable in an evolving workplace.",
+      },
+      {
+        title: "The Future of Leadership",
+        description: "How leadership expectations are shifting when operational tasks accelerate and organisational purpose takes centre stage.",
+      },
+      {
+        title: "Workforce Transformation",
+        description: "Preparing people, campus talent and enterprises for changing roles, skills and operating models.",
+      },
+      {
+        title: "AI-Ready vs AI-Rushed HR",
+        description: "Making grounded, ethical choices around AI adoption, productivity and meaningful employee contribution.",
+      },
+      {
+        title: "Learning & Capability Building",
+        description: "Cultivating continuous learning, adaptability and resilient talent pipelines across experience levels.",
+      },
+      {
+        title: "The 2030 Organisation Challenge",
+        description: "Examining workplace culture, agility and inclusivity to build organisations ready for 2030 and beyond.",
+      },
+    ],
+    speakers: [
+      {
+        name: "Ancy Sreenivasan",
+        designation: "Head of People and Culture, APAC",
+        organisation: "Zywave",
+        role: "Speaker",
+        topic: "Changing Times: HR and Digital Transformation",
+        linkedin: "https://www.linkedin.com/in/ancynsreenivasan",
+      },
+      {
+        name: "Kapil Kella",
+        designation: "GCC Chief Talent Officer",
+        organisation: "NCS Group (Singtel)",
+        role: "Panel Discussion",
+        topic: "Talent, Industry–Academia Collaboration & Future-Focused Campus Hiring",
+        linkedin: "https://www.linkedin.com/in/kapilkella2",
+      },
+      {
+        name: "Bhakti S N",
+        designation: "Global People & Communications Lead",
+        organisation: "Niru Group",
+        role: "Panel Discussion",
+        topic: "AI-Ready or AI-Rushed? Making Sensible Choices in AI for HR",
+        linkedin: "https://www.linkedin.com/in/bhaktisonwane",
+      },
+      {
+        name: "Manoj",
+        designation: "VP HR",
+        organisation: "Wisdom Finserv",
+        role: "Speaker",
+        topic: "AI in HR & Modern People Strategy",
+      },
+    ],
+    agenda: [
+      {
+        dayLabel: "Day 1",
+        dateLabel: "Saturday, 21 November 2026",
+        sessions: [
+          { time: "12:00 PM", title: "Delegate Arrival & Registration" },
+          { time: "12:30 PM", title: "Networking Lunch" },
+          { time: "2:00 PM", title: "Inaugural Session & Leadership Conclave" },
+          { time: "4:15 PM onwards", title: "Networking Breaks & Leadership Conversations" },
+          { time: "8:00 PM", title: "Cultural Experience" },
+          { time: "8:45 PM", title: "Gala Dinner" },
+          { time: "10:00 PM onwards", title: "Being Networks Night" },
+        ],
+      },
+      {
+        dayLabel: "Day 2",
+        dateLabel: "Sunday, 22 November 2026",
+        sessions: [
+          { time: "7:30 AM", title: "Optional Wellness & Nature Activity" },
+          { time: "8:30 AM", title: "Breakfast" },
+          { time: "10:00 AM", title: "Leadership Keynote" },
+          { time: "11:15 AM", title: "Leadership Conversation" },
+          { time: "12:00 PM", title: "The 2030 Organisation Challenge" },
+          { time: "12:30 PM", title: "Vista Leadership & Organisational Excellence Awards" },
+          { time: "1:15 PM", title: "Networking Lunch" },
+          { time: "2:00 PM onwards", title: "Departure" },
+        ],
+      },
+    ],
+    awardsHighlight: {
+      badge: "HR Leadership Excellence Awards 2026",
+      title: "30 Under 30 Felicitation at Lavasa",
+      date: "22 November 2026",
+      location: "CHRIST University, Lavasa",
+      description: "Recognising 30 HR professionals under 30 shaping the future of work—nominated by the community, scored by an independent jury, and felicitated live on the HR VISTA 3.0 stage.",
+    },
+    experienceInclusions: [
+      "Two days of curated leadership keynotes, panels and industry-academia dialogues at CHRIST University, Lavasa",
+      "Networking lunch, high tea, gala dinner and the Being Networks Night community gathering",
+      "One-night accommodation plus coordinated pickup and drop transit arranged for delegates",
+    ],
   },
 
   intro: {
@@ -171,7 +328,6 @@ export const content: Content = {
       { value: "50+", label: "LEADING ORGANISATIONS & INDUSTRY REPRESENTATION" },
       { value: "1 PLATFORM", label: "CONNECTING ACADEMIA & INDUSTRY" },
     ],
-    locationNote: "VENUE TO BE ANNOUNCED",
     dates: "21–22 NOVEMBER 2026",
   },
 
@@ -273,13 +429,13 @@ export const content: Content = {
   whyGather: {
     heading: "A SHARED SPACE FOR INDIA'S HR COMMUNITY",
     subheading: "PEOPLE × HR VISTA 3.0",
-    body: "HR VISTA brings together business, academia, technology and people leadership for conversations about the changing world of work. The venue for the third edition will be announced once confirmed.",
+    body: "HR VISTA 3.0 brings together business, academia, technology and people leadership at CHRIST (Deemed to be University), Pune Lavasa Campus—co-hosted with Being Networks and Community Partner BeingHR.",
     points: [
-      "Industry Perspectives",
-      "Corporate Leadership",
-      "Global Organisations",
-      "Talent & Innovation",
-      "Networking & Opportunity",
+      "Human Potential & AI",
+      "The 2030 Organisation Challenge",
+      "30 Under 30 Awards Felicitation",
+      "Industry–Academia Dialogues",
+      "Lavasa Networking & Gala Dinner",
     ],
   },
 
@@ -332,12 +488,11 @@ export const content: Content = {
   ],
 
   partners: [
-    { name: "CHRIST (Deemed to be University), Pune Lavasa Campus", role: "Host & presenting institution" }, // src: HR 3.0.pdf cover
-    { name: "Centre for Placement and Career Guidance (CPCG)", role: "Presenter / organising centre" }, // src: HR 3.0.pdf cover + p.9
-    { name: "BeingHR", role: "Conclave partner (HR VISTA 1.0 & 2.0)" }, // src: christuniversitylavasa.blogspot.com/2025/03/hr-vista-2025.html; hrvista.live
-    { name: "Ghatsfield Foundation", role: "Partner (HR VISTA 1.0)" }, // src: christuniversitylavasa.blogspot.com/2025/03/hr-vista-2025.html
-    // NOTE: HR 3.0.pdf names NO 3.0 sponsors/partners beyond CHRIST + CPCG.
-    // 3.0 sponsor logos do not appear anywhere in the brochure.
+    { name: "CHRIST (Deemed to be University), Pune Lavasa Campus", role: "Host & presenting institution — The Analytical Hub in Lavasa" },
+    { name: "Centre for Placement and Career Guidance (CPCG)", role: "Organising centre connecting students, academia and HR leadership" },
+    { name: "BeingHR", role: "Community Partner (HR VISTA 1.0, 2.0 & 3.0) · 60,000+ HR professionals via Being Networks" },
+    { name: "Being Networks", role: "Co-organiser & Knowledge Platform · Knowledge · Community · Experiences" },
+    { name: "Ghatsfield Foundation", role: "Founding Partner (HR VISTA 1.0)" },
   ],
 
   // Big line for the media strip — src: HR 3.0.pdf p.1 (welcome page).
@@ -476,7 +631,7 @@ export const content: Content = {
       "A conversation about the future of work.",
     ],
     contacts: [
-      "21–22 November 2026 | Venue to be announced",
+      "21–22 November 2026",
       "CHRIST (Deemed to be University), Pune Lavasa Campus",
       "Centre for Placement and Career Guidance (CPCG)",
       // NOTE: brochure lists no email/phone/social handles — add when supplied by the client.

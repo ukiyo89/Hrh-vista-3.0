@@ -79,7 +79,7 @@ const TILES: Tile[] = [
     alt: "HR VISTA closing frame",
     index: "06",
     title: "21–22 Nov",
-    caption: "Venue to be announced",
+    caption: "HR VISTA 3.0",
   },
 ];
 

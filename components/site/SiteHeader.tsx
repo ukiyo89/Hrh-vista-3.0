@@ -9,9 +9,9 @@ import styles from "./SiteHeader.module.css";
 const LINKS = [
   { label: "Our journey", href: "/#lavasa" },
   { label: "Editions", href: "/#editions" },
-  { label: "Voices", href: "/voices" },
   { label: "People", href: "/#people" },
-  { label: "Sponsors", href: "/sponsors" },
+  { label: "Voices", href: "/voices" },
+  { label: "Partners", href: "/partners" },
   { label: "Brochure", href: "/brochure" },
 ];
 
@@ -25,6 +25,8 @@ export function SiteHeader() {
   const panelRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLSpanElement>(null);
   const resolve = (href: string) => home && href.startsWith("/#") ? href.slice(1) : href;
+  const isCurrent = (href: string) =>
+    pathname === href || (href === "/partners" && pathname === "/sponsors");
 
   useEffect(() => {
     let frame = 0;
@@ -91,7 +93,17 @@ export function SiteHeader() {
           <span>HR VISTA <span className={styles.version}>3.0</span></span>
         </Link>
         <nav className={styles.desktop} aria-label="Primary">
-          {LINKS.map((link) => <Link key={link.label} href={resolve(link.href)} data-ui="text" data-ui-tone="dark" aria-current={pathname === link.href ? "page" : undefined}>{link.label}</Link>)}
+          {LINKS.map((link) => (
+            <Link
+              key={link.label}
+              href={resolve(link.href)}
+              className={styles.navTab}
+              data-ui-tone="dark"
+              aria-current={isCurrent(link.href) ? "page" : undefined}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
         <div className={styles.actions}>
           <ActionLink href="/brochure/HR-VISTA-3.0.pdf" download size="compact" direction="down" className={styles.join}><span className={styles.downloadFull}>Download brochure</span><span className={styles.downloadShort}><span className={styles.srOnly}>Download </span>Brochure</span></ActionLink>
@@ -106,10 +118,10 @@ export function SiteHeader() {
       <button type="button" className={styles.backdrop} aria-label="Close navigation" tabIndex={-1} onClick={() => setOpen(false)} />
       <div ref={panelRef} className={styles.panel} id="mobile-navigation" data-lenis-prevent>
         <nav aria-label="Mobile">
-          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} data-ui="row" data-ui-tone="dark" aria-current={pathname === link.href ? "page" : undefined} style={{ animationDelay: `${index * 24}ms` }} onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span data-ui-glyph aria-hidden="true">↗</span></Link>)}
+          {LINKS.map((link, index) => <Link key={link.label} href={resolve(link.href)} data-ui="row" data-ui-tone="dark" aria-current={isCurrent(link.href) ? "page" : undefined} style={{ animationDelay: `${index * 24}ms` }} onClick={() => setOpen(false)}><span className={styles.number} aria-hidden="true">0{index + 1}</span>{link.label}<span data-ui-glyph aria-hidden="true">↗</span></Link>)}
           <ActionLink href="/brochure" className={styles.mobileJoin} onClick={() => setOpen(false)}>Explore the brochure</ActionLink>
         </nav>
-        <p>21–22 November 2026 · Venue to be announced</p>
+        <p>21–22 November 2026 · Lavasa</p>
       </div></>}
     </header>
   );

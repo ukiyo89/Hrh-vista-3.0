@@ -121,14 +121,13 @@ export function EditionsArchive() {
       <section className={styles.upcoming} aria-labelledby="next-edition-title">
         <span className={styles.nextNumber} aria-hidden="true">3.0</span>
         <div className={`hv-container ${styles.upcomingInner}`}>
-          <div><p className="hv-eyebrow">HR VISTA 3.0 · Upcoming</p><h2 id="next-edition-title" className={styles.nextTitle}>Next<br />chapter<span>↗</span></h2></div>
+          <div><p className="hv-eyebrow">HR VISTA 3.0 · {content.vista30.themeTitle}</p><h2 id="next-edition-title" className={styles.nextTitle}>When Machines<br />Think<span>↗</span></h2></div>
           <div>
-            <p className={styles.upcomingDate}>{content.hero.dates}</p>
-            <p className={styles.upcomingLocation}>Venue to be announced</p>
-            <p className="hv-copy">{content.hero.theme}. Two days of keynote conversations, leadership panels and connections across the HR community.</p>
+            <p className={styles.upcomingDate}>{content.hero.dates} · CHRIST Lavasa · With BeingHR</p>
+            <p className="hv-copy">{content.hero.theme}. Two days of leadership keynotes, The 2030 Organisation Challenge, the 30 Under 30 HR Leadership Awards Felicitation and gala networking in Lavasa.</p>
             <div className={styles.actions}>
-              <ActionLink href="/brochure/HR-VISTA-3.0.pdf" download direction="down">Download brochure</ActionLink>
-              <ActionLink href="/" direction="right" size="compact">Explore HR VISTA 3.0</ActionLink>
+              <ActionLink href="/brochure/HR-VISTA-3.0.pdf" download direction="down" size="compact">Download brochure</ActionLink>
+              <ActionLink href="/brochure" direction="right" size="compact">Read 3.0 brochure</ActionLink>
             </div>
           </div>
         </div>

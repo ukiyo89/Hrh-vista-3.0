@@ -32,7 +32,7 @@ export function BrochureMasthead() {
             <div className={styles.coverTag}><span>12 pages</span><span>One shared future.</span></div>
           </div>
         </div>
-        <div className={styles.introMeta}><span>21–22 November 2026</span><span>Venue to be announced</span><span>HR VISTA 3.0 <span aria-hidden="true">↗</span></span></div>
+        <div className={styles.introMeta}><span>21–22 November 2026</span><span>HR VISTA 3.0 <span aria-hidden="true">↗</span></span></div>
       </div>
     </header>
   );

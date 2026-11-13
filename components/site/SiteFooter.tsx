@@ -1,3 +1,4 @@
+import { Globe } from "lucide-react";
 import { socialGroups, type SocialChannel } from "@/lib/data/socials";
 import styles from "./StoryFooter.module.css";
 
@@ -40,31 +41,61 @@ export function SiteFooter() {
             height={100}
           />
           <p>
-            Presented by the Centre for Placement
+            Presented by the Centre for Placement and Career Guidance,
             <br />
-            and Career Guidance.
+            in association with Community Partner{" "}
+            <a
+              data-ui="text"
+              href="https://www.beingnetworks.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.inlinePartnerLink}
+            >
+              BeingHR ↗
+            </a>
+            .
           </p>
         </div>
         <nav className={styles.linkColumn} aria-labelledby="footer-explore">
           <h2 id="footer-explore" className={styles.columnHeading}>Explore</h2>
           <a data-ui="text" href="/#lavasa">Lavasa</a>
           <a data-ui="text" href="/#editions">Editions</a>
+          <a data-ui="text" href="/#voices">Voices</a>
           <a data-ui="text" href="/#next-chapter">What’s next</a>
         </nav>
         <nav className={styles.linkColumn} aria-labelledby="footer-discover">
           <h2 id="footer-discover" className={styles.columnHeading}>Discover</h2>
           <a data-ui="text" href="/work">Archive</a>
-          <a data-ui="text" href="/voices">Voices 2.0</a>
-          <a data-ui="text" href="/#people">Christ staff</a>
-          <a data-ui="text" href="/#cpcg-members">CPCG members</a>
-          <a data-ui="text" href="/sponsors">Sponsors</a>
+          <a data-ui="text" href="/#people">People</a>
+          <a data-ui="text" href="/voices">Voices</a>
+          <a data-ui="text" href="/partners">Partners</a>
           <a data-ui="text" href="/brochure">Brochure</a>
+          <a data-ui="text" href="https://www.beingnetworks.com/" target="_blank" rel="noopener noreferrer">
+            BeingHR <span data-ui-glyph aria-hidden="true">↗</span>
+          </a>
           <a data-ui="text" href="/brochure/HR-VISTA-3.0.pdf" download>
             Download PDF <span data-ui-glyph aria-hidden="true">↓</span>
           </a>
         </nav>
         <div className={styles.socials}>
           <h2 className={styles.columnHeading}>Connect</h2>
+          <section className={styles.socialGroup} aria-labelledby="footer-beinghr-partner">
+            <h3 id="footer-beinghr-partner">Community Partner</h3>
+            <nav className={styles.socialLinks} aria-label="BeingHR official website">
+              <a
+                className={styles.socialLink}
+                data-ui="text"
+                href="https://www.beingnetworks.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="BeingHR official website at beingnetworks.com (opens in a new tab)"
+              >
+                <span className={styles.socialIcon}><Globe size={16} strokeWidth={1.6} aria-hidden="true" /></span>
+                <span>BeingHR</span>
+                <span className={styles.socialArrow} data-ui-glyph aria-hidden="true">↗</span>
+              </a>
+            </nav>
+          </section>
           {socialGroups.map(group => (
             <section key={group.id} className={styles.socialGroup} aria-labelledby={`footer-${group.id}-socials`}>
               <h3 id={`footer-${group.id}-socials`}>{group.name}</h3>
@@ -82,7 +113,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className={styles.bottom}>
-        <span>HR VISTA 3.0 · 21–22 NOVEMBER 2026</span>
+        <span>HR VISTA 3.0 · 21–22 NOVEMBER 2026 · LAVASA · WITH COMMUNITY PARTNER BEINGHR</span>
       </div>
     </footer>
   );

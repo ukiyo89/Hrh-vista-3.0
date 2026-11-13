@@ -5,7 +5,6 @@ export const event = {
   start: "2026-11-21T00:00:00+05:30",
   end: "2026-11-23T00:00:00+05:30",
   dates: "21–22 November 2026",
-  venue: "Venue to be announced",
 } as const;
 
 export function getEventCountdown(now: number) {

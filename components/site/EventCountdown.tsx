@@ -56,7 +56,7 @@ export function EventCountdown() {
   return <section ref={root} id="countdown" className={styles.section} aria-labelledby="countdown-title">
     <div className={styles.heading}>
       <h2 id="countdown-title" data-clock-title>{phase === "live" ? <>The conversation<br /><em>is happening.</em></> : phase === "ended" ? <>A chapter<br /><em>to remember.</em></> : <>A date for<br /><em>what’s next.</em></>}</h2>
-      <div className={styles.date}><p><time dateTime="2026-11-21">21</time>—<time dateTime="2026-11-22">22 November 2026</time></p><span>{event.venue}</span></div>
+      <div className={styles.date}><p><time dateTime="2026-11-21">21</time>—<time dateTime="2026-11-22">22 November 2026</time></p></div>
     </div>
     <div className={styles.clock} role="timer" aria-live="off" aria-label={phase === "live" ? "HR VISTA 3.0 event dates are here" : phase === "ended" ? "HR VISTA 3.0 countdown has ended" : remaining ? `${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds until 21 November 2026, India Standard Time` : "Countdown to 21 November 2026, India Standard Time"}>
       {units.map((unit) => <div key={unit} className={styles.cell} data-clock-cell aria-hidden="true">

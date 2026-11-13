@@ -4,8 +4,8 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Sponsor showcase — HR VISTA 3.0",
-  description: "Explore the HR VISTA 3.0 sponsor showcase preview. Imagine your brand in the next chapter of the future of work. Sponsor announcements to follow.",
+  title: "Partners & Sponsors — HR VISTA 3.0",
+  description: "Explore HR VISTA 3.0 partners BeingHR & Being Networks alongside CHRIST University Lavasa (CPCG) and corporate sponsor showcase previews.",
 };
 
 export default function SponsorsPage() {

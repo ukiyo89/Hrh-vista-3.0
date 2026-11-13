@@ -2,6 +2,7 @@ import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   // Vercel expects the standard .next output directory.
   // Locally, a production build uses .next-production so dev preview is not overwritten.

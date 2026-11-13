@@ -1,225 +1,450 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, Compass, MapPin, X } from "lucide-react";
+import { Journey3DScene } from "./Journey3DScene";
 import { content } from "@/lib/data/content";
 import { ActionLink } from "./ActionLink";
 import styles from "./Journey.module.css";
 
 const PDF = "/brochure/HR-VISTA-3.0.pdf";
-const EARTH_IMAGE = { width: 1367, height: 768 };
-const LAVASA_POINT = { x: 594, y: 510 };
 
-const lavasaPhotos = [
-  { src: "/media/Lavasa/pic2.jpg", alt: "Aerial view of Lavasa lake and the surrounding green hills", width: 1170, height: 768 },
-  { src: "/media/Lavasa/pic1.jpg", alt: "Waterfront buildings and the lake at Lavasa", width: 1200, height: 675 },
-  { src: "/media/Lavasa/pic3.jpg", alt: "Lavasa waterfront and hillside buildings", width: 810, height: 540 },
-];
+export const LAVASA_SCENIC_CARDS = [
+  {
+    id: "card-valley",
+    title: "Sahyadri Valley & Hills",
+    subtitle: "Elevation 640m · Western Ghats",
+    tag: "Valley Horizon",
+    caption:
+      "A breathtaking natural amphitheatre nestled among emerald hills where delegates step outside conference halls into pristine mountain air.",
+    src: "/media/Lavasa/pic2.jpg",
+    arcRotation: -9.5,
+    arcY: 22,
+  },
+  {
+    id: "card-promenade",
+    title: "Dasve Waterfront",
+    subtitle: "Italianate Lakeside Promenade",
+    tag: "Waterfront Town",
+    caption:
+      "Vibrant Portofino-inspired architecture bordering the lake, providing a serene setting for evening networking and conclave roundtables.",
+    src: "/media/Lavasa/pic1.jpg",
+    arcRotation: -3.5,
+    arcY: 4,
+  },
+  {
+    id: "card-lake",
+    title: "Lake Warasgaon & Dam",
+    subtitle: "Natural Waters of the Sahyadri",
+    tag: "Lake Panorama",
+    caption:
+      "The sweeping expanse of turquoise waters and lush forested ridges framing the hill retreat of Lavasa.",
+    src: "/media/flickr/story-4.jpg",
+    arcRotation: 3.5,
+    arcY: 4,
+  },
+  {
+    id: "card-campus",
+    title: "CHRIST University Campus",
+    subtitle: "The Hub of Future of Work",
+    tag: "Academic Grounds",
+    caption:
+      "The state-of-the-art academic sanctuary where HR leaders, thinkers, and students gather to shape leadership paradigms.",
+    src: "/media/Lavasa/pic3.jpg",
+    arcRotation: 9.5,
+    arcY: 22,
+  },
+] as const;
+
+const JOURNEY_STAGES = [
+  { id: "space", code: "01", label: "Deep Space", targetProgress: 0.0 },
+  { id: "approach", code: "02", label: "India Orbit", targetProgress: 0.36 },
+  { id: "horizon", code: "03", label: "Lavasa Horizon", targetProgress: 0.78 },
+] as const;
 
 export function Journey() {
-  const root = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [pinPos, setPinPos] = useState({ x: 0, y: 0, visible: false });
+  const [isReduced, setIsReduced] = useState(false);
+
+  const targetProgress = useRef(0);
+  const currentProgress = useRef(0);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
-    const element = root.current;
-    if (!element) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const viewport = element.querySelector<HTMLElement>(`.${styles.viewport}`)!;
-    const measure = () => {
-      const width = viewport.clientWidth;
-      const height = viewport.clientHeight;
-      const fit = Math.max(width / EARTH_IMAGE.width, height / EARTH_IMAGE.height);
-      const imageWidth = EARTH_IMAGE.width * fit;
-      const imageHeight = EARTH_IMAGE.height * fit;
-      const left = (width - imageWidth) / 2;
-      const top = (height - imageHeight) / 2;
-      const pinX = left + LAVASA_POINT.x * fit;
-      const pinY = top + LAVASA_POINT.y * fit;
-      viewport.style.setProperty("--pin-x", `${pinX}px`);
-      viewport.style.setProperty("--pin-y", `${pinY}px`);
-      return { width, height, fit, left, top, pinX, pinY };
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setIsReduced(mq.matches);
+    const handler = () => setIsReduced(mq.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const totalDist = el.offsetHeight - window.innerHeight;
+
+    if (totalDist <= 0) {
+      targetProgress.current = 0;
+      return;
+    }
+
+    const scrolled = -rect.top;
+    const raw = Math.max(0, Math.min(1, scrolled / totalDist));
+    targetProgress.current = raw;
+  }, []);
+
+  useEffect(() => {
+    if (isReduced) {
+      const onScrollDirect = () => {
+        handleScroll();
+        setProgress(targetProgress.current);
+      };
+      window.addEventListener("scroll", onScrollDirect, { passive: true });
+      return () => window.removeEventListener("scroll", onScrollDirect);
+    }
+
+    let running = true;
+    const loop = () => {
+      if (!running) return;
+
+      const diff = targetProgress.current - currentProgress.current;
+      if (Math.abs(diff) > 0.0001) {
+        currentProgress.current += diff * 0.12;
+        setProgress(currentProgress.current);
+      }
+
+      rafId.current = requestAnimationFrame(loop);
     };
-    let layout = measure();
-    const resizeObserver = new ResizeObserver(() => {
-      layout = measure();
-      ScrollTrigger.refresh();
-    });
-    resizeObserver.observe(viewport);
-    const media = gsap.matchMedia();
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      element.dataset.journeyMode = "cinematic";
-      const artwork = element.querySelector<HTMLElement>("[data-earth-artwork]")!;
-      const marker = element.querySelector<HTMLElement>("[data-lavasa-marker]")!;
-      const region = element.querySelector<SVGPathElement>("[data-maharashtra]")!;
-      const welcome = element.querySelector<HTMLElement>("[data-welcome-copy]")!;
-      const explore = element.querySelector<HTMLElement>("[data-explore-link]")!;
-      const cards = Array.from(element.querySelectorAll<HTMLElement>("[data-lavasa-card]"));
-      const initial = measure();
-      gsap.set(artwork, {
-        width: EARTH_IMAGE.width,
-        height: EARTH_IMAGE.height,
-        x: initial.left,
-        y: initial.top,
-        scale: initial.fit,
-        transformOrigin: "0 0",
-      });
-      gsap.set(marker, {
-        left: initial.pinX,
-        top: initial.pinY,
-        xPercent: -50,
-        yPercent: -50,
-      });
-      gsap.set(welcome, { autoAlpha: 0, y: 24 });
-      gsap.set(explore, { autoAlpha: 0, y: 16 });
-      gsap.set(region, { autoAlpha: 0 });
-      gsap.set(marker, { autoAlpha: 0, scale: 0.5 });
-      cards.forEach((card, index) => {
-        const offset = (index - 1) * Math.min(viewport.clientWidth * 0.24, 310);
-        const rotation = (index - 1) * 9;
-        gsap.set(card, {
-          xPercent: -50,
-          x: offset,
-          y: 120,
-          rotation,
-          scale: index === 1 ? 0.92 : 0.82,
-          autoAlpha: 0,
-          transformOrigin: "50% 100%",
-        });
-      });
 
-      const syncScene = (progress: number) => {
-        element.dataset.journeyProgress = progress.toFixed(3);
-        const phase = progress < 0.36 ? "orbit" : progress < 0.68 ? "arrival" : "lavasa";
-        if (element.dataset.journeyScene !== phase) element.dataset.journeyScene = phase;
-      };
-      const timeline = gsap.timeline({
-        defaults: { ease: "none" },
-        onUpdate() { syncScene(this.progress()); },
-      });
-      timeline
-        .to(artwork, {
-          scale: () => layout.fit * 3.2,
-          x: () => viewport.clientWidth / 2 - LAVASA_POINT.x * layout.fit * 3.2,
-          y: () => viewport.clientHeight * 0.48 - LAVASA_POINT.y * layout.fit * 3.2,
-          duration: 0.72,
-          ease: "power2.inOut",
-        }, 0)
-        .to(region, { autoAlpha: 1, duration: 0.2 }, 0.29)
-        .to(marker, {
-          left: () => viewport.clientWidth / 2,
-          top: () => viewport.clientHeight * 0.48,
-          scale: 1,
-          autoAlpha: 1,
-          duration: 0.18,
-          ease: "back.out(1.5)",
-        }, 0.34)
-        .to(welcome, { autoAlpha: 1, y: 0, duration: 0.22, ease: "power2.out" }, 0.43)
-        .to(explore, { autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.55);
-      cards.forEach((card, index) => {
-        timeline.to(card, {
-          x: () => (index - 1) * Math.min(viewport.clientWidth * 0.24, 310),
-          y: 0,
-          rotation: (index - 1) * 9,
-          scale: index === 1 ? 1 : 0.88,
-          autoAlpha: 1,
-          duration: 0.28,
-          ease: "power2.out",
-        }, 0.56 + index * 0.065);
-      });
-      timeline.to({}, { duration: 0.12 }, 0.88);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    rafId.current = requestAnimationFrame(loop);
+    handleScroll();
 
-      ScrollTrigger.create({
-        trigger: element,
-        start: "top top",
-        end: "bottom bottom",
-        animation: timeline,
-        scrub: true,
-        invalidateOnRefresh: true,
-        onRefresh: (self) => {
-          layout = measure();
-          gsap.set(artwork, {
-            width: EARTH_IMAGE.width,
-            height: EARTH_IMAGE.height,
-            x: layout.left,
-            y: layout.top,
-            scale: layout.fit,
-          });
-          gsap.set(marker, { left: layout.pinX, top: layout.pinY });
-          timeline.invalidate();
-          timeline.progress(self.progress);
-          syncScene(self.progress);
-        },
-      });
-      return () => {
-        element.dataset.journeyProgress = "0";
-        element.dataset.journeyScene = "orbit";
-        delete element.dataset.journeyMode;
-      };
-    }, element);
     return () => {
-      resizeObserver.disconnect();
-      media.revert();
+      running = false;
+      cancelAnimationFrame(rafId.current);
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, [handleScroll, isReduced]);
+
+  // Lightbox keyboard navigation
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxIndex(null);
+      } else if (e.key === "ArrowRight") {
+        setLightboxIndex((prev) =>
+          prev === null ? 0 : (prev + 1) % LAVASA_SCENIC_CARDS.length
+        );
+      } else if (e.key === "ArrowLeft") {
+        setLightboxIndex((prev) =>
+          prev === null
+            ? 0
+            : (prev - 1 + LAVASA_SCENIC_CARDS.length) % LAVASA_SCENIC_CARDS.length
+        );
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightboxIndex]);
+
+  const scrollToStage = useCallback((targetP: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const totalDist = el.offsetHeight - window.innerHeight;
+    if (totalDist <= 0) return;
+    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: sectionTop + totalDist * targetP,
+      behavior: "smooth",
+    });
+  }, []);
+
+  const uiState = useMemo(() => {
+    const stageProgress = Math.min(1, Math.max(0, (progress - 0.36) / 0.34));
+    const headingOpacity = Math.min(1, Math.max(0, (progress - 0.32) / 0.24));
+    const cardsOpacity = Math.min(1, Math.max(0, (progress - 0.4) / 0.24));
+    const pinOpacity = Math.min(1, Math.max(0, (progress - 0.35) / 0.22));
+    const cueOpacity = Math.max(0, 1 - progress * 4.5);
+
+    const activeStageIndex = progress < 0.26 ? 0 : progress < 0.58 ? 1 : 2;
+
+    return {
+      stageProgress,
+      headingOpacity,
+      cardsOpacity,
+      pinOpacity,
+      cueOpacity,
+      activeStageIndex,
+    };
+  }, [progress]);
+
+  const handlePinUpdate = useCallback((pos: { x: number; y: number; visible: boolean }) => {
+    setPinPos(pos);
   }, []);
 
   return (
-    <div
-      className={styles.journey}
-      ref={root}
+    <section
+      ref={containerRef}
       id="lavasa"
-      role="region"
-      aria-labelledby="lavasa-title"
-      data-journey-scene="orbit"
-      data-journey-progress="0"
+      className={`${styles.journeySection} ${isReduced ? styles.journeyReduced : styles.journeyCinematic}`}
+      aria-labelledby="lavasa-heading"
+      data-journey-progress={progress.toFixed(3)}
     >
+      <span id="journey" className="sr-only" />
+
       <div className={styles.viewport}>
-        <div className={styles.spaceGlow} aria-hidden="true" />
-        <div className={styles.earthArtwork} data-earth-artwork aria-hidden="true">
-          <img
-            className={styles.earthImage}
-            src="/media/journey/earth-at-night.png"
-            alt=""
-            width={EARTH_IMAGE.width}
-            height={EARTH_IMAGE.height}
-            fetchPriority="high"
-            decoding="async"
-          />
-          <svg
-            className={styles.regionMap}
-            viewBox={`0 0 ${EARTH_IMAGE.width} ${EARTH_IMAGE.height}`}
-            preserveAspectRatio="xMidYMid slice"
-            aria-hidden="true"
+        {/* Layer 1: High-Detail 3D WebGL Earth & Starfield */}
+        <Journey3DScene progress={progress} onPinPosition={handlePinUpdate} />
+
+        {/* Subtle legibility gradient over top/bottom edges */}
+        <div className={styles.atmosphereScrim} aria-hidden="true" />
+
+        {/* Top-left minimal orbital coordinate kicker (fades out once main heading arrives) */}
+        <div
+          className={styles.orbitalKicker}
+          style={{ opacity: Math.max(0, 1 - uiState.headingOpacity * 1.15) }}
+          aria-hidden="true"
+        >
+          <Compass size={13} strokeWidth={1.7} />
+          <span>DESCENT TO SAHYADRI · 18°24&apos;N 73°30&apos;E</span>
+        </div>
+
+        {/* Initial Scroll Cue */}
+        {progress < 0.26 && (
+          <div
+            className={styles.scrollCueBox}
+            style={{ opacity: uiState.cueOpacity }}
           >
-            <path
-              d="M518 451 540 441 558 446 575 438 594 450 616 447 632 459 653 465 672 481 665 497 670 510 656 524 651 542 635 550 630 568 615 574 601 560 584 556 574 537 557 527 550 510 536 499 532 482 520 470Z"
-              data-maharashtra
-              vectorEffect="non-scaling-stroke"
+            <button
+              type="button"
+              className={styles.scrollCueBtn}
+              onClick={() => scrollToStage(0.75)}
+              aria-label="Scroll down to zoom into Lavasa on Earth"
+            >
+              <span>Scroll to descend into Lavasa</span>
+              <ArrowDown size={13} className={styles.cueArrow} aria-hidden="true" />
+            </button>
+          </div>
+        )}
+
+        {/* Layer 2: Location Pin Tracking 3D Coordinate on Earth */}
+        {pinPos.visible && pinPos.x > 0 && pinPos.y > 0 && (
+          <div
+            className={styles.targetingBeacon}
+            style={{
+              left: `${pinPos.x}px`,
+              top: `${pinPos.y}px`,
+              opacity: uiState.pinOpacity,
+            }}
+          >
+            <div className={styles.beaconReticle} aria-hidden="true">
+              <span className={styles.beaconRing} />
+              <span className={styles.beaconCore} />
+            </div>
+            <div className={styles.beaconTag}>
+              <span className={styles.beaconLine} aria-hidden="true" />
+              <div className={styles.beaconPill}>
+                <span className={styles.beaconText}>
+                  <MapPin size={10} strokeWidth={2} aria-hidden="true" /> LAVASA, MAHARASHTRA
+                </span>
+                <span className={styles.beaconSub}>18.406° N · 73.504° E</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Layer 3: Arrival Composition (Headline + Fanned Lavasa Scenic Cards + Actions) */}
+        <div
+          className={styles.videoStage}
+          style={{
+            pointerEvents: uiState.cardsOpacity > 0.35 ? "auto" : "none",
+          }}
+        >
+          <header
+            className={styles.lavasaHeadingBox}
+            style={{
+              opacity: uiState.headingOpacity,
+              transform: `translateY(${(1 - uiState.headingOpacity) * 18}px)`,
+            }}
+          >
+            <p className={styles.lavasaKicker}>CHRIST UNIVERSITY · SAHYADRI HILLS</p>
+            <h2 id="lavasa-heading" className={styles.lavasaTitle}>
+              Welcome to <em>Lavasa.</em>
+            </h2>
+            <p className={styles.lavasaSubtitle}>
+              A campus. A community. A conversation that kept growing.
+            </p>
+          </header>
+
+          <div
+            className={styles.cardsArcContainer}
+            style={{ opacity: uiState.cardsOpacity }}
+          >
+            {LAVASA_SCENIC_CARDS.map((card, index) => {
+              const fanFactor = uiState.stageProgress;
+              const rot = card.arcRotation * fanFactor;
+              const yOffset = card.arcY * fanFactor + (1 - fanFactor) * 44;
+              const centerDist = index - 1.5;
+              const xOffset = centerDist * (1 - fanFactor) * -24;
+
+              return (
+                <div
+                  key={card.id}
+                  className={styles.photoCardWrapper}
+                  style={{
+                    transform: `translateX(${xOffset.toFixed(1)}px) translateY(${yOffset.toFixed(1)}px) rotate(${rot.toFixed(1)}deg)`,
+                    zIndex: index === 1 || index === 2 ? 6 : 5,
+                  }}
+                  onClick={() => setLightboxIndex(index)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setLightboxIndex(index);
+                    }
+                  }}
+                  aria-label={`View photograph of ${card.title}`}
+                >
+                  <div className={styles.photoCard}>
+                    <div className={styles.cardImageHolder}>
+                      <img
+                        src={card.src}
+                        alt={card.title}
+                        className={styles.cardImage}
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className={styles.cardCaption}>
+                      <span className={styles.cardTag}>{card.tag}</span>
+                      <h3 className={styles.cardTitle}>{card.title}</h3>
+                      <p className={styles.cardSub}>{card.subtitle}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div
+            className={styles.stageActions}
+            style={{
+              opacity:
+                uiState.cardsOpacity > 0.55
+                  ? Math.min(1, (uiState.cardsOpacity - 0.55) * 2.2)
+                  : 0,
+            }}
+          >
+            <a href="#editions" className={styles.exploreButton} data-ui="button">
+              Explore our editions <ArrowDown size={14} aria-hidden="true" />
+            </a>
+            <a href="/brochure" className={styles.brochureLink} data-ui="text" data-ui-tone="dark">
+              Read conclave brochure <ArrowUpRight size={14} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        {/* Sleek Unified Bottom Chapter Dock (Zero Viewport Occlusion) */}
+        <nav className={styles.chapterDock} aria-label="Orbital camera stages">
+          <div className={styles.dockTrack} aria-hidden="true">
+            <span
+              className={styles.dockFill}
+              style={{ transform: `scaleX(${Math.max(0.04, progress)})` }}
             />
-          </svg>
-        </div>
-        <div className={styles.lavasaMarker} data-lavasa-marker aria-hidden="true">
-          <span className={styles.markerPulse} />
-          <span className={styles.markerDot} />
-          <span className={styles.markerLabel}>Lavasa, Pune</span>
-        </div>
-        <header className={styles.welcomeCopy} data-welcome-copy>
-          <p className={styles.eyebrow}>HR VISTA 3.0 <span>·</span> SAHYADRI, INDIA</p>
-          <h2 id="lavasa-title">Welcome to <em>Lavasa.</em></h2>
-          <p className={styles.body}>A campus. A community. A conversation that kept growing.</p>
-        </header>
-        <a className={styles.editionsLink} href="#editions" data-explore-link data-ui="text" data-ui-tone="dark">
-          Explore our editions <span aria-hidden="true">↓</span>
-        </a>
-        <div className={styles.photoArc} role="group" aria-label="Lavasa photo gallery">
-          {lavasaPhotos.map((photo) => (
-            <figure className={styles.photoCard} data-lavasa-card key={photo.src}>
-              <img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} decoding="async" />
-            </figure>
-          ))}
-        </div>
-        <p className={styles.scrollCue} aria-hidden="true">Scroll to explore <span>↓</span></p>
+          </div>
+          <div className={styles.dockItems}>
+            {JOURNEY_STAGES.map((stage, idx) => (
+              <button
+                key={stage.id}
+                type="button"
+                className={`${styles.dockStep} ${
+                  uiState.activeStageIndex === idx ? styles.dockStepActive : ""
+                }`}
+                onClick={() => scrollToStage(stage.targetProgress)}
+                aria-current={uiState.activeStageIndex === idx ? "step" : undefined}
+              >
+                <span className={styles.dockCode}>{stage.code}</span>
+                <span className={styles.dockLabel}>{stage.label}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* Layer 4: Photo Lightbox Modal */}
+        {lightboxIndex !== null && (
+          <div
+            className={styles.lightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label={LAVASA_SCENIC_CARDS[lightboxIndex].title}
+            onClick={() => setLightboxIndex(null)}
+          >
+            <div className={styles.lightboxBox} onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                className={styles.lightboxClose}
+                onClick={() => setLightboxIndex(null)}
+                aria-label="Close photo preview"
+              >
+                <X size={18} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className={`${styles.lightboxNav} ${styles.lightboxPrev}`}
+                onClick={() =>
+                  setLightboxIndex(
+                    (lightboxIndex - 1 + LAVASA_SCENIC_CARDS.length) %
+                      LAVASA_SCENIC_CARDS.length
+                  )
+                }
+                aria-label="Previous Lavasa photograph"
+              >
+                <ChevronLeft size={20} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className={`${styles.lightboxNav} ${styles.lightboxNext}`}
+                onClick={() =>
+                  setLightboxIndex((lightboxIndex + 1) % LAVASA_SCENIC_CARDS.length)
+                }
+                aria-label="Next Lavasa photograph"
+              >
+                <ChevronRight size={20} aria-hidden="true" />
+              </button>
+              <img
+                src={LAVASA_SCENIC_CARDS[lightboxIndex].src}
+                alt={LAVASA_SCENIC_CARDS[lightboxIndex].title}
+                className={styles.lightboxImage}
+              />
+              <div className={styles.lightboxInfo}>
+                <div className={styles.lightboxMetaRow}>
+                  <span className={styles.lightboxTag}>
+                    {LAVASA_SCENIC_CARDS[lightboxIndex].tag}
+                  </span>
+                  <span className={styles.lightboxCounter}>
+                    0{lightboxIndex + 1} / 0{LAVASA_SCENIC_CARDS.length}
+                  </span>
+                </div>
+                <h4>{LAVASA_SCENIC_CARDS[lightboxIndex].title}</h4>
+                <p className={styles.lightboxSub}>
+                  {LAVASA_SCENIC_CARDS[lightboxIndex].subtitle}
+                </p>
+                <p className={styles.lightboxDesc}>
+                  {LAVASA_SCENIC_CARDS[lightboxIndex].caption}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -229,25 +454,26 @@ export function JourneyFinale() {
       <span id="next-chapter" className={styles.anchorAlias} aria-hidden="true" />
       <div className={styles.finaleOrbit} aria-hidden="true" />
       <h2 id="finale-title">
-        The future of work.
+        When Machines Think.
         <br />
-        <em>Closer than ever.</em>
+        <em>Human potential leads.</em>
       </h2>
       <p>
-        Keynote conversations. Leadership panels. New connections.
-        <br />
-        Discover what’s ahead at HR VISTA 3.0.
+        Two days of leadership keynotes, The 2030 Organisation Challenge, and the 30 Under 30 HR
+        Leadership Excellence Awards in Lavasa—with Community Partner BeingHR.
       </p>
       <div className={styles.finaleActions}>
-        <ActionLink href={PDF} download direction="down">Download brochure</ActionLink>
+        <ActionLink href={PDF} download direction="down" variant="light">
+          Download brochure
+        </ActionLink>
         <a className={styles.textLink} href="/brochure" data-ui="text" data-ui-tone="dark">
           Read online <span data-ui-glyph aria-hidden="true">↗</span>
         </a>
       </div>
       <div className={styles.finaleMeta}>
         <span>{content.hero.dates}</span>
-        <span>VENUE TO BE ANNOUNCED</span>
-        <span>HR VISTA 3.0</span>
+        <span>CHRIST UNIVERSITY, LAVASA</span>
+        <span>COMMUNITY PARTNER: BEINGHR</span>
       </div>
     </section>
   );

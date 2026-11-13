@@ -88,7 +88,7 @@
 
 .navNumber {
   font: 400 clamp(28px, 3vw, 43px)/1 var(--font-display), sans-serif;
-  letter-spacing: -.07em;
+  letter-spacing: -.02em;
 }
 
 .navText {
@@ -172,7 +172,7 @@
   position: relative;
   min-width: 0;
   display: grid;
-  grid-template-columns: .7fr 1.3fr;
+  grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
   align-items: end;
   gap: 4vw;
   overflow: clip;
@@ -193,12 +193,16 @@
   z-index: 1;
   display: block;
   color: var(--archive-blue);
-  font: 500 clamp(160px, 25vw, 390px)/.8 var(--font-display), sans-serif;
-  letter-spacing: -.095em;
+  font: 500 clamp(150px, 23vw, 360px)/.8 var(--font-display), sans-serif;
+  letter-spacing: -.025em;
   user-select: none;
+  white-space: nowrap;
 }
 
 .editionNumber > span {
+  display: inline-block;
+  margin-left: .035em;
+  letter-spacing: -.015em;
   color: transparent;
   -webkit-text-stroke: 1px var(--archive-blue);
 }
@@ -345,8 +349,8 @@
   .editionMeta { margin-bottom: 28px; font-size: 12px; gap: 12px; }
   .editionLayout { grid-template-columns: 1fr; gap: 22px; }
   .editionInfo { grid-template-columns: 1fr; gap: 24px; padding-block: 10px; }
-  .editionMark { height: 155px; width: 220px; }
-  .editionNumber { font-size: 180px; }
+  .editionMark { height: 155px; width: 100%; }
+  .editionNumber { font-size: 164px; }
   .editionInfo h3 { font-size: clamp(43px, 10vw, 72px); margin-bottom: 0; }
   .editionDetails { display: block; }
   .editionDetails .textLink { margin-top: 18px; }
@@ -364,8 +368,8 @@
   .timeline > a { flex-direction: column; gap: 8px; min-height: 84px; padding-inline: 4px; }
   .navNumber { font-size: 29px; }
   .navText { text-align: center; }
-  .editionMark { height: 150px; }
-  .editionNumber { font-size: 168px; }
+  .editionMark { height: 145px; }
+  .editionNumber { font-size: 148px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

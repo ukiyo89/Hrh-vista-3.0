@@ -31,7 +31,7 @@
 .chapter { padding: 76px 0 96px; scroll-margin-top: calc(var(--nav-h, 88px) + 24px); }
 .chapterHeader { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-bottom: 42px; }
 .chapterHeader :global(.hv-eyebrow) { margin-bottom: 28px; }
-.editionTitle { font: 600 clamp(140px, 17vw, 245px)/.8 var(--font-display), sans-serif; letter-spacing: -.07em; }
+.editionTitle { font: 600 clamp(140px, 17vw, 245px)/.8 var(--font-display), sans-serif; letter-spacing: -.025em; }
 .editionTitle > span { display: block; font: 600 13px/1.3 var(--font-body), sans-serif; letter-spacing: .16em; margin-bottom: 16px; }
 .location { max-width: 285px; color: var(--hv-muted); font-size: 14px; line-height: 1.7; padding-bottom: 5px; }
 .location > span { display: block; color: var(--hv-blue); font-size: 12px; margin-bottom: 8px; }
@@ -62,8 +62,8 @@
 .upcoming :global(.hv-eyebrow) { color: #d7e2ff; }
 .nextTitle { font: 600 clamp(58px, 7vw, 98px)/.94 var(--font-display), sans-serif; letter-spacing: -.06em; text-transform: uppercase; }
 .nextTitle > span { display: inline-block; font-size: .6em; margin-left: 18px; vertical-align: top; }
-.nextNumber { position: absolute; bottom: -90px; right: -10px; z-index: 0; color: #ffffff0e; font: 600 480px/.9 var(--font-display), sans-serif; letter-spacing: -.09em; pointer-events: none; }
-.upcomingDate { font-size: 23px; font-weight: 600; }
+.nextNumber { position: absolute; bottom: -90px; right: -10px; z-index: 0; color: #ffffff0e; font: 600 480px/.9 var(--font-display), sans-serif; letter-spacing: -.03em; pointer-events: none; }
+.upcomingDate { font-size: 23px; font-weight: 600; margin-bottom: 18px; }
 .upcomingLocation { font-size: 14px; color: #dce5ff; margin: 10px 0 24px; }
 .upcoming :global(.hv-copy) { color: #eef3ff; font-size: 16px; }
 .actions { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; margin-top: 30px; }

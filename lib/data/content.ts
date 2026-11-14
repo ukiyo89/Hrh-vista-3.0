@@ -195,8 +195,8 @@ export interface Content {
 
 export const content: Content = {
   hero: {
-    headline: "THE FUTURE OF WORK. THE PEOPLE WHO SHAPE IT.",
-    theme: "When Machines Think — The Evolution of Human Potential, Professional Value and the Future of Work",
+    headline: "THE EVOLUTION OF HUMAN POTENTIAL, PROFESSIONAL VALUES & THE FUTURE OF WORK.",
+    theme: "Evolution of Human Potential, Professional Values and the Future of Work: When Machines Think",
     dates: "21–22 November 2026",
     presenter: "Presented by the Centre for Placement and Career Guidance · With Community Partner BeingHR",
     institution: "CHRIST (Deemed to be University), Pune Lavasa Campus",
@@ -205,7 +205,7 @@ export const content: Content = {
   // Grounded details fetched from https://www.beingnetworks.com/e/hrvista3 and /awards
   vista30: {
     themeTitle: "WHEN MACHINES THINK",
-    themeSubtitle: "The Evolution of Human Potential, Professional Value and the Future of Work",
+    themeSubtitle: "Evolution of Human Potential, Professional Values and the Future of Work",
     centralQuestion: "What Makes Human Potential More Valuable?",
     communityPartner: "BeingHR · Being Networks",
     communityPartnerUrl: "https://www.beingnetworks.com/",
@@ -214,8 +214,8 @@ export const content: Content = {
     contactPhone: "+91 98922 82705",
     centralThemes: [
       {
-        title: "Human Potential & Professional Value",
-        description: "Recognising the capabilities—judgment, creativity and empathy—that make people indispensable in an evolving workplace.",
+        title: "Human Potential & Professional Values",
+        description: "Recognising the capabilities—judgment, integrity, creativity and empathy—that make people indispensable in an evolving workplace.",
       },
       {
         title: "The Future of Leadership",

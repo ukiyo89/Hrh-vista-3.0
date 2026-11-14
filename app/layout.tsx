@@ -54,9 +54,9 @@ const manrope = Manrope({
 });
 
 export const metadata = {
-  title: "HR VISTA 3.0 — The Future of Work. The People Who Shape It.",
+  title: "HR VISTA 3.0 — When Machines Think · Human Potential, Professional Values & Future of Work",
   description:
-    "HR VISTA 3.0 — 21–22 November 2026. The flagship HR conclave of CHRIST (Deemed to be University), Pune Lavasa Campus: keynote conversations, leadership panels, industry interactions and networking.",
+    "HR VISTA 3.0 (21–22 November 2026) — Evolution of Human Potential, Professional Values and the Future of Work: When Machines Think. Flagship HR conclave of CHRIST (Deemed to be University), Pune Lavasa Campus.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

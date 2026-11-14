@@ -93,12 +93,12 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
           <div className={styles.stairIdentity}>
             {i === 0 ? <><span className={styles.collabName}>HR VISTA <i>×</i></span><strong data-long={brand.length > 15} data-cpcg={isDefaultBrand || undefined}>{brand}</strong></> :
               i === 1 ? <><span className={styles.collabName}>HOST CAMPUS</span><strong data-long>CHRIST Lavasa · CPCG</strong></> :
-              i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>When Machines Think · Human Potential &amp; AI.</span></> :
+              i === 2 ? <><strong className={styles.stairEdition}>3.0<span>↗</span></strong><span className={styles.cardSub}>When Machines Think · Human Potential &amp; Professional Values.</span></> :
               i === 3 ? <><strong>30 Under 30<br />Awards.</strong><span className={styles.cardSub}>HR Leadership Excellence Felicitation · 22 Nov 2026</span></> : <><span className={styles.collabName}>TWO DAYS IN LAVASA</span><strong data-long>Keynotes, The 2030 Challenge &amp; Gala Dinner<i className={styles.cardArrow}>↗</i></strong></>}
           </div>
           <div className={styles.stairCardFoot}><span>{card.foot}</span><span>↗</span></div>
         </article>)}
-        <div className={styles.stairSceneFoot}><div><p>COMMUNITY PARTNER: BEINGHR (BEING NETWORKS) · HOST: CHRIST LAVASA CPCG</p><div className={styles.stairProgress}><span data-stair-progress /></div></div><Link href={home ? "/partners" : "#brand-preview"} className={styles.stairLink}>{home ? "Explore partners" : "Try your brand"}<span>↗</span></Link></div>
+        <div className={styles.stairSceneFoot}><div className={styles.stairProgress}><span data-stair-progress /></div><Link href={home ? "/partners" : "#brand-preview"} className={styles.stairLink}>{home ? "Explore partners" : "Try your brand"}<span>↗</span></Link></div>
       </div>
     </div>
   </section>;

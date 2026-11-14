@@ -166,7 +166,7 @@ export function ChristIntro() {
       <div className={styles.brand}>
         <img className={styles.christ} src="/media/raw/logo_christ_lavasa.png" alt="CHRIST (Deemed to be University) presents" width={250} height={85} loading="eager" />
         <div className={styles.wordmark} aria-label="HR VISTA 3.0"><span>HR VISTA</span><em>3.0</em></div>
-        <p>A new chapter. A bigger world.</p>
+        <p>When machines think. Human potential leads.</p>
         <div className={styles.progress} role="progressbar" aria-label="Preparing the photo wall" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
           <span style={{ transform: `scaleX(${progress / 100})` }} />
         </div>

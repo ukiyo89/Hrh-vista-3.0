@@ -1,593 +1,130 @@
 /* ============================================================
-   VISTA CARD SHOWCASE (moto-card.com fidelity adaptation)
-   Pure obsidian stage, 3 concave cylindrical rows of HR VISTA 2.0
-   company brand plaques, vertical brushed-silver HR VISTA 3.0 card
+   1:1 moto-card.com ".card" section layout & typography
    ============================================================ */
 
-.showcaseSection {
+.card {
   position: relative;
+  z-index: 60;
   width: 100%;
-  min-height: 100svh;
-  background: radial-gradient(circle at 50% 44%, #0f1b30 0%, #0a1220 62%, #070d18 100%);
-  color: var(--paper, #ffffff);
-  overflow: hidden;
+  min-height: 250vh;
+  background-color: #080808;
+  color: #e1e5e5;
+}
+
+.cardSticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 100;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  padding: 72px 24px 64px;
-  isolation: isolate;
+  height: 100vh;
+  margin-inline: 32px;
 }
 
-/* Top corner bar inside showcase matching reference screenshot */
-.topChrome {
-  position: absolute;
-  top: 24px;
-  left: clamp(18px, 3vw, 40px);
-  right: clamp(18px, 3vw, 40px);
-  z-index: 25;
+.cardHeader {
+  position: relative;
+  z-index: 500;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: space-between;
-  pointer-events: none;
+  text-align: center;
+  width: 100%;
+  max-width: 720px;
+  padding-bottom: 4vh;
 }
 
-.brandBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+.cardH2Wrap {
+  padding-top: 1.5vh;
+  padding-bottom: 3vh;
+  max-width: 100%;
 }
 
-.brandSeal {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgba(157, 188, 255, 0.38);
-  background: radial-gradient(circle at 30% 30%, #243e73, #0a1220);
-  color: #e8f0ff;
-  font-family: var(--font-display), serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.brandWord {
-  font-family: var(--font-display), "Nohemi", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: #e8f0ff;
-}
-
-.topActionPill {
-  pointer-events: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 18px;
-  border-radius: 999px;
-  background: rgba(16, 27, 46, 0.9);
-  border: 1px solid rgba(157, 188, 255, 0.24);
-  color: #e8f0ff;
-  font-family: var(--font-body), sans-serif;
-  font-size: 12px;
+.cardHeading {
+  margin: 0;
+  font-family: var(--font-display), "Nohemi", Arial, sans-serif;
+  font-size: clamp(26px, 3.05vw, 44px);
   font-weight: 500;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-
-.topActionPill:hover {
-  background: #2e5bff;
-  border-color: #5b82ff;
-  color: #ffffff;
-}
-
-/* ------------------------------------------------------------
-   3D CURVED CYLINDRICAL BACKGROUND GALLERY
-   ------------------------------------------------------------ */
-.cylindricalStage {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  perspective: 1100px;
-  transform-style: preserve-3d;
-  overflow: hidden;
-}
-
-.companyTile {
-  position: absolute;
-  width: clamp(134px, 12.2vw, 182px);
-  height: clamp(178px, 16.5vw, 244px);
-  border-radius: 13px;
-  background: linear-gradient(155deg, #142138 0%, #0e182b 58%, #09101d 100%);
-  border: 1px solid rgba(157, 188, 255, 0.14);
-  box-shadow: 0 18px 45px rgba(3, 7, 16, 0.78);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 16px 14px;
-  box-sizing: border-box;
-  overflow: hidden;
-  cursor: pointer;
-  outline: none;
-  will-change: transform, opacity;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.companyTile:hover,
-.companyTile:focus-visible,
-.companyTileActive {
-  border-color: rgba(91, 130, 255, 0.58);
-  box-shadow: 0 22px 54px rgba(3, 7, 16, 0.9), 0 0 26px rgba(46, 91, 255, 0.22);
-  z-index: 12;
-}
-
-.tileSheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(125deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 48%);
-  pointer-events: none;
-}
-
-.tileInner {
-  margin: auto 0;
-  width: 100%;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 4px;
-}
-
-.companyLogoImg {
-  display: block;
-  object-fit: contain;
-  object-position: center;
-  user-select: none;
-  pointer-events: none;
-  transition: transform 0.28s ease, filter 0.28s ease;
-}
-
-.logoWide {
-  width: auto;
-  height: auto;
-  max-width: 88%;
-  max-height: clamp(38px, 4.2vw, 56px);
-}
-
-.logoSquare {
-  width: auto;
-  height: auto;
-  max-width: 72%;
-  max-height: clamp(54px, 5.4vw, 76px);
-}
-
-/* Monochrome brushed platinum treatment matching moto-card obsidian aesthetic */
-.treat_platinum {
-  filter: brightness(0) invert(0.92);
-  opacity: 0.94;
-}
-
-.treat_silverBoost {
-  filter: brightness(1.42) contrast(1.06);
-}
-
-.treat_screenWhite {
-  mix-blend-mode: screen;
-  filter: brightness(0.96) contrast(1.08);
-}
-
-.treat_native {
-  filter: brightness(1.1) contrast(1.04);
-}
-
-.companyTile:hover .treat_platinum,
-.companyTileActive .treat_platinum {
-  filter: brightness(0) invert(1);
-}
-
-.companyTile:hover .companyLogoImg,
-.companyTileActive .companyLogoImg {
-  transform: scale(1.06);
-}
-
-.tileFooter {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 8px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.tileCompanyName {
-  font-family: var(--font-display), "Nohemi", sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: #c7ccd6;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.tileCompanySector {
-  font-family: var(--font-body), sans-serif;
-  font-size: 8.5px;
-  letter-spacing: 0.08em;
+  line-height: 1.04;
+  letter-spacing: -0.008em;
   text-transform: uppercase;
-  color: #717887;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #e1e5e5;
 }
 
-/* Deep ink-navy perimeter vignette matching --ink-900 */
-.vignetteOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 6;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(10, 18, 32, 0.14) 0%, rgba(10, 18, 32, 0.72) 72%, #0a1220 100%),
-    linear-gradient(180deg, #0a1220 0%, rgba(10, 18, 32, 0) 20%, rgba(10, 18, 32, 0) 70%, #0a1220 100%);
-}
-
-/* ------------------------------------------------------------
-   FOREGROUND VERTICAL BRUSHED SILVER CARD + STATEMENT
-   ------------------------------------------------------------ */
-.foregroundStage {
-  position: relative;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  margin-top: 14px;
-}
-
-.cardPerspective {
-  perspective: 1200px;
-}
-
-.metalCard {
-  position: relative;
-  width: clamp(210px, 19.5vw, 272px);
-  aspect-ratio: 54 / 85.6;
-  transform-style: preserve-3d;
-  cursor: pointer;
-  outline: none;
-  will-change: transform;
-  --glare-x: 38%;
-  --glare-y: 35%;
-}
-
-.cardFace {
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  backface-visibility: hidden;
-  overflow: hidden;
-  box-shadow:
-    0 34px 80px rgba(4, 8, 18, 0.9),
-    0 12px 28px rgba(4, 8, 18, 0.65),
-    0 0 0 1px rgba(157, 188, 255, 0.28),
-    inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.96),
-    inset -1.5px -1.5px 2px rgba(10, 18, 32, 0.42);
-}
-
-/* Classic Brushed Pearl-Platinum & Deep Sapphire Executive Finish (Theme-matched) */
-.cardFront {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.08) 0px,
-      rgba(255, 255, 255, 0.08) 1px,
-      rgba(16, 30, 58, 0.025) 1px,
-      rgba(16, 30, 58, 0.025) 3px
-    ),
-    linear-gradient(
-      132deg,
-      #ffffff 0%,
-      #f2f6ff 18%,
-      #e1eafc 42%,
-      #c9d8f4 62%,
-      #eef4ff 74%,
-      #a8bee6 88%,
-      #1a2b4c 97%,
-      #0a1220 100%
-    );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cardFront::before {
-  content: "";
-  position: absolute;
-  inset: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(46, 91, 255, 0.22);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  pointer-events: none;
-}
-
-.cardSpecularGlare {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at var(--glare-x) var(--glare-y),
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(157, 188, 255, 0.24) 32%,
-    rgba(0, 0, 0, 0) 64%
-  );
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
-
-/* Centered Sculptural 3D Sapphire & Chrome Orb ("the ball") */
-.centerCrest {
-  position: relative;
-  width: 50%;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.crestOuterRing {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  padding: 7px;
-  background: conic-gradient(
-    from 135deg,
-    #ffffff 0deg,
-    #b7c9ec 85deg,
-    #1c2e52 175deg,
-    #e8f0ff 265deg,
-    #ffffff 360deg
-  );
-  box-shadow:
-    0 14px 28px rgba(10, 18, 32, 0.34),
-    0 4px 10px rgba(46, 91, 255, 0.18),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.crestSphere {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      circle at 31% 27%,
-      #cfe0ff 0%,
-      #5b82ff 20%,
-      #2e5bff 42%,
-      #122761 72%,
-      #070e1d 100%
-    );
-  box-shadow:
-    inset -8px -10px 18px rgba(4, 8, 18, 0.75),
-    inset 4px 5px 12px rgba(215, 232, 255, 0.55),
-    0 0 0 1px rgba(10, 18, 32, 0.55);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #ffffff;
-}
-
-.crestSphereGlint {
-  position: absolute;
-  top: 12%;
-  left: 16%;
-  width: 42%;
-  height: 24%;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(232, 240, 255, 0.18) 55%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(-28deg);
-  pointer-events: none;
-}
-
-.crestSphereEquator {
-  position: absolute;
-  inset: 7px;
-  border-radius: 50%;
-  border: 1px solid rgba(232, 240, 255, 0.28);
-  pointer-events: none;
-}
-
-.crestEdition {
-  position: relative;
-  z-index: 2;
-  font-family: var(--font-body), sans-serif;
-  font-size: 7.5px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  color: #dce8ff;
-  text-shadow: 0 1px 4px rgba(4, 8, 18, 0.7);
-}
-
-.crestNumber {
-  position: relative;
-  z-index: 2;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(23px, 2.3vw, 31px);
-  font-weight: 700;
-  line-height: 1;
-  margin-top: 2px;
-  color: #ffffff;
-  text-shadow: 0 2px 10px rgba(4, 8, 18, 0.65);
-}
-
-/* Card Back Face — Ink Navy (--ink-900) & Signature Royal Blue (--royal-500) */
-.cardBack {
-  transform: rotateY(180deg);
-  background: linear-gradient(155deg, #13213c 0%, #0a1220 58%, #060b14 100%);
-  border: 1px solid rgba(91, 130, 255, 0.36);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 22px 20px;
-  color: #e8f0ff;
-}
-
-.cardMagStrip {
-  width: calc(100% + 40px);
-  margin: 6px -20px 0;
-  height: 36px;
-  background: linear-gradient(90deg, #050912 0%, #16284d 50%, #050912 100%);
-  border-top: 1px solid rgba(91, 130, 255, 0.28);
-  border-bottom: 1px solid rgba(91, 130, 255, 0.28);
-}
-
-.cardBackContent {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.backEyebrow {
-  margin: 0;
-  font-family: monospace;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  color: #9dbcff;
-}
-
-.cardBackContent h4 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.backVenue {
-  margin: 0;
-  font-family: var(--font-body), sans-serif;
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: #c7d2e0;
-}
-
-.backStats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(157, 188, 255, 0.2);
-}
-
-.backStats strong {
-  display: block;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 18px;
-  color: #ffffff;
-}
-
-.backStats span {
-  font-size: 10px;
-  color: #8a97ad;
-}
-
-/* ------------------------------------------------------------
-   STATEMENT HEADLINE & PILL CTA
-   ------------------------------------------------------------ */
-.headlineStack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 14px;
-}
-
-.companyReadout {
-  margin: 0;
-  font-family: monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #9dbcff;
-  min-height: 16px;
-}
-
-.mainStatement {
-  margin: 0;
-  font-family: var(--font-display), "Nohemi", sans-serif;
-  font-size: clamp(28px, 3.8vw, 48px);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-wrap: balance;
-}
-
-.pillCta {
+.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 34px;
-  border-radius: 999px;
-  background: #ffffff;
-  color: #0a1220;
-  font-family: var(--font-body), sans-serif;
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  width: 100%;
+  max-width: 253px;
+  padding: 18px 24px;
+  border-radius: 99vw;
+  background-color: #e1e5e5;
+  color: #080808;
+  font-family: var(--font-body), "Manrope", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.003em;
+  text-align: center;
   text-decoration: none;
-  box-shadow: 0 12px 30px rgba(4, 8, 18, 0.55);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
-.pillCta:hover {
-  background: #2e5bff;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(46, 91, 255, 0.35);
+.button:hover,
+.button:focus-visible {
+  background-color: #ffffff;
+  color: #080808;
 }
 
-/* ------------------------------------------------------------
-   RESPONSIVE ADJUSTMENTS
-   ------------------------------------------------------------ */
-@media (max-width: 640px) {
-  .showcaseSection {
-    padding: 76px 16px 52px;
+.cardCanvasWarp {
+  position: absolute;
+  inset: 0% auto auto 0%;
+  z-index: 2;
+  pointer-events: none;
+  width: 100%;
+  height: 100lvh;
+  overflow: hidden;
+}
+
+.cardCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .cardContent {
+    margin-inline: 20px;
   }
 
-  .topActionPill span {
-    font-size: 11px;
+  .cardHeader {
+    max-width: 100%;
+    padding-bottom: 6vh;
   }
 
-  .metalCard {
-    width: 196px;
+  .cardH2Wrap {
+    padding-top: 1vh;
+    padding-bottom: 2.5vh;
   }
 
-  .mainStatement {
-    font-size: clamp(24px, 7.2vw, 34px);
+  .cardHeading {
+    font-size: clamp(19px, 5vw, 28px);
+    line-height: 1.08;
+  }
+
+  .button {
+    max-width: 200px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 14px;
   }
 }

@@ -1,7 +1,7 @@
 .footer {
   background: #eae9e2;
   color: #172437;
-  padding: 56px 6vw 0;
+  padding: 56px 6vw 48px;
 }
 
 .top {
@@ -95,29 +95,17 @@
 .socialIcon svg { width: 16px; height: 16px; }
 .socialArrow { margin-left: 4px; font-size: 14px; }
 
-.bottom {
-  border-top: 1px solid #17243730;
-  padding: 22px 0;
-  color: #536174;
-  font-size: 11px;
-  line-height: 1.8;
-  letter-spacing: .04em;
-}
-
 @media (max-width: 1000px) {
   .grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
   .institution { grid-column: 1 / -1; display: flex; align-items: center; gap: 32px; }
-  .institution p { margin-top: 0; }
 }
 
 @media (max-width: 600px) {
-  .footer { padding: 36px 7vw 0; }
+  .footer { padding: 36px 7vw 32px; }
   .top { padding-bottom: 28px; }
   .grid { grid-template-columns: 1fr 1fr; padding-block: 32px; gap: 32px 24px; }
   .institution { display: block; }
   .institution img { width: 200px; }
-  .institution p { margin-top: 16px; }
   .socials { grid-column: 1 / -1; border-top: 1px solid #17243730; padding-top: 28px; }
   .columnHeading { margin-bottom: 12px; }
-  .bottom { font-size: 10px; padding-block: 20px; }
 }

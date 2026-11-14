@@ -10,26 +10,24 @@ const editions = [
   {
     number: "1.0",
     kicker: "February 2025 · Lavasa",
-    title: "The first spark.",
-    lines: ["The first", "spark."],
-    nav: "The spark",
+    title: "Work Reimagined: HR for the Future",
+    lines: ["Work Reimagined:", "HR for the Future"],
+    nav: "Work Reimagined",
     copy: "A meeting of minds in the hills. Around 50 HR delegates came together for conversations, mentorship and a shared vision of work reimagined.",
     image: "/media/flickr/raw/hrvista1_feb21.jpg",
     alt: "HR VISTA 1.0 delegates gathered in the Lavasa amphitheatre",
-    caption: "The community takes shape · HR VISTA 1.0",
     href: "/work#hr-vista-1",
     label: "Explore the first edition",
   },
   {
     number: "2.0",
     kicker: "November 2025 · Lavasa",
-    title: "The conversation grows.",
-    lines: ["The conversation", "grows."],
-    nav: "The conversation",
+    title: "Human Future — Redefining Leadership in the Post-AI World",
+    lines: ["Human Future —", "Redefining Leadership in the Post-AI World"],
+    nav: "Human Future",
     copy: "Leadership in a post-AI world. Four panels, two round tables, and a community finding new connections—on the stage and beyond it.",
     image: "/media/flickr/story-1.jpg",
     alt: "Two speakers in conversation on stage at HR VISTA 2.0",
-    caption: "Perspectives in conversation · HR VISTA 2.0",
     href: "/work#hr-vista-2",
     label: "Revisit the second edition",
   },
@@ -38,15 +36,32 @@ const editions = [
     kicker: "21–22 November 2026 · Lavasa",
     title: "When Machines Think.",
     lines: ["When Machines", "Think."],
-    nav: "Machines think",
-    copy: "The Evolution of Human Potential, Professional Value and the Future of Work. Co-hosted with Community Partner BeingHR (Being Networks) across two days of leadership keynotes, The 2030 Organisation Challenge, the 30 Under 30 HR Leadership Awards Felicitation, gala dinner and Being Networks Night.",
+    nav: "When Machines Think",
+    copy: "Evolution of Human Potential, Professional Values and the Future of Work. Co-hosted with Community Partner BeingHR (Being Networks) across two days of leadership keynotes, The 2030 Organisation Challenge, the 30 Under 30 HR Leadership Awards Felicitation, gala dinner and Being Networks Night.",
     image: "/media/flickr/editions-4.jpg",
     alt: "The HR VISTA 2.0 community whose story continues into HR VISTA 3.0 at CHRIST Lavasa",
-    caption: "21–22 November 2026 · CHRIST University, Pune Lavasa Campus",
     href: "/brochure",
     label: "Explore HR VISTA 3.0 brochure",
   },
 ];
+
+const themePillars = [
+  {
+    code: "01",
+    title: "Evolution of Human Potential",
+    summary: "Judgment, empathy, adaptability, and creative agency as intelligence scales across every function.",
+  },
+  {
+    code: "02",
+    title: "Professional Values",
+    summary: "Integrity, ethical stewardship, fairness, and human accountability at the core of AI-era workplaces.",
+  },
+  {
+    code: "03",
+    title: "Future of Work: When Machines Think",
+    summary: "Designing human–machine collaboration, leadership capability, and culture for 2030 and beyond.",
+  },
+] as const;
 
 export function EditionJourney() {
   const root = useRef<HTMLElement>(null);
@@ -105,21 +120,11 @@ export function EditionJourney() {
         scrollTrigger: { trigger: "." + styles.story, start: "top 45%", end: "bottom 60%", scrub: 0.3 },
       });
 
-      element.querySelectorAll<HTMLElement>("[data-edition]").forEach((article, index) => {
-        const number = article.querySelector("[data-number]");
+      element.querySelectorAll<HTMLElement>("[data-edition]").forEach((article) => {
         const photograph = article.querySelector("[data-photo-reveal]");
         const image = article.querySelector("[data-photo-image]");
-        const type = article.querySelectorAll("[data-edition-line]");
         const rule = article.querySelector("[data-edition-rule]");
 
-        // The chapter grows from a narrow photographic aperture into a full
-        // archive sheet. Every stage follows native scroll in both directions.
-        gsap.fromTo(number, { xPercent: index === 1 ? 28 : -28, yPercent: 12 }, {
-          yPercent: -8,
-          xPercent: 0,
-          ease: "none",
-          scrollTrigger: { trigger: article, start: "top bottom", end: "top 20%", scrub: 0.6 },
-        });
         gsap.fromTo(photograph, {
           clipPath: "inset(8% 38% 8% 38%)",
         }, {
@@ -132,13 +137,6 @@ export function EditionJourney() {
           yPercent: -2,
           ease: "none",
           scrollTrigger: { trigger: photograph, start: "top bottom", end: "bottom top", scrub: 0.6 },
-        });
-        gsap.fromTo(type, { x: (lineIndex: number) => (lineIndex === 0 ? -1 : 1) * Math.min(window.innerWidth * .12, 160), y: 30 }, {
-          x: 0,
-          y: 0,
-          stagger: 0.08,
-          ease: "none",
-          scrollTrigger: { trigger: article, start: "top 88%", end: "top 15%", scrub: 0.5 },
         });
         gsap.fromTo(rule, { scaleX: 0 }, {
           scaleX: 1,
@@ -173,7 +171,16 @@ export function EditionJourney() {
     <section id="editions" ref={root} className={styles.editions} aria-labelledby="editions-heading">
       <header className={styles.header}>
         <div className={styles.headerMain}>
-          <h2 id="editions-heading"><span data-header-line>Every chapter.</span><span data-header-line><em>More possibility.</em></span></h2>
+          <h2 id="editions-heading"><span data-header-line>When machines think.</span><span data-header-line><em>Human potential evolves.</em></span></h2>
+        </div>
+        <div className={styles.themePillars} aria-label="HR VISTA 3.0 central theme pillars">
+          {themePillars.map((pillar) => (
+            <div key={pillar.code} className={styles.pillarItem}>
+              <span className={styles.pillarCode}>{pillar.code}</span>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.summary}</p>
+            </div>
+          ))}
         </div>
       </header>
 
@@ -213,7 +220,6 @@ export function EditionJourney() {
                     <span className={styles.photoArrow} data-ui-glyph aria-hidden="true">↗</span>
                   </a>
                 </div>
-                <figcaption>{edition.caption}</figcaption>
               </figure>
               <div className={styles.editionDetails}>
                 <p className={styles.copy}>{edition.copy}</p>

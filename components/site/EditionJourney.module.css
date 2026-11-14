@@ -64,6 +64,55 @@
   font-size: 18px;
 }
 
+.themePillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 44px);
+  padding: 28px 0 42px;
+  border-top: 1px solid var(--archive-rule);
+}
+
+.pillarItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pillarCode {
+  font-family: var(--font-display), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: var(--archive-blue);
+}
+
+.pillarItem h3 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(17px, 1.35vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--archive-ink);
+}
+
+.pillarItem p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #495669;
+  max-width: 38ch;
+}
+
+@media (max-width: 900px) {
+  .themePillars {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 22px 0 32px;
+  }
+}
+
 .timeline {
   position: sticky;
   z-index: 6;
@@ -211,8 +260,9 @@
   position: relative;
   z-index: 2;
   margin: 0 0 10px;
-  font: 400 clamp(48px, 6.6vw, 104px)/.98 var(--font-display), sans-serif;
-  letter-spacing: -.055em;
+  font: 400 clamp(30px, 3.35vw, 52px)/1.08 var(--font-display), sans-serif;
+  letter-spacing: -.035em;
+  text-wrap: balance;
 }
 
 .editionInfo h3 > span {
@@ -331,7 +381,7 @@
   .timeline > a { padding: 14px 16px; gap: 12px; }
   .navDot { display: none; }
   .editionLayout { gap: 24px; }
-  .editionInfo h3 { font-size: clamp(44px, 6.5vw, 72px); }
+  .editionInfo h3 { font-size: clamp(28px, 3.6vw, 44px); }
   .edition { min-height: 0; }
 }
 
@@ -351,7 +401,7 @@
   .editionInfo { grid-template-columns: 1fr; gap: 24px; padding-block: 10px; }
   .editionMark { height: 155px; width: 100%; }
   .editionNumber { font-size: 164px; }
-  .editionInfo h3 { font-size: clamp(43px, 10vw, 72px); margin-bottom: 0; }
+  .editionInfo h3 { font-size: clamp(26px, 6.8vw, 42px); margin-bottom: 0; }
   .editionDetails { display: block; }
   .editionDetails .textLink { margin-top: 18px; }
   .copy { font-size: 13px; max-width: 460px; }

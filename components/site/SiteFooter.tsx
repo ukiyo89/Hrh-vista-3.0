@@ -40,21 +40,6 @@ export function SiteFooter() {
             width={280}
             height={100}
           />
-          <p>
-            Presented by the Centre for Placement and Career Guidance,
-            <br />
-            in association with Community Partner{" "}
-            <a
-              data-ui="text"
-              href="https://www.beingnetworks.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.inlinePartnerLink}
-            >
-              BeingHR ↗
-            </a>
-            .
-          </p>
         </div>
         <nav className={styles.linkColumn} aria-labelledby="footer-explore">
           <h2 id="footer-explore" className={styles.columnHeading}>Explore</h2>
@@ -111,9 +96,6 @@ export function SiteFooter() {
             </section>
           ))}
         </div>
-      </div>
-      <div className={styles.bottom}>
-        <span>HR VISTA 3.0 · 21–22 NOVEMBER 2026 · LAVASA · WITH COMMUNITY PARTNER BEINGHR</span>
       </div>
     </footer>
   );

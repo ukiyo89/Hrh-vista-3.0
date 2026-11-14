@@ -405,14 +405,17 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Copy — the reference's eyebrow over a two-line display headline. */}
+      {/* Copy — the reference's eyebrow over a two-line display headline + theme subline. */}
       <div className={styles.copy} data-hero-copy>
-        <p className={styles.caption}>HR VISTA 3.0 : WHEN MACHINES THINK · 21–22 NOVEMBER 2026</p>
+        <p className={styles.caption}>HR VISTA 3.0 · 21–22 NOVEMBER 2026 · CHRIST UNIVERSITY, LAVASA</p>
         <h1 id="hero-title" className={styles.title}>
-          <span className={styles.titleLine}><span>The Future of Work.</span></span>
+          <span className={styles.titleLine}><span>When Machines Think.</span></span>
           <br />
-          <span className={styles.titleLine}><span>The People Who Shape It.</span></span>
+          <span className={styles.titleLine}><span>Human Potential Leads.</span></span>
         </h1>
+        <p className={styles.themeLine}>
+          Evolution of Human Potential, Professional Values &amp; the Future of Work
+        </p>
       </div>
 
       <a className={styles.storyLink} href="#countdown">Explore the story <span aria-hidden="true">↓</span></a>

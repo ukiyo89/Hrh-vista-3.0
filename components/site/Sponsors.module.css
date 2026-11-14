@@ -32,8 +32,7 @@
 .cardAsterisk { position:absolute; right:0; top:18px; font:300 60px/1 var(--font-display),sans-serif; color:#93b9f1; }
 .cardArrow { float:right; font-style:normal; font-weight:300; }
 .stairSceneFoot { position:absolute; bottom:28px; left:6vw; right:6vw; display:flex; justify-content:space-between; align-items:center; gap:25px; z-index:6; }
-.stairSceneFoot p { font-size:7px; letter-spacing:.12em; color:#b0c2da; line-height:1.8; }
-.stairProgress { width:160px; height:1px; background:#ffffff22; margin-top:15px; }
+.stairProgress { width:160px; height:1px; background:#ffffff22; margin-top:0; }
 .stairProgress > span { display:block; height:100%; background:#b4d0fc; transform-origin:left; }
 .stairLink { display:flex; align-items:center; gap:35px; min-height:44px; font-size:13px; color:#e6eeff; border-bottom:1px solid #99bae166; }
 .stairLink > span { font-size:22px; transition:transform .2s ease-out; }

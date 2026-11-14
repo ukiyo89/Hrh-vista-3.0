@@ -165,7 +165,7 @@
   position: absolute;
   left: var(--section-padding-x);
   right: var(--section-padding-x);
-  top: 67.3%;
+  top: 63%;
   z-index: 5;
   text-align: center;
   pointer-events: none; /* the wall stays grabbable through the type */
@@ -180,35 +180,48 @@
    type off on short or narrow screens. */
 .caption {
   font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
-  font-size: clamp(0.75rem, min(1.4vw, 2.5vh), 1.5rem);
-  font-weight: 400;
-  line-height: 2.4;
-  letter-spacing: -0.01em;
-  color: var(--paper);
+  font-size: clamp(0.72rem, min(1.18vw, 2vh), 1.2rem);
+  font-weight: 500;
+  line-height: 2;
+  letter-spacing: 0.08em;
+  color: #a9c4ee;
 }
 
 /* The reference's headline: 80px, weight 500, line-height 1, two lines, white,
    centred. 4.7vw / 8.3vh both land on 80px at 1708×962. The 10px gap is what
    remains between the eyebrow's line box and the headline in the reference. */
 .title {
-  margin-top: clamp(0.4rem, 1.05vh, 0.75rem);
+  margin-top: clamp(0.35rem, 0.9vh, 0.65rem);
   font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
-  font-size: clamp(1.9rem, min(4.7vw, 8.3vh), 5rem);
+  font-size: clamp(1.9rem, min(4.5vw, 7.8vh), 4.75rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.025em;
   color: var(--paper);
 }
 
+.themeLine {
+  margin: clamp(0.65rem, 1.4vh, 1rem) auto 0;
+  max-width: 68ch;
+  font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif);
+  font-size: clamp(0.78rem, min(1.05vw, 1.8vh), 1rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #c7d6ec;
+  text-wrap: balance;
+}
+
 .titleLine { display:inline-block; max-width:100%; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; vertical-align:bottom; text-wrap:balance; }
 .titleLine > span { display:block; }
 :global(html[data-intro="loading"]) .viewport { transform:translateY(28px); }
-:global(html[data-intro="loading"]) .caption { opacity:0; }
+:global(html[data-intro="loading"]) .caption,
+:global(html[data-intro="loading"]) .themeLine { opacity:0; }
 :global(html[data-intro="loading"]) .titleLine > span { transform:translateY(115%); }
 :global(html[data-intro="loading"]) :is(.breathe,.breathe img),
 :global(html[data-intro="opening"]) :is(.breathe,.breathe img) { animation-play-state:paused; }
 :global(html[data-intro="opening"]) .viewport { animation:wallEnter 1s cubic-bezier(.16,1,.3,1) both; }
 :global(html[data-intro="opening"]) .caption { animation:hero-fade .65s ease-out .26s both; }
+:global(html[data-intro="opening"]) .themeLine { animation:hero-fade .65s ease-out .54s both; }
 :global(html[data-intro="opening"]) .titleLine > span { animation:lineEnter .82s cubic-bezier(.16,1,.3,1) .32s both; }
 :global(html[data-intro="opening"]) .titleLine:last-child > span { animation-delay:.43s; }
 /* Opacity and scale on the perspective window can flatten the nested 3D
@@ -264,7 +277,7 @@
   }
 
   .copy {
-    top: 52%;
+    top: 49%;
   }
 }
 
@@ -272,22 +285,23 @@
    sit closer to it rather than pushing it off the bottom. */
 @media (max-height: 620px) {
   .viewport {
-    top: 30%;
+    top: 28%;
   }
 
   .copy {
-    top: 58%;
+    top: 53%;
   }
 
   .floor {
-    top: 28%;
+    top: 26%;
     height: 66%;
   }
 }
 
 @media (max-width: 480px) {
-  .caption { max-width:280px; margin-inline:auto; font-size:9px; line-height:1.8; letter-spacing:.04em; }
-  .title { font-size:clamp(1.45rem,7.3vw,2rem); }
+  .caption { max-width:300px; margin-inline:auto; font-size:9.5px; line-height:1.5; letter-spacing:.05em; }
+  .title { font-size:clamp(1.42rem,7vw,1.95rem); }
+  .themeLine { max-width:290px; font-size:11.5px; line-height:1.45; }
   .storyLink { font-size:11px; gap:12px; }
 }
 
@@ -309,6 +323,7 @@
 
   .caption,
   .title,
+  .themeLine,
   .viewport,
   .storyLink {
     animation: none !important;

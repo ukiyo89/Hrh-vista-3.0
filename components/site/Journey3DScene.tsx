@@ -105,8 +105,6 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
   const onPinPositionRef = useRef(onPinPosition);
   onPinPositionRef.current = onPinPosition;
 
-  const pointerRef = useRef({ x: 0, y: 0 });
-
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -612,20 +610,13 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
     rimLight.position.set(6.2, 1.8, -3.6);
     scene.add(rimLight);
 
+    globe.rotation.x = THREE.MathUtils.degToRad(-7.5);
     globe.rotation.z = THREE.MathUtils.degToRad(-5);
     globe.rotation.y = START_ROT_Y;
 
     if (!isSoftwareGl) {
       renderer.compile(scene, camera);
     }
-
-    const onPointerMove = (e: PointerEvent) => {
-      const nx = (e.clientX / Math.max(window.innerWidth, 1)) * 2 - 1;
-      const ny = (e.clientY / Math.max(window.innerHeight, 1)) * 2 - 1;
-      pointerRef.current.x = THREE.MathUtils.clamp(nx, -1, 1);
-      pointerRef.current.y = THREE.MathUtils.clamp(ny, -1, 1);
-    };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     const handleResize = () => {
       width = container.clientWidth;
@@ -639,9 +630,6 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
     ro.observe(container);
 
     let animationFrameId = 0;
-    let lastNow = performance.now();
-    let smoothPointerX = 0;
-    let smoothPointerY = 0;
 
     const afterDraw = (cb: () => void) => {
       const gl = renderer.getContext() as WebGL2RenderingContext;
@@ -667,26 +655,18 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
       animationFrameId = window.setTimeout(poll, 5);
     };
 
-    const tick = (now = performance.now()) => {
+    const tick = () => {
       if (disposed) return;
 
-      const delta = Math.min(0.05, Math.max(0.001, (now - lastNow) / 1000));
-      lastNow = now;
-      const elapsed = now * 0.001;
       const p = progressRef.current;
 
-      smoothPointerX = THREE.MathUtils.damp(smoothPointerX, pointerRef.current.x, 4.5, delta);
-      smoothPointerY = THREE.MathUtils.damp(smoothPointerY, pointerRef.current.y, 4.5, delta);
-
-      const pose = computeJourneyPose(p, width, elapsed, smoothPointerX, smoothPointerY);
+      const pose = computeJourneyPose(p, width, 0, 0, 0);
       globe.position.set(...pose.globePos);
       globe.rotation.set(...pose.globeRot);
       camera.position.set(...pose.camPos);
       camera.lookAt(...pose.lookAt);
 
-      cloudMesh.rotation.y = elapsed * 0.006;
       arcMaterial.opacity = 0.22 + 0.36 * pose.ease;
-      starMesh.rotation.y = elapsed * 0.003;
 
       renderer.render(scene, camera);
 
@@ -710,7 +690,7 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
 
       if (isSoftwareGl) {
         afterDraw(() => {
-          if (!disposed) tick(performance.now());
+          if (!disposed) tick();
         });
       } else {
         animationFrameId = requestAnimationFrame(tick);
@@ -724,7 +704,6 @@ export function Journey3DScene({ progress, onPinPosition }: Journey3DSceneProps)
       abortController.abort();
       cancelAnimationFrame(animationFrameId);
       clearTimeout(animationFrameId);
-      window.removeEventListener("pointermove", onPointerMove);
       ro.disconnect();
       renderer.dispose();
       renderer.domElement.remove();

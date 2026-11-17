@@ -67,7 +67,7 @@ export function People() {
         window.dispatchEvent(new CustomEvent("hr-vista:seek", { detail: top }));
       }}>
         <summary className={`${actionStyles.action} ${styles.rosterToggle}`} aria-controls="all-cpcg-members">
-          <span className={styles.rosterStack} aria-hidden="true"><i><img src="/media/cpcg/sabhya-walani.jpg" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/cpcg/aditi-mishra.png" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/people/arnav-sharma.webp" alt="" width={400} height={400} loading="lazy" decoding="async" /></i></span>
+          <span className={styles.rosterStack} aria-hidden="true"><i><img src="/assets/aistudio/ec27b50d-6b03-41b7-9cce-507903ceeba3_e162f91f.png" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/cpcg/aditi-mishra.png" alt="" width={400} height={400} loading="lazy" decoding="async" /></i><i><img src="/media/people/arnav-sharma.webp" alt="" width={400} height={400} loading="lazy" decoding="async" /></i></span>
           <span className={styles.rosterLabel}><span className={styles.closedLabel}>Meet all members</span><span className={styles.openLabel}>Close member list</span></span>
           <span className={styles.rosterCount}>{cpcgMembers.length}</span>
           <span className={`${actionStyles.icon} ${styles.rosterIcon}`} aria-hidden="true">{[0, 1].map(icon => <svg key={icon} viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>)}</span>

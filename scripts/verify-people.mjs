@@ -62,7 +62,7 @@ for (const member of cpcgMembers) {
     assert.ok(["verified", "retained", "user-provided"].includes(evidence.status), `${member.name}: portrait must have source evidence`);
     assert.equal(member.portrait, evidence.portrait);
     if (evidence.status !== "user-provided") assert.equal(new URL(member.linkedin).pathname.replace(/\/$/, ""), new URL(evidence.linkedin).pathname.replace(/\/$/, ""), `${member.name}: image and profile must match`);
-    assert.match(member.portrait, /^\/media\/[a-z0-9/-]+\.(webp|jpg|png)$/);
+    assert.match(member.portrait, /^\/(?:media|assets\/aistudio)\/[A-Za-z0-9_./-]+\.(webp|jpg|jpeg|png)$/);
     const bytes = await readFile(new URL(`../public${member.portrait}`, import.meta.url));
     assert.ok(bytes.length > 1000, `${member.name}: portrait must be a real local image`);
     assert.equal(createHash("sha256").update(bytes).digest("hex"), evidence.sha256.toLowerCase(), `${member.name}: stored portrait must match retrieved bytes`);

@@ -1,11 +1,11 @@
-.section { position:relative; padding:84px 6vw 80px; color:#17283c; background:#c8d8e8; overflow:clip; }
+.section { position:relative; padding:84px 6vw 80px; color:#17283c; background:#c8d8e8; overflow:clip; scroll-margin-top:var(--nav-h,64px); }
 .layout { display:grid; grid-template-columns:1.1fr 1fr; gap:7vw; padding-top:0; align-items:center; }
 .copy h2 { font:400 clamp(48px,7.6vw,120px)/.98 var(--font-display),sans-serif; letter-spacing:-.05em; }
 .copy h2 > span { display:block; }
 .copy h2 em { font-style:normal; color:#3b6088; }
 .copy > p { font-size:15px; line-height:1.8; margin-top:32px; color:#3b526c; }
 .link { margin-top:30px; }
-.art { position:relative; display:block; padding-top:80px; }
+.art { position:relative; display:block; padding-top:0; }
 .quote { position:absolute; z-index:2; top:-26px; left:-30px; width:200px; height:220px; font:400 250px/1 var(--font-display),sans-serif; color:#234b78; pointer-events:none; }
 .quote > i { position:absolute; inset:0; font:inherit; font-style:normal; }
 .quote > i:first-child { clip-path:inset(0 50% 0 0); }
@@ -45,7 +45,7 @@
   .copy h2 { font-size:clamp(54px,13vw,88px); }
   .copy > p { font-size:14px; margin-top:24px; }
   .link { margin-top:20px; }
-  .art { padding-top:56px; margin-left:8%; }
+  .art { padding-top:0; margin-left:0; }
   .quote { font-size:190px; top:-15px; left:-24px; width:152px; height:170px; }
   .perspectivePicture { aspect-ratio:1.45; }
   .artFoot { padding-top:16px; }

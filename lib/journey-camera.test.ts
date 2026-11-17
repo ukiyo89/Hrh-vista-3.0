@@ -74,3 +74,12 @@ test("computeJourneyPose clamps out-of-range progress cleanly", () => {
   const one = computeJourneyPose(1, 1440);
   assert.deepEqual(high, one);
 });
+
+test("globe rotation stays completely static across progress, elapsed time, and pointer input", () => {
+  const p0 = computeJourneyPose(0, 1440, 0, 0, 0);
+  const pMid = computeJourneyPose(0.5, 1440, 25, 0.8, -0.6);
+  const pEnd = computeJourneyPose(1.0, 1440, 120, -1, 1);
+
+  assert.deepEqual(p0.globeRot, pMid.globeRot);
+  assert.deepEqual(pMid.globeRot, pEnd.globeRot);
+});

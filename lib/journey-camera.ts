@@ -5,7 +5,7 @@ export const LAVASA_COORDS = { lat: 18.406, lon: 73.504 } as const;
 
 // Exact Y rotation so Lon 73.504°E (Lavasa, India) faces +Z camera: -(lon + 90) deg
 export const TARGET_INDIA_Y = THREE.MathUtils.degToRad(-(LAVASA_COORDS.lon + 90));
-export const START_ROT_Y = TARGET_INDIA_Y - THREE.MathUtils.degToRad(18);
+export const START_ROT_Y = TARGET_INDIA_Y;
 
 export interface JourneyCameraPose {
   globePos: [number, number, number];
@@ -43,16 +43,15 @@ export function easeInOutCubic(t: number): number {
 }
 
 /**
- * Compute deterministic orbital camera + globe transforms across scroll progress [0..1].
- * Ensures India/Arabian Sea is always facing the viewer from p=0, and frames Lavasa
- * cleanly in the unobstructed middle band above the scenic cards by p=1.
+ * Compute deterministic orbital camera + static-rotation globe transforms across scroll progress [0..1].
+ * Keeps globe rotation completely stopped with India/Lavasa facing the viewer cleanly.
  */
 export function computeJourneyPose(
   progress: number,
   width: number,
-  elapsedSec = 0,
-  pointerX = 0,
-  pointerY = 0
+  _elapsedSec = 0,
+  _pointerX = 0,
+  _pointerY = 0
 ): JourneyCameraPose {
   const p = Math.min(1, Math.max(0, progress));
   const t = Math.min(1, p / 0.74);
@@ -69,16 +68,13 @@ export function computeJourneyPose(
 
   const startCamY = 0.05;
   const targetCamY = isMobile ? 0.14 : 0.12;
-  const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease) - pointerY * 0.06;
-  const camX = pointerX * 0.1;
+  const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
+  const camX = 0;
 
   const lookAtY = THREE.MathUtils.lerp(0.0, isMobile ? -0.18 : -0.25, ease);
 
-  const rotY =
-    THREE.MathUtils.lerp(START_ROT_Y, TARGET_INDIA_Y, ease) +
-    elapsedSec * 0.004 +
-    pointerX * 0.025;
-  const rotX = THREE.MathUtils.degToRad(THREE.MathUtils.lerp(4, -7.5, ease));
+  const rotY = TARGET_INDIA_Y;
+  const rotX = THREE.MathUtils.degToRad(-7.5);
   const rotZ = THREE.MathUtils.degToRad(-5);
 
   return {

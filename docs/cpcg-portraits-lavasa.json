@@ -155,11 +155,11 @@
     ],
     "status": "verified",
     "note": "Profile photo dialog on the matched LinkedIn profile in the authorized Chrome Beta session.",
-    "portrait": "/media/cpcg/saketh-madisetty.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D5635AQH3Rc2sHSZATg/profile-framedphoto-shrink_400_400/B56Z2iWalPIQAc-/0/1776545279392?e=1793721600&v=beta&t=wwxn9VVcBFL_UMP2D5FYnGHtfrXcMnz6TR17OdjWVRQ",
-    "width": 400,
-    "height": 400,
-    "sha256": "4684c0ce86f30c8e18a1cbb64b960d8c60342d1730d3c0ec86389cd6e0ecb937"
+    "portrait": "/assets/aistudio/a259ff68-47c4-4f40-b8f4-ebcb7f7a357b_aa466eed.png",
+    "portraitSource": "User-supplied replacement portrait",
+    "width": 1078,
+    "height": 1459,
+    "sha256": "aa466eed34b14cd697e56f2d33af0021cdccde89473767491775021ffa07fd45"
   },
   {
     "name": "Shambhavi Shesh",
@@ -209,11 +209,11 @@
     ],
     "status": "verified",
     "note": "Profile photo dialog on the matched LinkedIn profile in the authorized Chrome Beta session.",
-    "portrait": "/media/cpcg/harmandeep-kaur-bhogal.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D4E35AQHFLX6JHUzTpA/profile-framedphoto-shrink_400_400/B4EZpPhsJKHMAc-/0/1762270823343?e=1793721600&v=beta&t=5i6tmtwOTnYXAQs33r9E9LxO1gARQh316MPxz-2ti_Q",
-    "width": 400,
-    "height": 400,
-    "sha256": "147ad4d4d082b0a093f6513fc5805adf91e8a6191f9271ac0a556f823e423f50"
+    "portrait": "/assets/aistudio/WhatsApp_Image_2026-11-15_at_7.09.31_PM_13469884.jpeg",
+    "portraitSource": "User-supplied replacement portrait",
+    "width": 688,
+    "height": 942,
+    "sha256": "134698848bf2c9c863e9a057ec7c00a1f140018a531aed9cc0baa72924c0b28d"
   },
   {
     "name": "Sparsh Parashar",

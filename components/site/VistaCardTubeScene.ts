@@ -2,7 +2,12 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TUBE_ASSETS, computeRowSpeeds, getTubeTileIndex } from "@/lib/data/brands";
+import {
+  TUBE_ASSETS,
+  computeResponsiveCardScale,
+  computeRowSpeeds,
+  getTubeTileIndex,
+} from "@/lib/data/brands";
 
 interface RowDescriptor {
   group: THREE.Group;
@@ -110,6 +115,8 @@ export class VistaCardTubeScene {
   private _disposed = false;
   private _initialized = false;
   private _cardBaseY = 0.31;
+  private _cardModelMaxDim = 1;
+  private _cardUnscaledCenter = new THREE.Vector3();
   private _nearViewport = true;
   private _throttleCounter = 0;
   private _maxBufferDim = 4096;
@@ -212,9 +219,9 @@ export class VistaCardTubeScene {
       spinScale: 1,
       envEnabled: true,
       reflectMono: true,
-      envMapIntensity: 0.11,
+      envMapIntensity: 0.035,
       reflectUseBump: !this.isMobile,
-      reflectSoft: 0.6,
+      reflectSoft: 0.85,
       reflStrength: 0.3,
       envScale: this.isMobile ? 0.5 : 1,
       envSamples: 0,
@@ -751,19 +758,16 @@ gl_FragColor = vec4( outgoingLight, accumAlpha * nodeU20 );`
 
           const box = new THREE.Box3().setFromObject(rootObj);
           const sz = box.getSize(new THREE.Vector3());
-          const maxDim = Math.max(sz.x, sz.y, sz.z) || 1;
-          rootObj.scale.setScalar(this.CARD.targetSize / maxDim);
+          this._cardModelMaxDim = Math.max(sz.x, sz.y, sz.z) || 1;
+          box.getCenter(this._cardUnscaledCenter);
 
           if (sz.x <= sz.y && sz.x <= sz.z) this.cardLocalNormal.set(1, 0, 0);
           else if (sz.y <= sz.x && sz.y <= sz.z) this.cardLocalNormal.set(0, 1, 0);
           else this.cardLocalNormal.set(0, 0, 1);
 
-          const center = new THREE.Box3().setFromObject(rootObj).getCenter(new THREE.Vector3());
-          rootObj.position.copy(this.CARD.position).sub(center);
           rootObj.rotation.copy(this.CARD.baseRotation);
-
-          this._cardBaseY = rootObj.position.y;
           this.cardObject = rootObj;
+          this.updateCardScale();
           this.scene.add(rootObj);
           resolve();
         },
@@ -853,6 +857,29 @@ gl_FragColor = vec4( outgoingLight, accumAlpha * nodeU20 );`
       this.blurRT.setSize(bw, bh);
       this._downMat.uniforms.uTexel.value.set(1 / bw, 1 / bh);
     }
+
+    this.updateCardScale();
+  }
+
+  private updateCardScale() {
+    if (!this.cardObject) return;
+    const { w, h } = this.viewportSize();
+    const scale = computeResponsiveCardScale({
+      viewportWidth: w,
+      viewportHeight: h,
+      cameraZ: this.camera.position.z,
+      fovDeg: this.camera.fov,
+      targetSize: this.CARD.targetSize,
+      modelMaxDim: this._cardModelMaxDim,
+      maxWidthFraction: 0.84,
+    });
+    this.cardObject.scale.setScalar(scale);
+    this.cardObject.position.set(
+      this.CARD.position.x - this._cardUnscaledCenter.x * scale,
+      this.CARD.position.y - this._cardUnscaledCenter.y * scale,
+      this.CARD.position.z - this._cardUnscaledCenter.z * scale
+    );
+    this._cardBaseY = this.cardObject.position.y;
   }
 
   private start() {

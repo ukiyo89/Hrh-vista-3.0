@@ -270,7 +270,13 @@ vec3 outgoingLight = ((reflectedLight.directDiffuse + reflectedLight.indirectDif
 				}
 				
 
-outgoingLight = spe_blend(outgoingLight, spe_blend(spe_blend(vec3( ( outgoingLight ) ),matcap(nodeU6,normal,nodeU7,1.0,nodeU8,nodeU9,g_uid19_calpha,nodeU10),( g_uid19_calpha ),nodeU9),g_uid12_uvTexture(normal,nodeU11,nodeU12.xy,nodeU13,nodeU14,nodeU15,nodeU16,nodeU17,1.0,nodeU18,nodeU19,g_uid12_calpha,g_uid12_writeUvs),( g_uid12_calpha ),nodeU19), 1.0, SPE_BLENDING_NORMAL);
+vec3 mcap = matcap(nodeU6,normal,nodeU7,1.0,nodeU8,nodeU9,g_uid19_calpha,nodeU10);
+vec3 cardTex = g_uid12_uvTexture(normal,nodeU11,nodeU12.xy,nodeU13,nodeU14,nodeU15,nodeU16,nodeU17,1.0,nodeU18,nodeU19,g_uid12_calpha,g_uid12_writeUvs);
+float texMask = clamp(dot(cardTex, vec3(0.299, 0.587, 0.114)), 0.0, 1.0);
+vec3 satinBase = vec3(0.025) + vec3(pow(mcap.r, 1.35) * 0.22);
+vec3 subtleRelief = vec3(pow(mcap.r, 3.0) * 0.04);
+vec3 crispContent = cardTex * (0.88 + mcap.r * 0.12);
+outgoingLight = clamp(mix(satinBase + subtleRelief, crispContent, texMask), 0.0, 1.0);
 gl_FragColor = vec4( outgoingLight, accumAlpha * nodeU20 );
 gl_FragColor.a *= nodeU22;
 #include <colorspace_fragment>

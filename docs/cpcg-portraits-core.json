@@ -22,11 +22,11 @@
     ],
     "status": "verified",
     "note": "Signed-in Chrome Beta displayed this exact profile and its profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/sabhya-walani.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D4D35AQGsNU78w8bGFA/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1723269488901?e=1793721600&v=beta&t=6SASw5pIJ0HqHIpvSO4HjMJ_s5CSEUsRCG48k7Dnk28",
-    "width": 400,
-    "height": 400,
-    "sha256": "e7b1597140eae9008d44886896a1b4c92c47d5671acfbfc0fa8514c69533cf8f"
+    "portrait": "/assets/aistudio/ec27b50d-6b03-41b7-9cce-507903ceeba3_e162f91f.png",
+    "portraitSource": "User-supplied replacement portrait",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "e162f91f4e5382e6867bd64c252d4862903cd1ea0024c3dc5b461b69c040f00b"
   },
   {
     "name": "Aditi Mishra",
@@ -143,11 +143,11 @@
     ],
     "status": "verified",
     "note": "Signed-in Chrome Beta displayed the matching profile and profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/mrinalini-sharma.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D5635AQFIG6ksUPsJhQ/profile-framedphoto-shrink_400_400/B56ZvhXslYHQAc-/0/1769012644484?e=1793721600&v=beta&t=XsaHiGJeMcwmdXlXQPhH80AIWPhnSsfactwGSVKY1kE",
-    "width": 400,
-    "height": 400,
-    "sha256": "de2dbbbda2e72ae1d919e519080c7077a9016ff087c66a26c8b0e43dc99f1cea"
+    "portrait": "/assets/aistudio/dd936bc1-9365-470f-be13-d75fd142a816_c24d0f02.png",
+    "portraitSource": "User-supplied replacement portrait",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "c24d0f020358d2ca1a0629184e6c491fe50648b6ca6e95580982baff55a3458d"
   },
   {
     "name": "Tanishq Kalra",
@@ -164,11 +164,11 @@
     ],
     "status": "verified",
     "note": "Signed-in Chrome Beta displayed the matching profile and profile-photo viewer; original image downloaded and decoded successfully.",
-    "portrait": "/media/cpcg/tanishq-kalra.jpg",
-    "portraitSource": "https://media.licdn.com/dms/image/v2/D4E03AQEkqWGYh7kSUA/profile-displayphoto-scale_400_400/B4EZndQ.N7IQAg-/0/1760353840886?e=1794441600&v=beta&t=Y2EgxdtPTY-2wAd3DQsiNC0HmYebyTboe8eErd72M5s",
-    "width": 400,
-    "height": 400,
-    "sha256": "d678003585de2fd31e6458ef50e25ae1861f7e7d2d20b9ed7ad74af659aca3fc"
+    "portrait": "/assets/aistudio/d3af888f-39ae-4f7a-a3e8-649f844b5064_c1833d51.png",
+    "portraitSource": "User-supplied replacement portrait",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "c1833d51a07e0771e6ce374e51e7771b25a516473a85b586bcaa05d32b38384c"
   },
   {
     "name": "Vivaan Sud",

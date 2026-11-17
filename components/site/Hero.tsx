@@ -405,7 +405,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Copy — the reference's eyebrow over a two-line display headline + theme subline. */}
+      {/* Copy — the reference's eyebrow over a two-line display headline. */}
       <div className={styles.copy} data-hero-copy>
         <p className={styles.caption}>HR VISTA 3.0 · 21–22 NOVEMBER 2026 · CHRIST UNIVERSITY, LAVASA</p>
         <h1 id="hero-title" className={styles.title}>
@@ -413,12 +413,7 @@ export function Hero() {
           <br />
           <span className={styles.titleLine}><span>Human Potential Leads.</span></span>
         </h1>
-        <p className={styles.themeLine}>
-          Evolution of Human Potential, Professional Values &amp; the Future of Work
-        </p>
       </div>
-
-      <a className={styles.storyLink} href="#countdown">Explore the story <span aria-hidden="true">↓</span></a>
     </section>
   );
 }

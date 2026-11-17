@@ -234,3 +234,21 @@ export function computeRowSpeeds(rows: number): number[] {
     return 0.65 + 0.9 * t;
   });
 }
+
+export function computeResponsiveCardScale(params: {
+  viewportWidth: number;
+  viewportHeight: number;
+  cameraZ: number;
+  fovDeg: number;
+  targetSize: number;
+  modelMaxDim: number;
+  maxWidthFraction?: number;
+}): number {
+  const aspect = Math.max(params.viewportWidth / Math.max(params.viewportHeight, 1), 0.35);
+  const halfFovRad = ((params.fovDeg * 0.5) * Math.PI) / 180;
+  const visibleH = 2 * params.cameraZ * Math.tan(halfFovRad);
+  const visibleW = visibleH * aspect;
+  const maxWidthFraction = params.maxWidthFraction ?? 0.84;
+  const desiredSize = Math.min(params.targetSize, visibleW * maxWidthFraction);
+  return desiredSize / Math.max(params.modelMaxDim, 1e-4);
+}

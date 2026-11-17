@@ -50,9 +50,42 @@
 
 .institution p {
   font-size: 13px;
-  line-height: 1.8;
-  margin-top: 20px;
+  line-height: 1.6;
+  margin-top: 0;
   color: #526073;
+}
+
+.address {
+  margin-top: 20px;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 300px;
+}
+
+.addressTitle {
+  color: #172437;
+  line-height: 1.45;
+}
+
+.addressTitle strong {
+  color: #172437;
+  font-weight: 600;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contactList span {
+  overflow-wrap: anywhere;
+}
+
+.contactList a {
+  color: #172437;
 }
 
 .inlinePartnerLink {
@@ -97,7 +130,8 @@
 
 @media (max-width: 1000px) {
   .grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
-  .institution { grid-column: 1 / -1; display: flex; align-items: center; gap: 32px; }
+  .institution { grid-column: 1 / -1; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 24px 36px; }
+  .address { margin-top: 0; }
 }
 
 @media (max-width: 600px) {
@@ -106,6 +140,7 @@
   .grid { grid-template-columns: 1fr 1fr; padding-block: 32px; gap: 32px 24px; }
   .institution { display: block; }
   .institution img { width: 200px; }
+  .address { margin-top: 18px; max-width: 100%; }
   .socials { grid-column: 1 / -1; border-top: 1px solid #17243730; padding-top: 28px; }
   .columnHeading { margin-bottom: 12px; }
 }

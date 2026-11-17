@@ -58,7 +58,6 @@ export function EventCountdown() {
       <h2 id="countdown-title" data-clock-title>{phase === "live" ? <>When machines think,<br /><em>human potential leads.</em></> : phase === "ended" ? <>A chapter<br /><em>to remember.</em></> : <>When machines think,<br /><em>human potential leads.</em></>}</h2>
       <div className={styles.date}>
         <p><time dateTime="2026-11-21">21</time>—<time dateTime="2026-11-22">22 November 2026</time></p>
-        <span>Human Potential · Professional Values · Future of Work</span>
       </div>
     </div>
     <div className={styles.clock} role="timer" aria-live="off" aria-label={phase === "live" ? "HR VISTA 3.0 event dates are here" : phase === "ended" ? "HR VISTA 3.0 countdown has ended" : remaining ? `${remaining.days} days, ${remaining.hours} hours, ${remaining.minutes} minutes, ${remaining.seconds} seconds until 21 November 2026, India Standard Time` : "Countdown to 21 November 2026, India Standard Time"}>
@@ -68,7 +67,6 @@ export function EventCountdown() {
       </div>)}
     </div>
     <div className={styles.rule} aria-hidden="true"><span data-clock-rule /></div>
-    <div className={styles.foot}><p>{phase === "live" ? "The HR VISTA days are here" : phase === "ended" ? "HR VISTA 3.0 · November 2026" : "Until 21 November · 00:00 IST"}</p><a href="/hr-vista-2026.ics" download data-ui="text" data-ui-tone="dark">Save the dates <span data-ui-glyph aria-hidden="true">↓</span></a></div>
     <noscript><p className={styles.noScript}>HR VISTA 3.0 takes place on {event.dates}. Enable JavaScript for the live countdown.</p></noscript>
   </section>;
 }

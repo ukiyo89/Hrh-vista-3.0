@@ -176,7 +176,6 @@ export function EditionJourney() {
         <div className={styles.themePillars} aria-label="HR VISTA 3.0 central theme pillars">
           {themePillars.map((pillar) => (
             <div key={pillar.code} className={styles.pillarItem}>
-              <span className={styles.pillarCode}>{pillar.code}</span>
               <h3>{pillar.title}</h3>
               <p>{pillar.summary}</p>
             </div>
@@ -215,10 +214,9 @@ export function EditionJourney() {
 
               <figure className={styles.editionPhoto}>
                 <div className={styles.photoReveal} data-photo-reveal>
-                  <a href={edition.href} className={styles.photoFrame} data-ui="media" data-ui-tone="dark" aria-label={edition.label}>
+                  <div className={styles.photoFrame}>
                     <img data-photo-image src={edition.image} alt={edition.alt} width={1600} height={900} loading="lazy" decoding="async" />
-                    <span className={styles.photoArrow} data-ui-glyph aria-hidden="true">↗</span>
-                  </a>
+                  </div>
                 </div>
               </figure>
               <div className={styles.editionDetails}>

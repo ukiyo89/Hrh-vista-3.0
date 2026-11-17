@@ -92,25 +92,19 @@ export function VoicesTeaser() {
       const sequence = gsap.timeline({ scrollTrigger: {
         trigger: root.current, start: "top 90%", end: "bottom 55%", scrub: .7,
       } });
-      sequence.fromTo("[data-voices-word]", { xPercent: (index: number) => index === 0 ? -24 : 24 }, { xPercent: 0, stagger: .12, ease: "power2.out", duration: 1 }, 0);
-      sequence.fromTo("[data-voices-photo]", { clipPath: "inset(16% 32% 16% 5%)", xPercent: 15 }, { clipPath: "inset(0% 0% 0% 0%)", xPercent: 0, ease: "none", duration: 1.2 }, .1);
-      sequence.fromTo("[data-quote-left]", { x: -120, y: 130, scale: 1.6 }, { x: 0, y: 0, scale: 1, ease: "none", duration: 1.2 }, 0);
-      sequence.fromTo("[data-quote-right]", { x: 120, y: -80, scale: 1.6 }, { x: 0, y: 0, scale: 1, ease: "none", duration: 1.2 }, 0);
-      sequence.fromTo("[data-voices-number]", { xPercent: -100 }, { xPercent: 0, ease: "none", duration: 1.2 }, .15);
+      sequence.fromTo("[data-voices-photo]", { clipPath: "inset(16% 32% 16% 5%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "none", duration: 1.2 }, .1);
     }, root);
     return () => context.revert();
   }, [reduced]);
-  return <section ref={root} className={styles.section} aria-labelledby="voices-teaser-title">
+  return <section ref={root} id="voices" className={styles.section} aria-labelledby="voices-teaser-title">
     <div className={styles.layout}>
       <div className={styles.copy}>
         <h2 id="voices-teaser-title"><span data-voices-word>What stays</span><span data-voices-word><em>with you.</em></span></h2>
-        <p>Perspectives from the people<br />who experienced HR VISTA 2.0.</p>
+        <p>Perspectives from the people <br />who experienced HR VISTA 2.0.</p>
         <ActionLink href="/voices" variant="light" className={styles.link}>Explore the voices</ActionLink>
       </div>
       <div className={styles.art}>
-        <span className={styles.quote} aria-hidden="true"><i data-quote-left>“</i><i data-quote-right>“</i></span>
         <div className={styles.photo}><ArchivePerspective teaserReveal /></div>
-        <div className={styles.artFoot}><span className={styles.number} data-voices-number aria-hidden="true">2.0</span></div>
       </div>
     </div>
   </section>;

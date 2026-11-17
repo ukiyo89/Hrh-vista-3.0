@@ -6,6 +6,7 @@ import {
   HR_VISTA_2_COMPANIES,
   TUBE_ASSETS,
   VISTA_CARD_COPY,
+  computeResponsiveCardScale,
   computeRowSpeeds,
   getTubeTileIndex,
 } from "./brands";
@@ -67,4 +68,29 @@ test("all referenced public media files exist on disk", () => {
   }
   assert.ok(VISTA_CARD_COPY.headingLine1.length > 0);
   assert.ok(VISTA_CARD_COPY.ctaHref.startsWith("/"));
+});
+
+test("computeResponsiveCardScale preserves targetSize 2.8 cleanly across desktop and mobile viewports", () => {
+  const modelMaxDim = 85.6;
+  const desktopScale = computeResponsiveCardScale({
+    viewportWidth: 1440,
+    viewportHeight: 900,
+    cameraZ: 6.5,
+    fovDeg: 50,
+    targetSize: 2.8,
+    modelMaxDim,
+  });
+  assert.ok(Math.abs(desktopScale * modelMaxDim - 2.8) < 1e-4);
+
+  const narrowScale = computeResponsiveCardScale({
+    viewportWidth: 320,
+    viewportHeight: 844,
+    cameraZ: 6.5,
+    fovDeg: 50,
+    targetSize: 2.8,
+    modelMaxDim,
+  });
+  const renderedWidth = narrowScale * modelMaxDim;
+  const visibleMobileW = 2 * 6.5 * Math.tan((25 * Math.PI) / 180) * (320 / 844);
+  assert.ok(renderedWidth <= visibleMobileW * 0.84 + 1e-4);
 });

@@ -174,19 +174,6 @@ export function Journey() {
 
         <div className={styles.atmosphereScrim} aria-hidden="true" />
 
-        {/* Quiet Opening Lead-In (fades smoothly before "Welcome to Lavasa." enters) */}
-        <div
-          className={styles.openingLead}
-          style={{
-            opacity: uiState.introOpacity,
-            transform: `translate3d(0, ${(1 - uiState.introOpacity) * -14}px, 0)`,
-          }}
-          aria-hidden="true"
-        >
-          <p className={styles.openingKicker}>Sahyadri Hills · Maharashtra</p>
-          <p className={styles.openingTitle}>Descent to Lavasa</p>
-        </div>
-
         {/* Clean Precision Map Pin Tracking 3D Coordinate on Earth */}
         <div
           ref={pinRef}
@@ -202,7 +189,6 @@ export function Journey() {
             <span className={styles.beaconLeader} />
             <span className={styles.beaconLabel}>
               <span className={styles.beaconCity}>Lavasa</span>
-              <span className={styles.beaconCoords}>18.41° N · 73.50° E</span>
             </span>
           </span>
         </div>
@@ -221,13 +207,9 @@ export function Journey() {
               transform: `translate3d(0, ${(1 - uiState.headingOpacity) * 18}px, 0)`,
             }}
           >
-            <p className={styles.lavasaKicker}>CHRIST University · Pune Lavasa</p>
             <h2 id="lavasa-heading" className={styles.lavasaTitle}>
               Welcome to <em>Lavasa.</em>
             </h2>
-            <p className={styles.lavasaSubtitle}>
-              A campus. A community. A conversation that kept growing.
-            </p>
           </header>
 
           <div

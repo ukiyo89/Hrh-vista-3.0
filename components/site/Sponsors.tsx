@@ -81,12 +81,10 @@ function SponsorStaircase({ name = "", paused = false, home = false }: { name?: 
   }, [paused]);
   return <section ref={root} id={home ? "sponsors" : "sponsor-staircase"} className={styles.staircase} aria-labelledby={home ? "sponsor-teaser-title" : "staircase-title"}>
     <div className={styles.stairHeading}>
-      <div><p className={styles.eyebrow}>06 / PARTNERS &amp; ECOSYSTEM</p><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>BeingHR ×<br /><em>CHRIST Lavasa.</em></h2></div>
-      <div className={styles.stairHeadingAside}><p>Being Networks &amp; BeingHR.<br />CPCG, CHRIST Pune Lavasa.<br />One shared HR ecosystem.</p><span className={styles.stairScroll}>SCROLL TO EXPLORE THE PARTNERSHIP <i>↓</i></span></div>
+      <div><h2 id={home ? "sponsor-teaser-title" : "staircase-title"}>BeingHR ×<br /><em>CHRIST Lavasa.</em></h2></div>
     </div>
     <div className={styles.stairRun} data-stair-run>
       <div className={styles.stairScene}>
-        <div className={styles.stairSceneTop}><span>HR VISTA 3.0 × BEINGHR</span><span>05 PILLARS / LAVASA · NOV 2026</span></div>
         <div className={styles.stairGuide} aria-hidden="true" />
         {stairCards.map((card, i) => <article key={card.label} className={styles.stairCard} data-sponsor-step={i} style={{ "--step": i, "--card-bg": card.background, "--card-ink": card.ink } as CSSProperties}>
           <div className={styles.stairCardTop}><span>{card.label}</span><span>0{i + 1}</span></div>

@@ -40,6 +40,45 @@ export function SiteFooter() {
             width={280}
             height={100}
           />
+          <address className={styles.address}>
+            <p className={styles.addressTitle}>
+              <strong>CHRIST</strong>
+              <br />
+              <strong>(Deemed to be University)</strong>
+            </p>
+            <p>
+              Christ University Road, 30 Valor Court
+              <br />
+              At Post: Dasve Lavasa, Taluka: Mulshi
+              <br />
+              Pune 412112, Maharashtra
+            </p>
+            <p className={styles.contactList}>
+              <span>
+                Tel:{" "}
+                <a data-ui="text" href="tel:18001232009">
+                  1800-123-2009
+                </a>
+              </span>
+              <span>
+                Email:{" "}
+                <a data-ui="text" href="mailto:mail.lavasa@christuniversity.in">
+                  mail.lavasa@christuniversity.in
+                </a>
+              </span>
+              <span>
+                Web:{" "}
+                <a
+                  data-ui="text"
+                  href="https://lavasa.christuniversity.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  https://lavasa.christuniversity.in
+                </a>
+              </span>
+            </p>
+          </address>
         </div>
         <nav className={styles.linkColumn} aria-labelledby="footer-explore">
           <h2 id="footer-explore" className={styles.columnHeading}>Explore</h2>

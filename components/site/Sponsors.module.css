@@ -1,6 +1,6 @@
 .page { color:#f4f3ed; background:#07111e; }
 .staircase { background:#08121f; color:#f3f3eb; overflow:clip; isolation:isolate; }
-.stairHeading { position:relative; z-index:1; background:#08121f; display:grid; grid-template-columns:1.5fr 1fr; align-items:end; gap:7vw; padding:110px 6vw 16px; }
+.stairHeading { position:relative; z-index:1; background:#08121f; display:grid; grid-template-columns:1fr; align-items:end; gap:7vw; padding:110px 6vw 16px; }
 .stairHeading .eyebrow { color:#acbfdb; margin-bottom:32px; }
 .stairHeading h2 { font:400 clamp(56px,7.4vw,120px)/.98 var(--font-display),sans-serif; letter-spacing:-.05em; }
 .stairHeading h2 em { font-style:normal; color:#a9c7fa; }

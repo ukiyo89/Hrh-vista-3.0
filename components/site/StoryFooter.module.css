@@ -31,18 +31,26 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(220px, 1.6fr) minmax(100px, .8fr) minmax(130px, 1fr) minmax(150px, 1fr);
-  gap: clamp(24px, 4vw, 64px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(28px, 3.8vw, 56px);
+  align-items: start;
   padding-block: 44px 48px;
 }
 
 .grid > * { min-width: 0; }
 
+.institution {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .institution img {
-  width: 220px;
+  display: block;
+  width: 210px;
   max-width: 100%;
   height: auto;
-  max-height: 100px;
+  max-height: 96px;
   object-fit: contain;
   object-position: left;
   mix-blend-mode: multiply;
@@ -50,18 +58,18 @@
 
 .institution p {
   font-size: 13px;
-  line-height: 1.6;
-  margin-top: 0;
+  line-height: 1.58;
+  margin: 0;
   color: #526073;
 }
 
 .address {
-  margin-top: 20px;
+  margin-top: 18px;
   font-style: normal;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 300px;
+  max-width: 100%;
 }
 
 .addressTitle {
@@ -122,25 +130,27 @@
 
 .wordmark:focus-visible { outline: 2px solid #365d95; outline-offset: 5px; }
 
+.socials .socialGroup:first-of-type { padding-top: 10px; }
 .socialGroup + .socialGroup { margin-top: 20px; }
 .socialGroup h3 { margin: 0 0 4px; font-size: 12px; font-weight: 600; line-height: 1.5; }
 .socialIcon { display: grid; place-items: center; flex-shrink: 0; }
 .socialIcon svg { width: 16px; height: 16px; }
 .socialArrow { margin-left: 4px; font-size: 14px; }
 
-@media (max-width: 1000px) {
-  .grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
-  .institution { grid-column: 1 / -1; display: flex; align-items: flex-start; flex-wrap: wrap; gap: 24px 36px; }
-  .address { margin-top: 0; }
+@media (max-width: 1080px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 32px; }
+  .institution { grid-column: 1 / -1; flex-direction: row; align-items: flex-start; flex-wrap: wrap; gap: 24px 48px; }
+  .address { margin-top: 0; max-width: 320px; }
 }
 
 @media (max-width: 600px) {
   .footer { padding: 36px 7vw 32px; }
   .top { padding-bottom: 28px; }
-  .grid { grid-template-columns: 1fr 1fr; padding-block: 32px; gap: 32px 24px; }
-  .institution { display: block; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: 32px; gap: 32px 24px; }
+  .institution { flex-direction: column; gap: 0; }
   .institution img { width: 200px; }
   .address { margin-top: 18px; max-width: 100%; }
   .socials { grid-column: 1 / -1; border-top: 1px solid #17243730; padding-top: 28px; }
+  .socials .socialGroup:first-of-type { padding-top: 0; }
   .columnHeading { margin-bottom: 12px; }
 }

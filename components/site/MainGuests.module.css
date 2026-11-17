@@ -126,12 +126,16 @@
   background: #132a48;
 }
 
+.speakerCard:hover .speakerPhoto {
+  transform: scale(1.04);
+}
+
 .cardTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .roleTag {
@@ -142,7 +146,7 @@
   border: 1px solid #9dbcff40;
   background: #17345a;
   color: #cbe0ff;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -153,227 +157,86 @@
   color: #7d9bc4;
 }
 
+.photoFrame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #163052;
+  border: 1px solid #82a4d62e;
+}
+
+.speakerPhoto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .speakerName {
   margin: 0;
-  font: 500 22px/1.18 var(--font-display), sans-serif;
+  font: 500 21px/1.18 var(--font-display), sans-serif;
   letter-spacing: -0.025em;
   color: #ffffff;
 }
 
-.speakerMeta {
-  margin: 8px 0 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: #afc4e0;
+.speakerDesignation {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #c2d6f2;
 }
 
-.speakerMeta strong {
-  color: #e4eeff;
+.speakerDesignation em {
+  font-style: italic;
+}
+
+.speakerOrganisation {
+  margin: 4px 0 0;
+  font-size: 13px;
   font-weight: 600;
+  line-height: 1.45;
+  color: #eef4ff;
 }
 
 .speakerTopic {
-  margin: 16px 0 0;
-  padding-top: 14px;
+  margin: 14px 0 0;
+  padding-top: 12px;
   border-top: 1px solid #82a4d626;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #d6e4f8;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #b4c9e6;
 }
 
 .linkedinLink {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
   color: #9dbcff;
   align-self: flex-start;
   min-height: 36px;
 }
 
-.programmeGrid {
-  margin-top: clamp(44px, 5vw, 68px);
-  display: grid;
-  grid-template-columns: 1.15fr 0.95fr;
-  gap: 24px;
-  align-items: start;
-}
-
-.agendaPanel {
-  padding: clamp(24px, 3vw, 36px);
-  border-radius: 16px;
-  background: #0f2139;
-  border: 1px solid #82a4d630;
-}
-
-.agendaHeader {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.dayTabs {
-  display: flex;
-  gap: 8px;
-}
-
-.daySub {
-  margin: 14px 0 0;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #a9c7fa;
-}
-
-.sessionList {
-  list-style: none;
-  margin: 18px 0 0;
-  padding: 0;
-  border-top: 1px solid #82a4d62e;
-}
-
-.sessionRow {
-  display: grid;
-  grid-template-columns: 145px minmax(0, 1fr);
-  gap: 16px;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid #82a4d624;
-}
-
-.sessionTime {
+.linkedinUnavailable {
+  margin-top: auto;
+  padding-top: 14px;
+  display: inline-flex;
+  align-items: center;
   font-size: 12px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: #9dbcff;
-}
-
-.sessionTitle {
-  font-size: 15px;
-  line-height: 1.5;
-  color: #eef4ff;
-}
-
-.highlightsStack {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.awardsCard {
-  padding: clamp(24px, 2.8vw, 32px);
-  border-radius: 16px;
-  background: linear-gradient(135deg, #163158 0%, #10233d 100%);
-  border: 1px solid #a9c7fa55;
-}
-
-.awardsBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  background: #c4d8f5;
-  color: #0b1a2e;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.awardsCard h4,
-.themesCard h4 {
-  margin: 14px 0 0;
-  font: 500 clamp(22px, 2.2vw, 28px)/1.18 var(--font-display), sans-serif;
-  letter-spacing: -0.025em;
-  color: #ffffff;
-}
-
-.awardsMeta {
-  margin: 10px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12.5px;
-  color: #b8d0f6;
-}
-
-.awardsCopy {
-  margin: 12px 0 0;
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: #d6e3f5;
-}
-
-.awardsLink {
-  margin-top: 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  color: #7d9bc4;
   min-height: 36px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.themesCard,
-.experienceCard {
-  padding: 24px;
-  border-radius: 16px;
-  background: #0f2139;
-  border: 1px solid #82a4d62e;
-}
-
-.pillarList {
-  list-style: none;
-  margin: 16px 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 18px;
-}
-
-.pillarList li {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.pillarList strong {
-  font-size: 13px;
-  font-weight: 600;
-  color: #eef4ff;
-}
-
-.pillarList span {
-  font-size: 12px;
-  line-height: 1.5;
-  color: #a8bdd9;
-}
-
-.experienceCard ul {
-  margin: 12px 0 0;
-  padding-left: 18px;
-  display: grid;
-  gap: 8px;
-}
-
-.experienceCard li {
-  font-size: 13px;
-  line-height: 1.55;
-  color: #c8d9f0;
 }
 
 @media (max-width: 1120px) {
   .speakersGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .programmeGrid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -389,13 +252,6 @@
     margin-bottom: 16px;
   }
   .speakersGrid {
-    grid-template-columns: 1fr;
-  }
-  .sessionRow {
-    grid-template-columns: 112px minmax(0, 1fr);
-    gap: 12px;
-  }
-  .pillarList {
     grid-template-columns: 1fr;
   }
 }

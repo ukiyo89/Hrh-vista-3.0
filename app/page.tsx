@@ -12,6 +12,7 @@ import { SponsorTeaser } from "@/components/site/Sponsors";
 import { EventCountdown } from "@/components/site/EventCountdown";
 import { HomeMotion } from "@/components/site/HomeMotion";
 import { VoicesTeaser } from "@/components/site/VoicesTeaser";
+import { MainGuests } from "@/components/site/MainGuests";
 import { VistaCardShowcase } from "@/components/site/VistaCardShowcase";
 
 export default function HomePage() {
@@ -26,6 +27,7 @@ export default function HomePage() {
         <Journey />
         <EditionJourney />
         <VoicesTeaser />
+        <MainGuests />
         <VistaCardShowcase />
         <SponsorTeaser />
         <People />

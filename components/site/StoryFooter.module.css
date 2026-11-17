@@ -32,7 +32,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(28px, 3.8vw, 56px);
+  grid-template-rows: auto auto;
+  gap: 14px clamp(28px, 3.8vw, 56px);
   align-items: start;
   padding-block: 44px 48px;
 }
@@ -40,17 +41,18 @@
 .grid > * { min-width: 0; }
 
 .institution {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  display: contents;
 }
 
 .institution img {
+  grid-column: 1;
+  grid-row: 1;
   display: block;
   width: 210px;
   max-width: 100%;
   height: auto;
   max-height: 96px;
+  margin-left: -12px;
   object-fit: contain;
   object-position: left;
   mix-blend-mode: multiply;
@@ -64,7 +66,9 @@
 }
 
 .address {
-  margin-top: 18px;
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 0;
   font-style: normal;
   display: flex;
   flex-direction: column;
@@ -113,6 +117,21 @@
   text-transform: uppercase;
 }
 
+.linkColumn {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.linkColumn + .linkColumn {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.socials {
+  grid-column: 4;
+  grid-row: 2;
+}
+
 .linkColumn, .socialLinks {
   display: flex;
   flex-direction: column;
@@ -138,8 +157,9 @@
 .socialArrow { margin-left: 4px; font-size: 14px; }
 
 @media (max-width: 1080px) {
-  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 32px; }
-  .institution { grid-column: 1 / -1; flex-direction: row; align-items: flex-start; flex-wrap: wrap; gap: 24px 48px; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto; gap: 36px 32px; }
+  .institution { display: flex; grid-column: 1 / -1; flex-direction: row; align-items: flex-start; flex-wrap: wrap; gap: 24px 48px; }
+  .institution img, .address, .linkColumn, .linkColumn + .linkColumn, .socials { grid-column: auto; grid-row: auto; }
   .address { margin-top: 0; max-width: 320px; }
 }
 
@@ -148,7 +168,7 @@
   .top { padding-bottom: 28px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-block: 32px; gap: 32px 24px; }
   .institution { flex-direction: column; gap: 0; }
-  .institution img { width: 200px; }
+  .institution img { width: 200px; margin-left: -11px; }
   .address { margin-top: 18px; max-width: 100%; }
   .socials { grid-column: 1 / -1; border-top: 1px solid #17243730; padding-top: 28px; }
   .socials .socialGroup:first-of-type { padding-top: 0; }

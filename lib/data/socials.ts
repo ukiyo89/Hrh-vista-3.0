@@ -21,4 +21,12 @@ export const socialGroups: { id: string; name: string; channels: SocialChannel[]
       { platform: "LinkedIn", handle: "cpcgchristlavasa", href: "https://www.linkedin.com/company/cpcgchristlavasa/" },
     ],
   },
+  {
+    id: "christ-lavasa",
+    name: "CHRIST University Lavasa",
+    channels: [
+      { platform: "Instagram", handle: "@christ_university_lavasa", href: "https://www.instagram.com/christ_university_lavasa/" },
+      { platform: "LinkedIn", handle: "christlavasa", href: "https://www.linkedin.com/in/christlavasa/" },
+    ],
+  },
 ];

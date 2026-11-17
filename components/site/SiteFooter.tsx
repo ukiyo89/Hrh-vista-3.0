@@ -89,17 +89,10 @@ export function SiteFooter() {
         </nav>
         <nav className={styles.linkColumn} aria-labelledby="footer-discover">
           <h2 id="footer-discover" className={styles.columnHeading}>Discover</h2>
-          <a data-ui="text" href="/work">Archive</a>
           <a data-ui="text" href="/#people">People</a>
           <a data-ui="text" href="/voices">Voices</a>
           <a data-ui="text" href="/partners">Partners</a>
           <a data-ui="text" href="/brochure">Brochure</a>
-          <a data-ui="text" href="https://www.beingnetworks.com/" target="_blank" rel="noopener noreferrer">
-            BeingHR <span data-ui-glyph aria-hidden="true">↗</span>
-          </a>
-          <a data-ui="text" href="/brochure/HR-VISTA-3.0.pdf" download>
-            Download PDF <span data-ui-glyph aria-hidden="true">↓</span>
-          </a>
         </nav>
         <div className={styles.socials}>
           <h2 className={styles.columnHeading}>Connect</h2>

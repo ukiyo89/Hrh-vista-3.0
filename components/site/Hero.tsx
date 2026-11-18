@@ -90,6 +90,10 @@ const SPRING_K = 100;
 const SPRING_C = 30;
 /** Longest step the integrator will take, so a stalled tab cannot explode it. */
 const MAX_DT = 1 / 30;
+/** Continuous slow drift speed (deg/s) — ~0.13 deg/frame at 60fps. */
+const AUTO_SPEED = 7.8;
+const AUTO_RAMP_IN_SEC = 0.7;
+const AUTO_RAMP_OUT_SEC = 0.35;
 
 /**
  * Net Y-rotation of panel `k`, folded into [−180, 180).
@@ -139,6 +143,8 @@ export function Hero() {
     let last = 0;
     let visible = true;
     let dragging = false;
+    let hovering = false;
+    let autoBlend = 0;
     let startX = 0;
     let startAngle = 0;
     let culledMask = -1;
@@ -219,6 +225,8 @@ export function Hero() {
       stage.dataset.static = String(reduced);
       if (reduced) {
         dragging = false;
+        hovering = false;
+        autoBlend = 0;
         vel = 0;
         target = Math.round(target / STEP) * STEP;
         angle = target;
@@ -244,18 +252,37 @@ export function Hero() {
         return;
       }
 
+      const shouldDrift = !dragging && !hovering;
+      if (shouldDrift) {
+        autoBlend = Math.min(1, autoBlend + dt / AUTO_RAMP_IN_SEC);
+      } else {
+        autoBlend = Math.max(0, autoBlend - dt / AUTO_RAMP_OUT_SEC);
+      }
+
+      if (autoBlend > 0 && !dragging) {
+        target += AUTO_SPEED * autoBlend * dt;
+      }
+
       // Overdamped spring (ζ = 1.5) — the reference's useSpring(100, 30).
       vel += (-SPRING_K * (angle - target) - SPRING_C * vel) * dt;
       angle += vel * dt;
 
-      // Land exactly rather than leaving the spring to drift around its target.
-      if (Math.abs(angle - target) < 0.002 && Math.abs(vel) < 0.002) {
+      // Land cleanly when paused/settled rather than drifting around target.
+      if (!shouldDrift && autoBlend === 0 && Math.abs(angle - target) < 0.002 && Math.abs(vel) < 0.002) {
         angle = target;
         vel = 0;
       }
+
+      // Keep angle bounded across long sessions without any visual seam.
+      if (!dragging && Math.abs(angle) > 3600) {
+        const turns = Math.trunc(angle / 360) * 360;
+        angle -= turns;
+        target -= turns;
+      }
+
       draw();
-      // Sleep completely once the wall settles; input wakes the spring.
-      if (angle === target && vel === 0) {
+      // Sleep only when paused and settled; otherwise keep smooth auto-motion running.
+      if (!shouldDrift && autoBlend === 0 && !dragging && angle === target && vel === 0) {
         last = 0;
       } else raf = requestAnimationFrame(frame);
     };
@@ -269,10 +296,21 @@ export function Hero() {
     io.observe(stage);
     document.addEventListener("visibilitychange", syncActivity);
 
+    const introObserver = new MutationObserver(() => {
+      const intro = document.documentElement.dataset.intro;
+      if (intro !== "loading" && intro !== "opening") wake();
+    });
+    introObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-intro"],
+    });
+
     const onDown = (e: PointerEvent) => {
       if (reduced || !e.isPrimary) return;
       if (e.pointerType === "mouse" && e.button !== 0) return;
       dragging = true;
+      hovering = false;
+      autoBlend = 0;
       startX = e.clientX;
       startAngle = angle;
       vel = 0;
@@ -297,9 +335,8 @@ export function Hero() {
     const onUp = (e?: PointerEvent) => {
       if (!dragging) return;
       dragging = false;
+      hovering = false;
       stage.classList.remove(styles["is-dragging"]!);
-      // Let go anywhere and the drum eases to the nearest centred photograph.
-      target = Math.round(target / STEP) * STEP;
       try {
         if (e?.pointerId !== undefined) stage.releasePointerCapture?.(e.pointerId);
       } catch {
@@ -308,8 +345,25 @@ export function Hero() {
       wake();
     };
 
+    const onPointerOver = (e: PointerEvent) => {
+      if (reduced || dragging || e.pointerType !== "mouse") return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest?.("[data-hero-panel]")) {
+        hovering = true;
+      }
+    };
+
+    const onPointerOut = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || !hovering) return;
+      const next = e.relatedTarget as HTMLElement | null;
+      if (!next || !next.closest?.("[data-hero-panel]")) {
+        hovering = false;
+        wake();
+      }
+    };
+
     const step = (direction: number) => {
-      target = Math.round(target / STEP) * STEP + direction * STEP;
+      target += direction * STEP;
       if (reduced) { angle = target; draw(); }
       wake();
     };
@@ -325,6 +379,8 @@ export function Hero() {
     stage.addEventListener("pointermove", onMove);
     stage.addEventListener("pointerup", onUp);
     stage.addEventListener("pointercancel", onUp);
+    stage.addEventListener("pointerover", onPointerOver);
+    stage.addEventListener("pointerout", onPointerOut);
     stage.addEventListener("keydown", onKey);
 
     wake();
@@ -332,6 +388,7 @@ export function Hero() {
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
+      introObserver.disconnect();
       resizeObserver.disconnect();
       preference.removeEventListener("change", updatePreference);
       document.removeEventListener("visibilitychange", syncActivity);
@@ -339,6 +396,8 @@ export function Hero() {
       stage.removeEventListener("pointermove", onMove);
       stage.removeEventListener("pointerup", onUp);
       stage.removeEventListener("pointercancel", onUp);
+      stage.removeEventListener("pointerover", onPointerOver);
+      stage.removeEventListener("pointerout", onPointerOut);
       stage.removeEventListener("keydown", onKey);
       stage.classList.remove(styles["is-dragging"]!);
     };
